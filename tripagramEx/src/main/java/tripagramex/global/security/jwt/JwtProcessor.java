@@ -1,4 +1,4 @@
-package tripagramex.global.jwt;
+package tripagramex.global.security.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -6,7 +6,7 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
-import tripagramex.global.authentication.UserAccount;
+import tripagramex.global.security.authentication.UserAccount;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @Component
 public class JwtProcessor {
 
-    @Value("${jwt.secretKey}")
+    @Value("${jwt.secret-Key}")
     String secretKey;
 
     @Value("${jwt.expiration}")
@@ -29,7 +29,7 @@ public class JwtProcessor {
     @Value("${jwt.header}")
     String header;
 
-    private String createAuthJwtToken(UserAccount userAccount) {
+    public String createAuthJwtToken(UserAccount userAccount) {
 
         Map<String, Object> claims = createClaims(userAccount);
 

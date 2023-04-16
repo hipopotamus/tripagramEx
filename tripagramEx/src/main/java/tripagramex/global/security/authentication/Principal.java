@@ -1,4 +1,4 @@
-package tripagramex.global.authentication;
+package tripagramex.global.security.authentication;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
