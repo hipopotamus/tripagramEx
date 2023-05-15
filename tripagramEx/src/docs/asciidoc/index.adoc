@@ -1,0 +1,20 @@
+= TripagramEx
+:sectnums:
+:toc: left
+:toclevels: 4
+:toc-title: Table of Contents
+:source-highlighter: prettify
+
+v1.0.0, 2023.05.15
+
+***
+== AccountController
+=== 테스트
+.curl-request
+include::{snippets}/accountTest/curl-request.adoc[]
+
+.http-reqeust
+include::{snippets}/accountTest/http-request.adoc[]
+
+.http-response
+include::{snippets}/accountTest/http-response.adoc[]
