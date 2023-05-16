@@ -6,13 +6,18 @@ import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import tripagramex.global.aop.logtracer.LogTrace;
+import tripagramex.global.aop.logtracer.LogTraceAspect;
 import tripagramex.global.p6spy.P6spySqlFormatConfiguration;
 
 @Configuration
 @RequiredArgsConstructor
 public class AppConfig {
+
+    private final LogTrace logTrace;
 
     @PersistenceContext
     public EntityManager entityManager;
@@ -25,5 +30,11 @@ public class AppConfig {
     @Bean
     public JPAQueryFactory jpaQueryFactory() {
         return new JPAQueryFactory(entityManager);
+    }
+
+    @Bean
+    @ConditionalOnProperty(value = "logTracer", havingValue = "true")
+    public LogTraceAspect logTraceAspect() {
+        return new LogTraceAspect(logTrace);
     }
 }
