@@ -8,13 +8,15 @@ spring:
     hibernate:
       ddl-auto: update
 
-decorator:
-  datasource:
-    p6spy:
-      enable-logging: true
-
 jwt:
   secret-key: 28d93268-a80b-4594-918b-5926a79a49ed
   expiration: 36000000
   prefix: Bearer
   header: Authorization
+
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true
+
+logTracer: false
