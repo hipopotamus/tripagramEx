@@ -5,13 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import tripagramex.global.auditing.BaseTime;
 
 @Entity
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BoardPhoto {
+public class BoardPhoto extends BaseTime {
 
     @Id
     @GeneratedValue
@@ -24,5 +25,5 @@ public class BoardPhoto {
 
     private String photo;
 
-    private int order;
+    private int orders;
 }

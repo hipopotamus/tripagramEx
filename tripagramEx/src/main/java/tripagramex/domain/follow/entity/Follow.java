@@ -1,4 +1,4 @@
-package tripagramex.domain.comment.entity;
+package tripagramex.domain.follow.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import tripagramex.domain.account.entity.Account;
-import tripagramex.domain.board.entity.Board;
 import tripagramex.global.auditing.BaseTime;
 
 @Entity
@@ -14,20 +13,18 @@ import tripagramex.global.auditing.BaseTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Comment extends BaseTime {
+public class Follow extends BaseTime {
 
     @Id
     @GeneratedValue
-    @Column(name = "comment_id")
+    @Column(name = "follow_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "board_id")
-    private Board board;
+    @JoinColumn(name = "following_id")
+    private Account following;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "account_id")
-    private Account account;
-
-    private String content;
+    @JoinColumn(name = "follower_id")
+    private Account follower;
 }

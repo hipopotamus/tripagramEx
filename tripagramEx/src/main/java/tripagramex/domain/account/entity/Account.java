@@ -19,7 +19,8 @@ import java.util.List;
 @AllArgsConstructor
 public class Account extends BaseTime {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "account_id")
     private Long id;
 
