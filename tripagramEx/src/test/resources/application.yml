@@ -38,3 +38,7 @@ decorator:
       enable-logging: false
 
 logTracer: true
+
+dir : ./testimage/
+
+mod : local

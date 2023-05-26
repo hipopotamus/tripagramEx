@@ -20,3 +20,7 @@ decorator:
       enable-logging: true
 
 logTracer: false
+
+dir : ./image/
+
+mod : local
