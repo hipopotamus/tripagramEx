@@ -9,3 +9,24 @@ v1.0.0, 2023.05.15
 
 ***
 == AccountController
+
+***
+== ImageController
+=== 이미지 저장
+.curl-request
+include::{snippets}/imageUpload/curl-request.adoc[]
+
+.http-request
+include::{snippets}/imageUpload/http-request.adoc[]
+
+.request-headers
+include::{snippets}/imageUpload/request-headers.adoc[]
+
+.request-parts
+include::{snippets}/imageUpload/request-parts.adoc[]
+
+.http-response
+include::{snippets}/imageUpload/http-response.adoc[]
+
+.response-fields
+include::{snippets}/imageUpload/response-fields.adoc[]
