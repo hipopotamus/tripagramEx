@@ -23,7 +23,7 @@ import java.util.List;
 public class ImageController {
 
     @Value("${dir}")
-    String path;
+    private String path;
 
     private final ImageService imageService;
 

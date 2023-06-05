@@ -50,8 +50,9 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.GET, "/accounts").permitAll()
-                .anyRequest().permitAll();
+                .requestMatchers(HttpMethod.POST, "/accounts").permitAll()
+                .requestMatchers(HttpMethod.GET, "/image-files/**").permitAll()
+                .anyRequest().authenticated();
 
         http
                 .addFilter(new JwtAuthenticationFilter(authenticationManager, jwtProcessor))
