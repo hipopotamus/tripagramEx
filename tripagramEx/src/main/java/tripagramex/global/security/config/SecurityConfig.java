@@ -50,8 +50,8 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.GET, "/accounts").permitAll()
-                .requestMatchers(HttpMethod.POST, "/accounts/testPost").permitAll()
+                .requestMatchers(HttpMethod.POST, "/accounts").permitAll()
+                .requestMatchers(HttpMethod.GET, "/image-files/**").permitAll()
                 .anyRequest().authenticated();
 
         http

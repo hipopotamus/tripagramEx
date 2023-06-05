@@ -6,7 +6,12 @@ spring:
     password: 123456
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
+    defer-datasource-initialization: true
+  sql:
+    init:
+      data-locations: classpath:static/db/data.sql
+      mode: always
 
 jwt:
   secret-key: 28d93268-a80b-4594-918b-5926a79a49ed
@@ -20,3 +25,7 @@ decorator:
       enable-logging: true
 
 logTracer: false
+
+dir : /Users/hipo/Desktop/project/toy_project/tripagramEx/tripagramEx/image/
+
+mod : local

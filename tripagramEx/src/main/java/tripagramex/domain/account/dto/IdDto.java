@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-public class TestDto {
+@AllArgsConstructor
+public class IdDto {
 
-    private String email;
-    private String password;
+    long id;
 }

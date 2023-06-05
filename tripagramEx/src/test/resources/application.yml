@@ -20,6 +20,11 @@ spring:
     properties:
       hibernate:
         default_batch_fetch_size: 100
+    defer-datasource-initialization: true
+  sql:
+    init:
+      data-locations: classpath:static/db/data.sql
+      mode: always
   data:
     web:
       pageable:
@@ -38,3 +43,7 @@ decorator:
       enable-logging: false
 
 logTracer: true
+
+dir : ./testimage/
+
+mod : local
