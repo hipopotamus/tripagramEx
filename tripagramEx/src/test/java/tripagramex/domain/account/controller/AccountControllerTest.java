@@ -1,10 +1,12 @@
 package tripagramex.domain.account.controller;
 
+import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -14,12 +16,15 @@ import tripagramex.domain.account.entity.Account;
 import tripagramex.domain.account.repository.AccountRepository;
 import tripagramex.global.exception.BusinessLogicException;
 import tripagramex.global.exception.ExceptionCode;
+import tripagramex.global.security.dto.LoginDto;
 import tripagramex.util.Treatment;
 
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.multipart;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -37,6 +42,44 @@ class AccountControllerTest extends Treatment {
 
     @Autowired
     private AccountRepository accountRepository;
+
+    @Autowired
+    private Gson gson;
+
+    @Test
+    void loginTest_Success() throws Exception {
+
+        //given
+        String email = "test1@test.com";
+        String password = "12345678";
+
+        LoginDto loginDto = new LoginDto(email, password);
+        String content = gson.toJson(loginDto);
+
+        //when
+        ResultActions actions = mockMvc.perform(
+                post("/login")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(content)
+        );
+
+        //then
+        actions
+                .andExpect(status().isOk())
+                .andDo(document(
+                        "login",
+                        getRequestPreProcessor(),
+                        getResponsePreProcessor(),
+                        requestFields(
+                                fieldWithPath("email").description("이메일"),
+                                fieldWithPath("password").description("비밀번호")
+                        ),
+                        responseHeaders(
+                                headerWithName("Authorization").description("JWT")
+                        )
+                ));
+    }
 
     @Test
     void accountAddTest_Success() throws Exception {
