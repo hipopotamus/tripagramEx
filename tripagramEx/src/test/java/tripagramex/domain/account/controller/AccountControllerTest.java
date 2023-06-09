@@ -1,6 +1,7 @@
 package tripagramex.domain.account.controller;
 
 import com.google.gson.Gson;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -47,6 +48,7 @@ class AccountControllerTest extends Treatment {
     private Gson gson;
 
     @Test
+    @DisplayName("로그인 성공")
     void loginTest_Success() throws Exception {
 
         //given
@@ -82,6 +84,7 @@ class AccountControllerTest extends Treatment {
     }
 
     @Test
+    @DisplayName("계정 추가_성공")
     void accountAddTest_Success() throws Exception {
 
         //given
