@@ -17,9 +17,9 @@ public class AccountAccessDeniedHandler implements AccessDeniedHandler {
     public void handle(HttpServletRequest request, HttpServletResponse response,
                        AccessDeniedException accessDeniedException) throws IOException, ServletException {
 
-        ExceptionCode forbidden = ExceptionCode.FORBIDDEN;
+        ExceptionCode forbiddenExCode = ExceptionCode.FORBIDDEN;
         ErrorResponse accessException =
-                new ErrorResponse("Forbidden", forbidden.getMessage(), forbidden.getCode());
+                new ErrorResponse("Forbidden", forbiddenExCode.getMessage(), forbiddenExCode.getCode());
 
         String authenticationExJson = new Gson().toJson(accessException);
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);

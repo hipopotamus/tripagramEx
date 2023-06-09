@@ -1,6 +1,5 @@
 package tripagramex.global.exception.advice;
 
-import org.hibernate.annotations.Comment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -20,7 +19,8 @@ public class ExceptionAdvice {
     public ResponseEntity<ErrorResponse> basicExceptionHandler(Exception e) {
 
         ErrorResponse errorResponse =
-                new ErrorResponse(e.getClass().getSimpleName(), e.getMessage(), ExceptionCode.GLOBAL_EXCEPTION.getCode());
+                new ErrorResponse(e.getClass().getSimpleName(), e.getMessage(),
+                        ExceptionCode.GLOBAL_EXCEPTION.getCode());
 
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }

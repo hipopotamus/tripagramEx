@@ -21,7 +21,7 @@ public class ImageService {
 
     public String uploadImage(MultipartFile image, String path) {
 
-        validateImage(image);
+        verifyImage(image);
 
         String filename = createFilename(image);
 
@@ -42,11 +42,11 @@ public class ImageService {
     public String createFilename(MultipartFile image) {
 
         String originalFilename = image.getOriginalFilename();
-        int pos = originalFilename.lastIndexOf(".");
-        return UUID.randomUUID() + originalFilename.substring(pos);
+        int dotIndex = originalFilename.lastIndexOf(".");
+        return UUID.randomUUID() + originalFilename.substring(dotIndex);
     }
 
-    public void validateImage(MultipartFile image) {
+    public void verifyImage(MultipartFile image) {
 
         if (image == null || image.isEmpty()) {
             throw new BusinessLogicException(ExceptionCode.EMPTY_FILE);

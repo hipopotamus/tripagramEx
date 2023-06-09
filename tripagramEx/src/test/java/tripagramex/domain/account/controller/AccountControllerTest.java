@@ -57,7 +57,7 @@ class AccountControllerTest extends Treatment {
         String content = gson.toJson(loginDto);
 
         //when
-        ResultActions actions = mockMvc.perform(
+        ResultActions loginResult = mockMvc.perform(
                 post("/login")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -65,7 +65,7 @@ class AccountControllerTest extends Treatment {
         );
 
         //then
-        actions
+        loginResult
                 .andExpect(status().isOk())
                 .andDo(document(
                         "login",
@@ -88,13 +88,13 @@ class AccountControllerTest extends Treatment {
         String email = "test@test.com";
         String password = "12345678";
         String nickname = "testNickname";
-        MockMultipartFile profile = new MockMultipartFile("profile", "profile.jpg",
+        MockMultipartFile profileFile = new MockMultipartFile("profile", "profile.jpg",
                 "image/jpg", "(file data)".getBytes());
 
         //when
-        ResultActions actions = mockMvc.perform(
+        ResultActions accountAddResult = mockMvc.perform(
                 multipart("/accounts")
-                        .file(profile)
+                        .file(profileFile)
                         .queryParam("email", email)
                         .queryParam("password", password)
                         .queryParam("nickname", nickname)
@@ -105,7 +105,7 @@ class AccountControllerTest extends Treatment {
         Account account = accountRepository.findByEmail(email)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_ACCOUNT));
 
-        actions
+        accountAddResult
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value(account.getId()))
                 .andDo(document(

@@ -55,12 +55,15 @@ class ImageControllerTest extends Treatment {
         Account account = accountRepository.findById(accountId).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
-        MockMultipartFile testImage1 = new MockMultipartFile("images", "jpgTestFile.jpg", "image/jpg", "(file data)".getBytes());
-        MockMultipartFile testImage2 = new MockMultipartFile("images", "jpegTestFile.jpg", "image/jpeg", "(file data)".getBytes());
-        MockMultipartFile testImage3 = new MockMultipartFile("images", "pngTestFile.jpg", "image/png", "(file data)".getBytes());
+        MockMultipartFile testImage1 = new MockMultipartFile("images", "jpgTestFile.jpg",
+                "image/jpg", "(file data)".getBytes());
+        MockMultipartFile testImage2 = new MockMultipartFile("images", "jpegTestFile.jpg",
+                "image/jpeg", "(file data)".getBytes());
+        MockMultipartFile testImage3 = new MockMultipartFile("images", "pngTestFile.jpg",
+                "image/png", "(file data)".getBytes());
 
         //when
-        ResultActions actions = mockMvc.perform(
+        ResultActions imageUploadResult = mockMvc.perform(
                 multipart("/image-files")
                         .file(testImage1)
                         .file(testImage2)
@@ -69,7 +72,7 @@ class ImageControllerTest extends Treatment {
         );
 
         //then
-        actions
+        imageUploadResult
                 .andExpect(status().isOk())
                 .andDo(document(
                         "imageUpload",

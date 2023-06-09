@@ -14,13 +14,15 @@ import java.io.IOException;
 public class AccountAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+    public void commence(HttpServletRequest request, HttpServletResponse response,
+                         AuthenticationException authException) throws IOException, ServletException {
 
-        ExceptionCode unAuthentication = ExceptionCode.UN_AUTHENTICATION;
+        ExceptionCode unAuthenticationExCode = ExceptionCode.UN_AUTHENTICATION;
         ErrorResponse unAuthException =
-                new ErrorResponse("UnAuthentication", unAuthentication.getMessage(), unAuthentication.getCode());
+                new ErrorResponse("UnAuthentication",
+                        ExceptionCode.UN_AUTHENTICATION.getMessage(), unAuthenticationExCode.getCode());
 
-        String authenticationExJson = new Gson().toJson(unAuthentication);
+        String authenticationExJson = new Gson().toJson(unAuthException);
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");

@@ -15,7 +15,6 @@ import tripagramex.global.security.jwt.JwtProcessor;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
@@ -40,15 +39,15 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         String jwtToken = jwtProcessor.extractJwtToken(jwtHeader);
         Claims claims = jwtProcessor.verifyJwtToken(jwtToken);
 
-        Long id = Long.valueOf(claims.getSubject());
-        String email = (String) claims.get("email");
+        Long accountId = Long.valueOf(claims.getSubject());
+        String accountEmail = (String) claims.get("email");
 
-        List<String> roleList = (List<String>) claims.get("role");
-        List<SimpleGrantedAuthority> authorities = roleList.stream()
+        List<String> accountRoles = (List<String>) claims.get("role");
+        List<SimpleGrantedAuthority> authorities = accountRoles.stream()
                 .map(SimpleGrantedAuthority::new)
                 .toList();
 
-        Principal principal = new Principal(id, email);
+        Principal principal = new Principal(accountId, accountEmail);
 
         UsernamePasswordAuthenticationToken authentication =
                 new UsernamePasswordAuthenticationToken(principal, null, authorities);
