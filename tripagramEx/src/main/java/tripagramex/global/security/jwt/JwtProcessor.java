@@ -46,12 +46,12 @@ public class JwtProcessor {
 
         Map<String, Object> claims = new HashMap<>();
 
-        List<String> roleList = userAccount.getAuthorities().stream()
+        List<String> accountRoles = userAccount.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
 
         claims.put("email", userAccount.getUsername());
-        claims.put("role", roleList);
+        claims.put("role", accountRoles);
 
         return claims;
     }
@@ -66,8 +66,8 @@ public class JwtProcessor {
 
     public String extractJwtToken(String jwtHeader) {
 
-        int pos = jwtHeader.lastIndexOf(" ");
-        return jwtHeader.substring(pos + 1);
+        int dotIndex = jwtHeader.lastIndexOf(" ");
+        return jwtHeader.substring(dotIndex + 1);
     }
 
     public String getPrefix() {
