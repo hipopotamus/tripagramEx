@@ -34,7 +34,7 @@ public class AccountService {
         String encodedPassword = bCryptPasswordEncoder.encode(accountAddReq.getPassword());
         String profile = imageService.uploadImage(accountAddReq.getProfile(), profilePath);
 
-        Account account = accountAddReq.to(encodedPassword, profile);
+        Account account = accountAddReq.toAccount(encodedPassword, profile);
         Account savedAccount = accountRepository.save(account);
 
         return new IdDto(savedAccount.getId());

@@ -27,7 +27,7 @@ public class AccountAddReq {
     @NotNull
     private MultipartFile profile;
 
-    public Account to(String encodedPassword, String profile) {
+    public Account toAccount(String encodedPassword, String profile) {
 
         return Account.builder()
                 .email(this.getEmail())
