@@ -10,7 +10,7 @@ import tripagramex.domain.account.entity.Account;
 import tripagramex.domain.account.entity.Role;
 
 @Data
-public class AccountAddReq {
+public class AccountAddRequest {
 
     @Email
     @NotBlank
@@ -27,7 +27,7 @@ public class AccountAddReq {
     @NotNull
     private MultipartFile profile;
 
-    public Account toAccount(requiredForAddAccount requiredForAddAccount) {
+    public Account toAccount(RequiredForAddAccount requiredForAddAccount) {
 
         return Account.builder()
                 .email(this.getEmail())
