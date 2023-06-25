@@ -43,7 +43,6 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         Long accountId = Long.valueOf(claims.getSubject());
         String accountEmail = (String) claims.get("email");
         List<String> accountRoles = (List<String>) claims.get("role");
-
         List<SimpleGrantedAuthority> authorities = accountRoles.stream()
                 .map(SimpleGrantedAuthority::new)
                 .toList();
