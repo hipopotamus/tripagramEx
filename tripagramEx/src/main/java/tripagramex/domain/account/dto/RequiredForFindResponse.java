@@ -6,7 +6,8 @@ import tripagramex.domain.account.entity.Account;
 
 @Data
 @Builder
-public class RequiredForFindAccount {
+public class RequiredForFindResponse {
+
     private Account account;
 
     private Long following;

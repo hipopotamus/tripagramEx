@@ -29,7 +29,7 @@ public class AccountCRUDService {
     @Transactional
     public IdDto addAccount(AccountAddRequest accountAddRequest) {
         verifyDuplicateAccountFactor(accountAddRequest);
-        Account account = createAccountFromAccountAddReq(accountAddRequest);
+        Account account = createAccountFromDto(accountAddRequest);
         Account savedAccount = accountRepository.save(account);
 
         return new IdDto(savedAccount.getId());
@@ -42,33 +42,46 @@ public class AccountCRUDService {
         return getAccountDetailsResponse(account);
     }
 
-    private Account createAccountFromAccountAddReq(AccountAddRequest accountAddRequest) {
-        RequiredForAddAccount requiredForAddAccount = getRequiredForAddAccount(accountAddRequest);
+    public LoginAccountDetailsResponse findLoginAccount(Long loginAccountId) {
+        Account account = accountRepository.findById(loginAccountId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_ACCOUNT));
 
-        return accountAddRequest.toAccount(requiredForAddAccount);
+        return getLoginAccountDetailsResponse(account);
     }
 
-    private RequiredForAddAccount getRequiredForAddAccount(AccountAddRequest accountAddRequest) {
+    private Account createAccountFromDto(AccountAddRequest accountAddRequest) {
+        RequiredForAddResponse requiredForAddResponse = getRequiredForAddResponse(accountAddRequest);
+
+        return accountAddRequest.toAccount(requiredForAddResponse);
+    }
+
+    private AccountDetailsResponse getAccountDetailsResponse(Account account) {
+        RequiredForFindResponse requiredForFindResponse = getRequiredForFindResponse(account);
+
+        return AccountDetailsResponse.of(requiredForFindResponse);
+    }
+
+    private LoginAccountDetailsResponse getLoginAccountDetailsResponse(Account account) {
+        RequiredForFindResponse requiredForFindResponse = getRequiredForFindResponse(account);
+
+        return LoginAccountDetailsResponse.of(requiredForFindResponse);
+    }
+
+    private RequiredForAddResponse getRequiredForAddResponse(AccountAddRequest accountAddRequest) {
         String encodedPassword = bCryptPasswordEncoder.encode(accountAddRequest.getPassword());
         String profile = imageService.uploadImage(accountAddRequest.getProfile(), profilePath);
 
-        return RequiredForAddAccount.builder()
+        return RequiredForAddResponse.builder()
                 .encodedPassword(encodedPassword)
                 .profile(profile)
                 .build();
     }
 
-    private AccountDetailsResponse getAccountDetailsResponse(Account account) {
-        RequiredForFindAccount requiredForFindAccount = getRequiredForFindAccount(account);
-
-        return AccountDetailsResponse.of(requiredForFindAccount);
-    }
-
-    private RequiredForFindAccount getRequiredForFindAccount(Account account) {
+    private RequiredForFindResponse getRequiredForFindResponse(Account account) {
         Long following = followRepository.countByFollower(account);
         Long follower = followRepository.countByFollowing(account);
 
-        return RequiredForFindAccount.builder()
+        return RequiredForFindResponse.builder()
                 .account(account)
                 .following(following)
                 .follower(follower)

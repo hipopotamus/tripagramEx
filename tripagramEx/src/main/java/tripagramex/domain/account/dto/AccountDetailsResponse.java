@@ -20,17 +20,17 @@ public class AccountDetailsResponse {
 
     private Long follower;
 
-    public static AccountDetailsResponse of(RequiredForFindAccount requiredForFindAccount) {
+    public static AccountDetailsResponse of(RequiredForFindResponse requiredForFindResponse) {
         AccountDetailsResponse accountDetailsResponse = new AccountDetailsResponse();
-        Account account = requiredForFindAccount.getAccount();
+        Account account = requiredForFindResponse.getAccount();
 
         accountDetailsResponse.setId(account.getId());
         accountDetailsResponse.setEmail(account.getEmail());
         accountDetailsResponse.setNickname(account.getNickname());
         accountDetailsResponse.setIntro(account.getIntro());
         accountDetailsResponse.setProfile(account.getProfile());
-        accountDetailsResponse.setFollowing(requiredForFindAccount.getFollowing());
-        accountDetailsResponse.setFollower(requiredForFindAccount.getFollower());
+        accountDetailsResponse.setFollowing(requiredForFindResponse.getFollowing());
+        accountDetailsResponse.setFollower(requiredForFindResponse.getFollower());
 
         return accountDetailsResponse;
     }
