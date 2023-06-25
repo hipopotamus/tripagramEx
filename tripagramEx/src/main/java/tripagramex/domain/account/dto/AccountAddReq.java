@@ -27,13 +27,13 @@ public class AccountAddReq {
     @NotNull
     private MultipartFile profile;
 
-    public Account toAccount(String encodedPassword, String profile) {
+    public Account toAccount(requiredForAddAccount requiredForAddAccount) {
 
         return Account.builder()
                 .email(this.getEmail())
-                .password(encodedPassword)
+                .password(requiredForAddAccount.getEncodedPassword())
                 .nickname(this.getNickname())
-                .profile(profile)
+                .profile(requiredForAddAccount.getProfile())
                 .role(Role.USER)
                 .build();
     }

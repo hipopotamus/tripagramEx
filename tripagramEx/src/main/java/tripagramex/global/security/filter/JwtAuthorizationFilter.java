@@ -31,6 +31,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
         String jwtHeader = request.getHeader(jwtProcessor.getHeader());
 
+        // verifyJwtHeader
         if (jwtHeader == null || !jwtHeader.startsWith(jwtProcessor.getPrefix())) {
             chain.doFilter(request, response);
             return;
@@ -41,8 +42,8 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
         Long accountId = Long.valueOf(claims.getSubject());
         String accountEmail = (String) claims.get("email");
-
         List<String> accountRoles = (List<String>) claims.get("role");
+
         List<SimpleGrantedAuthority> authorities = accountRoles.stream()
                 .map(SimpleGrantedAuthority::new)
                 .toList();
