@@ -49,6 +49,27 @@ public class CRUDService {
         return ReadLoginAccountResponse.of(account);
     }
 
+    public IdDto update(Long loginAccountId, UpdateRequest updateRequest) {
+        if (updateRequest.getNickname() != null) {
+            verifyDuplicateNickname(updateRequest.getNickname());
+        }
+
+        Account modifyAccount = getModifyAccount(updateRequest);
+        Account account = accountRepository.findById(loginAccountId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_ACCOUNT));
+        account.modify(modifyAccount);
+
+        return new IdDto(account.getId());
+    }
+
+    private Account getModifyAccount(UpdateRequest updateRequest) {
+        String encodedPassword = null;
+        if (updateRequest.getPassword() != null) {
+            encodedPassword = bCryptPasswordEncoder.encode(updateRequest.getPassword());
+        }
+        return updateRequest.toAccount(encodedPassword);
+    }
+
     private Account getAccountFromRequest(CreateRequest createRequest) {
         String encodedPassword = bCryptPasswordEncoder.encode(createRequest.getPassword());
         String profile = imageService.uploadImage(createRequest.getProfile(), profilePath);

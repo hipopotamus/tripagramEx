@@ -5,10 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tripagramex.domain.account.dto.CreateRequest;
-import tripagramex.domain.account.dto.ReadResponse;
-import tripagramex.domain.account.dto.IdDto;
-import tripagramex.domain.account.dto.ReadLoginAccountResponse;
+import tripagramex.domain.account.dto.*;
 import tripagramex.domain.account.service.CRUDService;
 import tripagramex.global.argumentresolver.LoginAccountId;
 
@@ -35,5 +32,12 @@ public class CRUDController {
     public ResponseEntity<ReadLoginAccountResponse> readLoginAccount(@LoginAccountId Long loginAccountId) {
         ReadLoginAccountResponse readLoginAccountResponse = CRUDService.readLoginAccount(loginAccountId);
         return new ResponseEntity<>(readLoginAccountResponse, HttpStatus.OK);
+    }
+
+    @PostMapping("/update")
+    public ResponseEntity<IdDto> update(@LoginAccountId Long loginAccountId,
+                                        @Valid @RequestBody UpdateRequest updateRequest) {
+        IdDto idDto = CRUDService.update(loginAccountId, updateRequest);
+        return new ResponseEntity<>(idDto, HttpStatus.OK);
     }
 }
