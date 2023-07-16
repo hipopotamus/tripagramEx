@@ -10,7 +10,7 @@ import tripagramex.domain.account.entity.Account;
 import tripagramex.domain.account.entity.Role;
 
 @Data
-public class AccountAddRequest {
+public class CreateRequest {
 
     @Email
     @NotBlank
@@ -27,12 +27,12 @@ public class AccountAddRequest {
     @NotNull
     private MultipartFile profile;
 
-    public Account toAccount(RequiredForAddResponse requiredForAddResponse) {
+    public Account toAccount(String encodedPassword, String profile) {
         return Account.builder()
                 .email(this.getEmail())
-                .password(requiredForAddResponse.getEncodedPassword())
+                .password(encodedPassword)
                 .nickname(this.getNickname())
-                .profile(requiredForAddResponse.getProfile())
+                .profile(profile)
                 .role(Role.USER)
                 .build();
     }

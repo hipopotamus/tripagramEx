@@ -37,7 +37,7 @@ import static tripagramex.util.ApiDocumentUtils.getResponsePreProcessor;
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
-class AccountCRUDControllerTest extends Treatment {
+class CRUDControllerTest extends Treatment {
 
     @Autowired
     private MockMvc mockMvc;

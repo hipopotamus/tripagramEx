@@ -11,6 +11,7 @@ import tripagramex.global.auditing.BaseTime;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Getter
@@ -46,5 +47,11 @@ public class Account extends BaseTime {
     @OneToMany(mappedBy = "account")
     private List<Board> boards = new ArrayList<>();
 
+    public void modify(Account account) {
+        Optional.ofNullable(account.getPassword()).ifPresent(password -> this.password = password);
+        Optional.ofNullable(account.getNickname()).ifPresent(nickname -> this.nickname = nickname);
+        Optional.ofNullable(account.getProfile()).ifPresent(profile -> this.profile = profile);
+        Optional.ofNullable(account.getIntro()).ifPresent(intro -> this.intro = intro);
+    }
 
 }
