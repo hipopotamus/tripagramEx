@@ -20,11 +20,12 @@ import tripagramex.global.exception.ExceptionCode;
 import tripagramex.global.security.dto.LoginDto;
 import tripagramex.util.Treatment;
 
+import java.util.List;
+
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.multipart;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -128,5 +129,41 @@ class AccountCRUDControllerTest extends Treatment {
                         )
                 ));
     }
+
+    @Test
+    @DisplayName("계정 단일 조회 성공")
+    void accountDetailsTest_Success() throws Exception {
+        //given
+        Long accountId = 10001L;
+
+        //when
+        ResultActions actions = mockMvc.perform(
+                get("/accounts/{accountId}", accountId)
+        );
+
+        //then
+        actions
+                .andExpect(status().isOk())
+                .andDo(document(
+                        "accountDetails",
+                        getRequestPreProcessor(),
+                        getResponsePreProcessor(),
+                        pathParameters(
+                                parameterWithName("accountId").description("Account 식별자")
+                        ),
+                        responseFields(
+                                List.of(
+                                        fieldWithPath("id").type(JsonFieldType.NUMBER).description("Account 식별자"),
+                                        fieldWithPath("email").type(JsonFieldType.STRING).description("이메일"),
+                                        fieldWithPath("nickname").type(JsonFieldType.STRING).description("닉네임"),
+                                        fieldWithPath("intro").type(JsonFieldType.STRING).description("소개글"),
+                                        fieldWithPath("profile").type(JsonFieldType.STRING).description("프로필 이미지"),
+                                        fieldWithPath("following").type(JsonFieldType.NUMBER).description("팔로잉 수"),
+                                        fieldWithPath("follower").type(JsonFieldType.NUMBER).description("팔로워 수")
+                                )
+                        )
+                ));
+    }
+
 
 }

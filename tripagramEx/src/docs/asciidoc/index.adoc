@@ -25,7 +25,7 @@ include::{snippets}/login/http-response.adoc[]
 .response-headers
 include::{snippets}/login/response-headers.adoc[]
 
-== 회원 생성
+== 계정 생성
 .curl-request
 include::{snippets}/accountAdd/curl-request.adoc[]
 
@@ -43,6 +43,22 @@ include::{snippets}/accountAdd/http-response.adoc[]
 
 .response-fields
 include::{snippets}/accountAdd/response-fields.adoc[]
+
+== 계정 단일 조회
+.curl-request
+include::{snippets}/accountDetails/curl-request.adoc[]
+
+.http-request
+include::{snippets}/accountDetails/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/accountDetails/path-parameters.adoc[]
+
+.http-response
+include::{snippets}/accountDetails/http-response.adoc[]
+
+.response-fields
+include::{snippets}/accountDetails/response-fields.adoc[]
 
 ***
 == ImageController

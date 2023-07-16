@@ -50,7 +50,9 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests()
+                .requestMatchers(HttpMethod.GET, "/accounts/login").authenticated()
                 .requestMatchers(HttpMethod.POST, "/accounts").permitAll()
+                .requestMatchers(HttpMethod.GET, "/accounts/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/image-files/**").permitAll()
                 .anyRequest().authenticated();
 

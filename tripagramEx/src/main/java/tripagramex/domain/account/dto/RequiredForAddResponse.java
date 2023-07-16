@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class requiredForAddAccount {
+public class RequiredForAddResponse {
 
     private String encodedPassword;
 
