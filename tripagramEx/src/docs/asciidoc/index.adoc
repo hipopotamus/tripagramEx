@@ -27,38 +27,51 @@ include::{snippets}/login/response-headers.adoc[]
 
 == 계정 생성
 .curl-request
-include::{snippets}/accountAdd/curl-request.adoc[]
+include::{snippets}/create/curl-request.adoc[]
 
 .http-request
-include::{snippets}/accountAdd/http-request.adoc[]
+include::{snippets}/create/http-request.adoc[]
 
-.request-part
-include::{snippets}/accountAdd/request-parts.adoc[]
-
-.query-parameters
-include::{snippets}/accountAdd/query-parameters.adoc[]
+.request-fields
+include::{snippets}/create/request-fields.adoc
 
 .http-response
-include::{snippets}/accountAdd/http-response.adoc[]
+include::{snippets}/create/http-response.adoc[]
 
 .response-fields
-include::{snippets}/accountAdd/response-fields.adoc[]
+include::{snippets}/create/response-fields.adoc[]
 
 == 계정 단일 조회
 .curl-request
-include::{snippets}/accountDetails/curl-request.adoc[]
+include::{snippets}/read/curl-request.adoc[]
 
 .http-request
-include::{snippets}/accountDetails/http-request.adoc[]
+include::{snippets}/read/http-request.adoc[]
 
 .path-parameters
-include::{snippets}/accountDetails/path-parameters.adoc[]
+include::{snippets}/read/path-parameters.adoc[]
 
 .http-response
-include::{snippets}/accountDetails/http-response.adoc[]
+include::{snippets}/read/http-response.adoc[]
 
 .response-fields
-include::{snippets}/accountDetails/response-fields.adoc[]
+include::{snippets}/read/response-fields.adoc[]
+
+== 로그인 계정 조회
+.curl-request
+include::{snippets}/readLoginAccount/curl-request.adoc[]
+
+.http-request
+include::{snippets}/readLoginAccount/http-request.adoc[]
+
+.request-headers
+include::{snippets}/readLoginAccount/request-headers.adoc[]
+
+.http-response
+include::{snippets}/readLoginAccount/http-response.adoc[]
+
+.response-fields
+include::{snippets}/readLoginAccount/response-fields.adoc[]
 
 ***
 == ImageController

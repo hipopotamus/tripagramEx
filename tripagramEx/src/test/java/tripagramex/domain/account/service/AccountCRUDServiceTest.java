@@ -30,7 +30,7 @@ class AccountCRUDServiceTest {
     }
 
     @Test
-    @DisplayName("Account 생성 Test_성공")
+    @DisplayName("계정 생성_성공")
     public void createTest_Success() {
         //given
         CreateRequest createRequest = CreateRequest.builder()
@@ -48,7 +48,7 @@ class AccountCRUDServiceTest {
     }
 
     @Test
-    @DisplayName("Account 단일 조회 Test_성공")
+    @DisplayName("계정 단일 조회_성공")
     public void readTest_Success() {
         //given
         saveOneSample();
@@ -59,7 +59,7 @@ class AccountCRUDServiceTest {
     }
 
     @Test
-    @DisplayName("로그인 Account 조회 Test_성공")
+    @DisplayName("로그인 계정 조회_성공")
     public void readLoginAccount_Success() {
         //given
         saveOneSample();
@@ -70,35 +70,33 @@ class AccountCRUDServiceTest {
     }
 
     @Test
-    @DisplayName("Account 수정 Test_성공")
+    @DisplayName("계정 수정_성공")
     public void updateAccount_Success() {
         //given
         saveOneSample();
 
-        //when
         UpdateRequest updateRequest = UpdateRequest.builder()
                 .password("testPassword")
                 .nickname("testNickname")
                 .profile("testProfile")
                 .intro("testIntro")
                 .build();
-
+        //when
         //then
         accountCrudService.update(1L, updateRequest);
     }
 
     @Test
-    @DisplayName("Account 수정 Test_Password, Nickname 없는 경우")
+    @DisplayName("계정 수정_Password, Nickname 없는 경우")
     public void updateAccount_NonExist_Password_Nickname() {
         //given
         saveOneSample();
 
-        //when
         UpdateRequest updateRequest = UpdateRequest.builder()
                 .profile("testProfile")
                 .intro("testIntro")
                 .build();
-
+        //when
         //then
         accountCrudService.update(1L, updateRequest);
     }

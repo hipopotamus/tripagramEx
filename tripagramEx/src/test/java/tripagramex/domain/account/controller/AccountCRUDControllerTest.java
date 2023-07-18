@@ -8,20 +8,24 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
+import tripagramex.domain.account.dto.CreateRequest;
+import tripagramex.domain.account.entity.Account;
+import tripagramex.domain.account.repository.AccountRepository;
+import tripagramex.global.security.authentication.UserAccount;
 import tripagramex.global.security.dto.LoginDto;
+import tripagramex.global.security.jwt.JwtProcessor;
 import tripagramex.util.Treatment;
 
 import java.util.List;
 
-import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
-import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
+import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -39,6 +43,12 @@ class AccountCRUDControllerTest extends Treatment {
 
     @Autowired
     private Gson gson;
+
+    @Autowired
+    private JwtProcessor jwtProcessor;
+
+    @Autowired
+    private AccountRepository accountRepository;
 
     @Test
     @DisplayName("로그인 성공")
@@ -78,39 +88,45 @@ class AccountCRUDControllerTest extends Treatment {
 
     @Test
     @DisplayName("계정 추가_성공")
-    void accountAddTest_Success() throws Exception {
+    void createTest_Success() throws Exception {
 
         //given
         String email = "test@test.com";
         String password = "12345678";
         String nickname = "testNickname";
-        MockMultipartFile profileFile = new MockMultipartFile("profile", "profile.jpg",
-                "image/jpg", "(file data)".getBytes());
+        String profile = "testProfile";
+
+        CreateRequest createRequest = CreateRequest.builder()
+                .email(email)
+                .password(password)
+                .nickname(nickname)
+                .profile(profile)
+                .build();
+
+        String content = gson.toJson(createRequest);
 
         //when
-        ResultActions accountAddResult = mockMvc.perform(
-                multipart("/accounts")
-                        .file(profileFile)
-                        .queryParam("email", email)
-                        .queryParam("password", password)
-                        .queryParam("nickname", nickname)
+        ResultActions createResult = mockMvc.perform(
+                post("/accounts")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(content)
+
         );
 
 
         //then
-        accountAddResult
+        createResult
                 .andExpect(status().isCreated())
                 .andDo(document(
-                        "accountAdd",
+                        "create",
                         getRequestPreProcessor(),
                         getResponsePreProcessor(),
-                        requestParts(
-                                partWithName("profile").description("프로필 이미지")
-                        ),
-                        queryParameters(
-                                parameterWithName("email").description("이메일"),
-                                parameterWithName("password").description("비밀번호"),
-                                parameterWithName("nickname").description("닉네임")
+                        requestFields(
+                                fieldWithPath("email").description("이메일"),
+                                fieldWithPath("password").description("비밀번호"),
+                                fieldWithPath("nickname").description("닉네임"),
+                                fieldWithPath("profile").description("프로필 주소")
                         ),
                         responseFields(
                                 fieldWithPath("id").type(JsonFieldType.NUMBER).description("생성된 Account 식별자")
@@ -119,8 +135,8 @@ class AccountCRUDControllerTest extends Treatment {
     }
 
     @Test
-    @DisplayName("계정 단일 조회 성공")
-    void accountDetailsTest_Success() throws Exception {
+    @DisplayName("계정 단일 조회_성공")
+    void readTest_Success() throws Exception {
         //given
         Long accountId = 10001L;
 
@@ -133,7 +149,7 @@ class AccountCRUDControllerTest extends Treatment {
         actions
                 .andExpect(status().isOk())
                 .andDo(document(
-                        "accountDetails",
+                        "read",
                         getRequestPreProcessor(),
                         getResponsePreProcessor(),
                         pathParameters(
@@ -149,6 +165,39 @@ class AccountCRUDControllerTest extends Treatment {
                                         fieldWithPath("following").type(JsonFieldType.NUMBER).description("팔로잉 수"),
                                         fieldWithPath("follower").type(JsonFieldType.NUMBER).description("팔로워 수")
                                 )
+                        )
+                ));
+    }
+
+    @Test
+    @DisplayName("로그인 계정 조회_성공")
+    void readLoginAccountTest_Success() throws Exception {
+        //given
+        Long accountId = 10001L;
+        Account account = accountRepository.findById(accountId).get();
+        String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
+
+        //when
+        ResultActions readLoginAccount = mockMvc.perform(
+                get("/accounts/login")
+                        .header("Authorization", jwt)
+        );
+
+        //then
+        readLoginAccount
+                .andExpect(status().isOk())
+                .andDo(document(
+                        "readLoginAccount",
+                        getRequestPreProcessor(),
+                        getResponsePreProcessor(),
+                        requestHeaders(
+                                headerWithName("Authorization").description("JWT")
+                        ),
+                        responseFields(
+                                fieldWithPath("id").type(JsonFieldType.NUMBER).description("Account 식별자"),
+                                fieldWithPath("email").type(JsonFieldType.STRING).description("이메일"),
+                                fieldWithPath("nickname").type(JsonFieldType.STRING).description("닉네임"),
+                                fieldWithPath("profile").type(JsonFieldType.STRING).description("프로필 이미지")
                         )
                 ));
     }

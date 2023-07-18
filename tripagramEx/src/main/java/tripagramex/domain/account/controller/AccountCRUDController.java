@@ -17,7 +17,7 @@ public class AccountCRUDController {
     private final AccountCRUDService AccountCRUDService;
 
     @PostMapping
-    public ResponseEntity<IdDto> create(@ModelAttribute @Valid CreateRequest createRequest) {
+    public ResponseEntity<IdDto> create(@RequestBody @Valid CreateRequest createRequest) {
         IdDto idDto = AccountCRUDService.create(createRequest);
         return new ResponseEntity<>(idDto, HttpStatus.CREATED);
     }
