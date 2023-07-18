@@ -2,7 +2,6 @@ package tripagramex.domain.account.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tripagramex.domain.account.dto.*;
@@ -12,15 +11,16 @@ import tripagramex.domain.follow.repository.FollowRepository;
 import tripagramex.domain.image.service.ImageService;
 import tripagramex.global.exception.BusinessLogicException;
 import tripagramex.global.exception.ExceptionCode;
+import tripagramex.global.intrastructure.PasswordEncoder;
 
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class CRUDService {
+public class AccountCRUDService {
 
     private final AccountRepository accountRepository;
     private final FollowRepository followRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final PasswordEncoder passwordEncoder;
     private final ImageService imageService;
 
     @Value("${dir}")
@@ -65,14 +65,14 @@ public class CRUDService {
     private Account getModifyAccount(UpdateRequest updateRequest) {
         String encodedPassword = null;
         if (updateRequest.getPassword() != null) {
-            encodedPassword = bCryptPasswordEncoder.encode(updateRequest.getPassword());
+            encodedPassword = passwordEncoder.encode(updateRequest.getPassword());
         }
         return updateRequest.toAccount(encodedPassword);
     }
 
     private Account getAccountFromRequest(CreateRequest createRequest) {
-        String encodedPassword = bCryptPasswordEncoder.encode(createRequest.getPassword());
-        String profile = imageService.uploadImage(createRequest.getProfile(), profilePath);
+        String encodedPassword = passwordEncoder.encode(createRequest.getPassword());
+        String profile = imageService.upload(createRequest.getProfile(), profilePath);
 
         return createRequest.toAccount(encodedPassword, profile);
     }

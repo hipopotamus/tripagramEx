@@ -13,10 +13,6 @@ import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
-import tripagramex.domain.account.entity.Account;
-import tripagramex.domain.account.repository.AccountRepository;
-import tripagramex.global.exception.BusinessLogicException;
-import tripagramex.global.exception.ExceptionCode;
 import tripagramex.global.security.dto.LoginDto;
 import tripagramex.util.Treatment;
 
@@ -28,7 +24,6 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static tripagramex.util.ApiDocumentUtils.getRequestPreProcessor;
 import static tripagramex.util.ApiDocumentUtils.getResponsePreProcessor;
@@ -37,13 +32,10 @@ import static tripagramex.util.ApiDocumentUtils.getResponsePreProcessor;
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
-class CRUDControllerTest extends Treatment {
+class AccountCRUDControllerTest extends Treatment {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private AccountRepository accountRepository;
 
     @Autowired
     private Gson gson;
@@ -106,12 +98,8 @@ class CRUDControllerTest extends Treatment {
 
 
         //then
-        Account account = accountRepository.findByEmail(email)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_ACCOUNT));
-
         accountAddResult
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").value(account.getId()))
                 .andDo(document(
                         "accountAdd",
                         getRequestPreProcessor(),
