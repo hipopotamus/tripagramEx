@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 import tripagramex.domain.account.dto.CreateRequest;
+import tripagramex.domain.account.dto.UpdateRequest;
 import tripagramex.domain.account.entity.Account;
 import tripagramex.domain.account.repository.AccountRepository;
 import tripagramex.global.security.authentication.UserAccount;
@@ -202,5 +203,51 @@ class AccountCRUDControllerTest extends Treatment {
                 ));
     }
 
+    @Test
+    @DisplayName("계정 수정 성공")
+    void updateTest_Success() throws Exception {
+        //given
+        Long accountId = 10001L;
+        Account account = accountRepository.findById(accountId).get();
+        String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
+
+        UpdateRequest updateRequest = UpdateRequest.builder()
+                .password("updatePassword")
+                .nickname("updateNickname")
+                .profile("updateProfile")
+                .intro("updateIntro")
+                .build();
+
+        String content = gson.toJson(updateRequest);
+
+        //when
+        ResultActions update = mockMvc.perform(
+                post("/accounts/update")
+                        .header("Authorization", jwt)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(content)
+        );
+
+        //then
+        update.andExpect(status().isOk())
+                .andDo(document(
+                        "update",
+                        getRequestPreProcessor(),
+                        getResponsePreProcessor(),
+                        requestHeaders(
+                                headerWithName("Authorization").description("JWT")
+                        ),
+                        requestFields(
+                                fieldWithPath("password").description("비밀 번호").optional(),
+                                fieldWithPath("nickname").description("닉네임").optional(),
+                                fieldWithPath("intro").description("소개글").optional(),
+                                fieldWithPath("profile").description("프로필 이미지 경로").optional()
+                        ),
+                        responseFields(
+                                fieldWithPath("id").description("수정된 계정의 id")
+                        )
+                ));
+    }
 
 }

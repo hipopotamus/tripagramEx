@@ -73,6 +73,22 @@ include::{snippets}/readLoginAccount/http-response.adoc[]
 .response-fields
 include::{snippets}/readLoginAccount/response-fields.adoc[]
 
+== 계정 수정
+.curl-request
+include::{snippets}/update/curl-request.adoc[]
+
+.http-request
+include::{snippets}/update/http-request.adoc[]
+
+.request-headers
+include::{snippets}/update/request-headers.adoc[]
+
+.http-response
+include::{snippets}/update/http-response.adoc[]
+
+.response-fields
+include::{snippets}/update/response-fields.adoc[]
+
 ***
 == ImageController
 === 이미지 저장
