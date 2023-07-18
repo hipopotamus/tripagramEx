@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.web.multipart.MultipartFile;
 import tripagramex.domain.account.entity.Account;
 import tripagramex.domain.account.entity.Role;
 
@@ -27,14 +26,14 @@ public class CreateRequest {
     private String nickname;
 
     @NotNull
-    private MultipartFile profile;
+    private String profile;
 
-    public Account toAccount(String encodedPassword, String profile) {
+    public Account toAccount(String encodedPassword) {
         return Account.builder()
                 .email(this.getEmail())
                 .password(encodedPassword)
                 .nickname(this.getNickname())
-                .profile(profile)
+                .profile(this.profile)
                 .role(Role.USER)
                 .build();
     }

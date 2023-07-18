@@ -1,18 +1,18 @@
 package tripagramex.domain.account.service;
 
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tripagramex.domain.account.dto.*;
 import tripagramex.domain.account.entity.Account;
 import tripagramex.domain.account.repository.AccountRepository;
 import tripagramex.domain.follow.repository.FollowRepository;
-import tripagramex.domain.image.service.ImageService;
 import tripagramex.global.exception.BusinessLogicException;
 import tripagramex.global.exception.ExceptionCode;
 import tripagramex.global.intrastructure.PasswordEncoder;
 
+@Builder
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -21,10 +21,6 @@ public class AccountCRUDService {
     private final AccountRepository accountRepository;
     private final FollowRepository followRepository;
     private final PasswordEncoder passwordEncoder;
-    private final ImageService imageService;
-
-    @Value("${dir}")
-    private String profilePath;
 
     @Transactional
     public IdDto create(CreateRequest createRequest) {
@@ -72,9 +68,8 @@ public class AccountCRUDService {
 
     private Account getAccountFromRequest(CreateRequest createRequest) {
         String encodedPassword = passwordEncoder.encode(createRequest.getPassword());
-        String profile = imageService.upload(createRequest.getProfile(), profilePath);
 
-        return createRequest.toAccount(encodedPassword, profile);
+        return createRequest.toAccount(encodedPassword);
     }
 
     private ReadResponse getReadResponse(Account account) {
@@ -101,3 +96,4 @@ public class AccountCRUDService {
         }
     }
 }
+
