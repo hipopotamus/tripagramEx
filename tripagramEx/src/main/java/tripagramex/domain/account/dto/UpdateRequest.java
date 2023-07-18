@@ -1,10 +1,12 @@
 package tripagramex.domain.account.dto;
 
+import lombok.Builder;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import tripagramex.domain.account.entity.Account;
 
 @Data
+@Builder
 public class UpdateRequest {
 
     @Length(min = 8, max = 30)

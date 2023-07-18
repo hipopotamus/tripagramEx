@@ -1,4 +1,4 @@
 package tripagramex.domain.account.repository;
 
-public interface AccountRepositoryCustom {
+public interface AccountRepositoryByQueryDsl {
 }
