@@ -4,9 +4,11 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import tripagramex.domain.account.dto.*;
 import tripagramex.domain.account.service.AccountCRUDService;
+import tripagramex.domain.account.validation.CreateRequestValidator;
 import tripagramex.global.argumentresolver.LoginAccountId;
 
 @RestController
@@ -15,6 +17,12 @@ import tripagramex.global.argumentresolver.LoginAccountId;
 public class AccountCRUDController {
 
     private final AccountCRUDService AccountCRUDService;
+    private final CreateRequestValidator createRequestValidator;
+
+    @InitBinder("createRequest")
+    public void initBinder(WebDataBinder webDataBinder) {
+        webDataBinder.addValidators(createRequestValidator);
+    }
 
     @PostMapping
     public ResponseEntity<IdDto> create(@RequestBody @Valid CreateRequest createRequest) {

@@ -24,7 +24,6 @@ public class AccountCRUDService {
 
     @Transactional
     public IdDto create(CreateRequest createRequest) {
-        verifyDuplicateForCreate(createRequest);
         Account account = getAccountFromRequest(createRequest);
         Account savedAccount = accountRepository.save(account);
 
@@ -77,17 +76,6 @@ public class AccountCRUDService {
         Long follower = followRepository.countByFollowing(account);
 
         return ReadResponse.of(account, following, follower);
-    }
-
-    private void verifyDuplicateForCreate(CreateRequest createRequest) {
-        verifyDuplicateEmail(createRequest.getEmail());
-        verifyDuplicateNickname(createRequest.getNickname());
-    }
-
-    private void verifyDuplicateEmail(String email) {
-        if (accountRepository.existsByEmail(email)) {
-            throw new BusinessLogicException(ExceptionCode.DUPLICATION_EMAIL);
-        }
     }
 
     private void verifyDuplicateNickname(String nickname) {
