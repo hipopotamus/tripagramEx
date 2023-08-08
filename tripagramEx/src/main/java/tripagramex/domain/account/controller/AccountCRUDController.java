@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import tripagramex.domain.account.dto.*;
 import tripagramex.domain.account.service.AccountCRUDService;
 import tripagramex.domain.account.validation.CreateRequestValidator;
+import tripagramex.domain.account.validation.UpdateRequestValidator;
 import tripagramex.global.argumentresolver.LoginAccountId;
 
 @RestController
@@ -18,10 +19,16 @@ public class AccountCRUDController {
 
     private final AccountCRUDService AccountCRUDService;
     private final CreateRequestValidator createRequestValidator;
+    private final UpdateRequestValidator updateRequestValidator;
 
     @InitBinder("createRequest")
-    public void initBinder(WebDataBinder webDataBinder) {
+    public void initCreateRequest(WebDataBinder webDataBinder) {
         webDataBinder.addValidators(createRequestValidator);
+    }
+
+    @InitBinder("updateRequest")
+    public void initUpdateRequest(WebDataBinder webDataBinder) {
+        webDataBinder.addValidators(updateRequestValidator);
     }
 
     @PostMapping
@@ -44,7 +51,7 @@ public class AccountCRUDController {
 
     @PostMapping("/update")
     public ResponseEntity<IdDto> update(@LoginAccountId Long loginAccountId,
-                                        @Valid @RequestBody UpdateRequest updateRequest) {
+                                        @RequestBody @Valid UpdateRequest updateRequest) {
         IdDto idDto = AccountCRUDService.update(loginAccountId, updateRequest);
         return new ResponseEntity<>(idDto, HttpStatus.OK);
     }

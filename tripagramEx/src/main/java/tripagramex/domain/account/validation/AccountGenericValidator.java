@@ -8,7 +8,7 @@ import tripagramex.global.exception.ExceptionCode;
 
 @Component
 @RequiredArgsConstructor
-public class AccountGenericValidator implements AccountValidator{
+public class AccountGenericValidator implements AccountValidator {
 
     private final AccountRepository accountRepository;
 

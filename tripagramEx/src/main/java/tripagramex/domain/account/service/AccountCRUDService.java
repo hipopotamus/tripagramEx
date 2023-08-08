@@ -44,11 +44,8 @@ public class AccountCRUDService {
         return ReadLoginAccountResponse.of(account);
     }
 
+    @Transactional
     public IdDto update(Long loginAccountId, UpdateRequest updateRequest) {
-        if (updateRequest.getNickname() != null) {
-            verifyDuplicateNickname(updateRequest.getNickname());
-        }
-
         Account modifyAccount = getModifyAccount(updateRequest);
         Account account = accountRepository.findById(loginAccountId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_ACCOUNT));
@@ -76,12 +73,6 @@ public class AccountCRUDService {
         Long follower = followRepository.countByFollowing(account);
 
         return ReadResponse.of(account, following, follower);
-    }
-
-    private void verifyDuplicateNickname(String nickname) {
-        if (accountRepository.existsByNickname(nickname)) {
-            throw new BusinessLogicException(ExceptionCode.DUPLICATION_NICKNAME);
-        }
     }
 }
 
