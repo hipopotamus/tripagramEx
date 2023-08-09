@@ -44,6 +44,8 @@ public class Account extends BaseTime {
 
     private LocalDateTime tempPasswordEmailSendAt;
 
+    private boolean deleted = false;
+
     @OneToMany(mappedBy = "account")
     private List<Board> boards = new ArrayList<>();
 
@@ -52,6 +54,10 @@ public class Account extends BaseTime {
         Optional.ofNullable(account.getNickname()).ifPresent(nickname -> this.nickname = nickname);
         Optional.ofNullable(account.getProfile()).ifPresent(profile -> this.profile = profile);
         Optional.ofNullable(account.getIntro()).ifPresent(intro -> this.intro = intro);
+    }
+
+    public void delete() {
+        deleted = true;
     }
 
 }
