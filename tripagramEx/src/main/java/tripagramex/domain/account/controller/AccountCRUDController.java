@@ -15,7 +15,7 @@ import tripagramex.global.argumentresolver.LoginAccountId;
 @RequiredArgsConstructor
 public class AccountCRUDController {
 
-    private final AccountCRUDService AccountCRUDService;
+    private final AccountCRUDService accountCRUDService;
     private final AccountValidator accountValidator;
 
     @PostMapping
@@ -23,7 +23,7 @@ public class AccountCRUDController {
         accountValidator.verifyDuplicateEmail(createRequest.getEmail());
         accountValidator.verifyDuplicateNickname(createRequest.getNickname());
 
-        IdDto idDto = AccountCRUDService.create(createRequest);
+        IdDto idDto = accountCRUDService.create(createRequest);
         return new ResponseEntity<>(idDto, HttpStatus.CREATED);
     }
 
@@ -31,13 +31,13 @@ public class AccountCRUDController {
     public ResponseEntity<ReadResponse> read(@PathVariable Long accountId) {
         accountValidator.verifyExistsById(accountId);
 
-        ReadResponse readResponse = AccountCRUDService.read(accountId);
+        ReadResponse readResponse = accountCRUDService.read(accountId);
         return new ResponseEntity<>(readResponse, HttpStatus.OK);
     }
 
     @GetMapping("/login")
     public ResponseEntity<ReadLoginAccountResponse> readLoginAccount(@LoginAccountId Long loginAccountId) {
-        ReadLoginAccountResponse readLoginAccountResponse = AccountCRUDService.readLoginAccount(loginAccountId);
+        ReadLoginAccountResponse readLoginAccountResponse = accountCRUDService.readLoginAccount(loginAccountId);
         return new ResponseEntity<>(readLoginAccountResponse, HttpStatus.OK);
     }
 
@@ -46,7 +46,12 @@ public class AccountCRUDController {
                                         @RequestBody @Valid UpdateRequest updateRequest) {
         accountValidator.verifyDuplicateNickname(updateRequest.getNickname());
 
-        IdDto idDto = AccountCRUDService.update(loginAccountId, updateRequest);
+        IdDto idDto = accountCRUDService.update(loginAccountId, updateRequest);
         return new ResponseEntity<>(idDto, HttpStatus.OK);
+    }
+
+    @DeleteMapping
+    public void delete(@LoginAccountId Long loginAccountId) {
+        accountCRUDService.delete(loginAccountId);
     }
 }

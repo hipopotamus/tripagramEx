@@ -52,6 +52,12 @@ public class AccountCRUDService {
         return new IdDto(account.getId());
     }
 
+    @Transactional
+    public void delete(Long accountId) {
+        Account account = accountRepository.findById(accountId).get();
+        account.delete();
+    }
+
     private Account getAccountForCreate(CreateRequest createRequest) {
         String encodedPassword = passwordEncoder.encode(createRequest.getPassword());
 
