@@ -46,6 +46,11 @@ public class MockAccountRepository implements AccountRepository {
     }
 
     @Override
+    public boolean existsById(Long id) {
+        return false;
+    }
+
+    @Override
     public Optional<Account> findByEmail(String email) {
         return store.stream()
                 .filter(account -> account.getEmail().equals(email))
@@ -61,6 +66,7 @@ public class MockAccountRepository implements AccountRepository {
     public boolean existsByNickname(String nickname) {
         return false;
     }
+
 
     public void clearAll() {
         store.clear();

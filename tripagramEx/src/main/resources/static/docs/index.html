@@ -448,10 +448,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel1">
 <li><a href="#_accountcontroller">1. AccountController</a></li>
 <li><a href="#_로그인">2. 로그인</a></li>
-<li><a href="#_회원_생성">3. 회원 생성</a></li>
-<li><a href="#_imagecontroller">4. ImageController</a>
+<li><a href="#_계정_생성">3. 계정 생성</a></li>
+<li><a href="#_계정_단일_조회">4. 계정 단일 조회</a></li>
+<li><a href="#_로그인_계정_조회">5. 로그인 계정 조회</a></li>
+<li><a href="#_계정_수정">6. 계정 수정</a></li>
+<li><a href="#_imagecontroller">7. ImageController</a>
 <ul class="sectlevel2">
-<li><a href="#_이미지_저장">4.1. 이미지 저장</a></li>
+<li><a href="#_이미지_저장">7.1. 이미지 저장</a></li>
 </ul>
 </li>
 </ul>
@@ -475,81 +478,138 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect1">
 <h2 id="_로그인">2. 로그인</h2>
 <div class="sectionbody">
-
-</div>
-</div>
-<div class="sect1">
-<h2 id="_회원_생성">3. 회원 생성</h2>
-<div class="sectionbody">
 <div class="listingblock">
 <div class="title">curl-request</div>
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/accounts?email=test@test.com&amp;password=12345678&amp;nickname=testNickname' -i -X POST \
-    -H 'Content-Type: multipart/form-data;charset=UTF-8' \
-    -F 'profile=@profile.jpg;type=image/jpg'</code></pre>
+<pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/login' -i -X POST \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -H 'Accept: application/json' \
+    -d '{
+  "email" : "test1@test.com",
+  "password" : "12345678"
+}'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /accounts?email=test@test.com&amp;password=12345678&amp;nickname=testNickname HTTP/1.1
-Content-Type: multipart/form-data;charset=UTF-8; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /login HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Accept: application/json
+Content-Length: 59
 Host: localhost:8080
 
---6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Content-Disposition: form-data; name=profile; filename=profile.jpg
-Content-Type: image/jpg
-
-(file data)
---6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm--</code></pre>
+{
+  "email" : "test1@test.com",
+  "password" : "12345678"
+}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. request-part</caption>
+<caption class="title">Table 1. request-fields</caption>
 <colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Part</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>profile</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">프로필 이미지</p></td>
-</tr>
-</tbody>
-</table>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 2. query-parameters</caption>
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
 <th class="tableblock halign-left valign-top">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>email</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">이메일</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>password</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">비밀번호</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nickname</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">닉네임</p></td>
 </tr>
 </tbody>
 </table>
+<div class="listingblock">
+<div class="title">http-response</div>
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2OTAzNzM3MzUsImV4cCI6MTY5MDM3NzMzNX0.g8DNtkpUpm024pfu-DTtfR_0IUbb_QopJhXOFTWYcWA
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 13
+
+success login</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. response-headers</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Authorization</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JWT</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_계정_생성">3. 계정 생성</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="title">curl-request</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/accounts' -i -X POST \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -H 'Accept: application/json' \
+    -d '{
+  "email" : "test@test.com",
+  "password" : "12345678",
+  "nickname" : "testNickname",
+  "profile" : "testProfile"
+}'</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">http-request</div>
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /accounts HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Accept: application/json
+Content-Length: 118
+Host: localhost:8080
+
+{
+  "email" : "test@test.com",
+  "password" : "12345678",
+  "nickname" : "testNickname",
+  "profile" : "testProfile"
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">request-fields</div>
+<p>include::/Users/hipo/Desktop/project/toy_project/tripagramEx/tripagramEx/build/generated-snippets/create/request-fields.adoc</p>
+</div>
 <div class="listingblock">
 <div class="title">http-response</div>
 <div class="content">
@@ -593,20 +653,336 @@ Content-Length: 14
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_계정_단일_조회">4. 계정 단일 조회</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="title">curl-request</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/accounts/10001' -i -X GET</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">http-request</div>
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /accounts/10001 HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 4. /accounts/{accountId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>accountId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Account 식별자</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="title">http-response</div>
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 257
+
+{
+  "id" : 10001,
+  "email" : "test1@test.com",
+  "nickname" : "testNickname1",
+  "intro" : "testIntro",
+  "profile" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+  "following" : 0,
+  "follower" : 0
+}</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 5. response-fields</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Account 식별자</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>email</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">이메일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nickname</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">닉네임</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>intro</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">소개글</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>profile</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">프로필 이미지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>following</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">팔로잉 수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>follower</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">팔로워 수</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_로그인_계정_조회">5. 로그인 계정 조회</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="title">curl-request</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/accounts/login' -i -X GET \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2OTAzNzM3MzUsImV4cCI6MTY5MDM3NzMzNX0.g8DNtkpUpm024pfu-DTtfR_0IUbb_QopJhXOFTWYcWA'</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">http-request</div>
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /accounts/login HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2OTAzNzM3MzUsImV4cCI6MTY5MDM3NzMzNX0.g8DNtkpUpm024pfu-DTtfR_0IUbb_QopJhXOFTWYcWA
+Host: localhost:8080</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 6. request-headers</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Authorization</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JWT</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="title">http-response</div>
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 195
+
+{
+  "id" : 10001,
+  "email" : "test1@test.com",
+  "nickname" : "testNickname1",
+  "profile" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg"
+}</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 7. response-fields</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Account 식별자</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>email</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">이메일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nickname</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">닉네임</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>profile</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">프로필 이미지</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_계정_수정">6. 계정 수정</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="title">curl-request</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/accounts/update' -i -X POST \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2OTAzNzM3MzUsImV4cCI6MTY5MDM3NzMzNX0.g8DNtkpUpm024pfu-DTtfR_0IUbb_QopJhXOFTWYcWA' \
+    -H 'Accept: application/json' \
+    -d '{
+  "password" : "updatePassword",
+  "nickname" : "updateNickname",
+  "profile" : "updateProfile",
+  "intro" : "updateIntro"
+}'</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">http-request</div>
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /accounts/update HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2OTAzNzM3MzUsImV4cCI6MTY5MDM3NzMzNX0.g8DNtkpUpm024pfu-DTtfR_0IUbb_QopJhXOFTWYcWA
+Accept: application/json
+Content-Length: 126
+Host: localhost:8080
+
+{
+  "password" : "updatePassword",
+  "nickname" : "updateNickname",
+  "profile" : "updateProfile",
+  "intro" : "updateIntro"
+}</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 8. request-headers</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Authorization</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JWT</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="title">http-response</div>
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 18
+
+{
+  "id" : 10001
+}</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 9. response-fields</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">수정된 계정의 id</p></td>
+</tr>
+</tbody>
+</table>
 <hr>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_imagecontroller">4. ImageController</h2>
+<h2 id="_imagecontroller">7. ImageController</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_이미지_저장">4.1. 이미지 저장</h3>
+<h3 id="_이미지_저장">7.1. 이미지 저장</h3>
 <div class="listingblock">
 <div class="title">curl-request</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/image-files' -i -X POST \
     -H 'Content-Type: multipart/form-data;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2ODYwMzM0ODEsImV4cCI6MTY4NjAzNzA4MX0.v5UrCtBO9W5MN1vAZrAl5vp7vEvmkXZDUAtLq1AGbq0' \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2OTAzNzM3MzUsImV4cCI6MTY5MDM3NzMzNX0.g8DNtkpUpm024pfu-DTtfR_0IUbb_QopJhXOFTWYcWA' \
     -F 'images=@jpgTestFile.jpg;type=image/jpg' \
     -F 'images=@jpegTestFile.jpg;type=image/jpeg' \
     -F 'images=@pngTestFile.jpg;type=image/png'</code></pre>
@@ -617,7 +993,7 @@ Content-Length: 14
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /image-files HTTP/1.1
 Content-Type: multipart/form-data;charset=UTF-8; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2ODYwMzM0ODEsImV4cCI6MTY4NjAzNzA4MX0.v5UrCtBO9W5MN1vAZrAl5vp7vEvmkXZDUAtLq1AGbq0
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2OTAzNzM3MzUsImV4cCI6MTY5MDM3NzMzNX0.g8DNtkpUpm024pfu-DTtfR_0IUbb_QopJhXOFTWYcWA
 Host: localhost:8080
 
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
@@ -639,7 +1015,7 @@ Content-Type: image/png
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 4. request-headers</caption>
+<caption class="title">Table 10. request-headers</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -658,7 +1034,7 @@ Content-Type: image/png
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 5. request-parts</caption>
+<caption class="title">Table 11. request-parts</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -693,12 +1069,12 @@ X-Frame-Options: DENY
 Content-Length: 257
 
 {
-  "imagePaths" : [ "http://localhost:8080/image-files/283f4228-4796-41b9-bbe8-4436d916aa52.jpg", "http://localhost:8080/image-files/54fa7476-59ec-47b8-8d22-740b69ba5ee3.jpg", "http://localhost:8080/image-files/a3c6295f-b35f-49e7-a262-b403ff7bbf36.jpg" ]
+  "imagePaths" : [ "http://localhost:8080/image-files/d7ccc233-63b9-4b39-9b2f-276150de9b1e.jpg", "http://localhost:8080/image-files/4f01ebe6-1cb6-46a9-bb52-e336d631cbdf.jpg", "http://localhost:8080/image-files/8291828f-fbce-47f7-96a4-fee2158fd197.jpg" ]
 }</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 6. response-fields</caption>
+<caption class="title">Table 12. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -726,7 +1102,7 @@ Content-Length: 257
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-06-06 15:37:27 +0900
+Last updated 2023-07-21 16:32:11 +0900
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.min.js"></script>

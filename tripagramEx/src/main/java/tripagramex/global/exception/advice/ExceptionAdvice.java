@@ -3,13 +3,12 @@ package tripagramex.global.exception.advice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import tripagramex.global.exception.BusinessLogicException;
 import tripagramex.global.exception.ExceptionCode;
 import tripagramex.global.exception.dto.ErrorResponse;
-
-import java.net.BindException;
 
 @Component
 @RestControllerAdvice
@@ -39,7 +38,7 @@ public class ExceptionAdvice {
 
         ExceptionCode bindException = ExceptionCode.BIND_EXCEPTION;
         ErrorResponse errorResponse =
-                new ErrorResponse(e.getClass().getSimpleName(), e.getMessage(), bindException.getCode());
+                new ErrorResponse(e.getClass().getSimpleName(), bindException.getMessage(), bindException.getCode());
 
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
