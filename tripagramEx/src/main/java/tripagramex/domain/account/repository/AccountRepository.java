@@ -17,4 +17,6 @@ public interface AccountRepository {
     Account save(Account account);
 
     Optional<Account> findById(Long id);
+
+    boolean existsById(Long id);
 }

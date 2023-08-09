@@ -25,4 +25,11 @@ public class AccountGenericValidator implements AccountValidator {
             throw new BusinessLogicException(ExceptionCode.DUPLICATION_NICKNAME);
         }
     }
+
+    @Override
+    public void verifyExistsById(Long id) {
+        if (!accountRepository.existsById(id)) {
+            throw new BusinessLogicException(ExceptionCode.NOT_FOUND_ACCOUNT);
+        }
+    }
 }
