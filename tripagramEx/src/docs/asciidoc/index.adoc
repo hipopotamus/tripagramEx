@@ -89,6 +89,19 @@ include::{snippets}/update/http-response.adoc[]
 .response-fields
 include::{snippets}/update/response-fields.adoc[]
 
+== 계정 삭제
+.curl-request
+include::{snippets}/delete/curl-request.adoc[]
+
+.http-request
+include::{snippets}/delete/http-request.adoc[]
+
+.request-header
+include::{snippets}/delete/request-headers.adoc[]
+
+.http-response
+include::{snippets}/delete/http-response.adoc[]
+
 ***
 == ImageController
 === 이미지 저장

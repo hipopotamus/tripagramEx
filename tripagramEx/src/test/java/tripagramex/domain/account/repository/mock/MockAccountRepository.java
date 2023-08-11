@@ -47,7 +47,7 @@ public class MockAccountRepository implements AccountRepository {
 
     @Override
     public boolean existsById(Long id) {
-        return false;
+        return true;
     }
 
     @Override

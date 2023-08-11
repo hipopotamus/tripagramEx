@@ -25,8 +25,7 @@ import java.util.List;
 
 import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -246,6 +245,32 @@ class AccountCRUDControllerTest extends Treatment {
                         ),
                         responseFields(
                                 fieldWithPath("id").description("수정된 계정의 id")
+                        )
+                ));
+    }
+
+    @Test
+    @DisplayName("계정 삭제 성공")
+    void deleteTest_Success() throws Exception {
+        //given
+        Long accountId = 10001L;
+        Account account = accountRepository.findById(accountId).get();
+        String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
+
+        //when
+        ResultActions delete = mockMvc.perform(
+                delete("/accounts")
+                        .header("Authorization", jwt)
+        );
+
+        //then
+        delete.andExpect(status().isOk())
+                .andDo(document(
+                        "delete",
+                        getRequestPreProcessor(),
+                        getResponsePreProcessor(),
+                        requestHeaders(
+                                headerWithName("Authorization").description("JWT")
                         )
                 ));
     }
