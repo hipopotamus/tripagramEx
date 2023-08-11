@@ -101,7 +101,34 @@ class AccountCRUDServiceTest {
         accountCrudService.update(1L, updateRequest);
     }
 
-    private void saveOneSample() {
+    @Test
+    @DisplayName("계정 삭제 성공")
+    public void deleteAccount_Success() {
+        //given
+        Account account = saveOneSample();
+
+        //when
+        accountCrudService.delete(account.getId());
+
+        //then
+        assertThat(account.isDeleted()).isTrue();
+    }
+
+    @Test
+    @DisplayName("삭제된 계정 삭제")
+    public void deleteDeletedAccount() {
+        //given
+        Account account = saveOneSample();
+
+        //when
+        accountCrudService.delete(account.getId());
+        accountCrudService.delete(account.getId());
+
+        //then
+        assertThat(account.isDeleted()).isTrue();
+    }
+
+    private Account saveOneSample() {
         Account account = Account.builder()
                 .id(1L)
                 .email("test1@test.com")
@@ -109,7 +136,7 @@ class AccountCRUDServiceTest {
                 .nickname("testNickname")
                 .profile("testProfile")
                 .build();
-        accountRepository.save(account);
+        return accountRepository.save(account);
     }
 
 }
