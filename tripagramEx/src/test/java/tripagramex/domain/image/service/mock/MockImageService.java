@@ -1,5 +1,7 @@
 package tripagramex.domain.image.service.mock;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import tripagramex.domain.image.dto.ImageUploadReq;
 import tripagramex.domain.image.service.ImageService;
@@ -7,6 +9,8 @@ import tripagramex.domain.image.service.ImageService;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
+@ConditionalOnProperty(value = "mode.test", havingValue = "true")
 public class MockImageService implements ImageService {
 
     @Override

@@ -46,4 +46,11 @@ logTracer: true
 
 dir : ./testimage/
 
-mod : local
+mode:
+  local: false
+  server: false
+  test: true
+
+domain:
+  front: localhost:3000/
+  back: localhost:8080/

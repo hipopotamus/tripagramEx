@@ -39,7 +39,10 @@ logTracer: false
 
 dir : /Users/hipo/Desktop/project/toy_project/tripagramEx/tripagramEx/image/
 
-mod : local
+mode:
+  local: true
+  server: false
+  test: false
 
 domain:
   front: localhost:3000/

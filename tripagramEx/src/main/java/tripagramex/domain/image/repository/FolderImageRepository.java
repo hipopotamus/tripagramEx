@@ -10,7 +10,7 @@ import java.io.File;
 import java.io.IOException;
 
 @Repository
-@ConditionalOnProperty(value = "mod", havingValue = "local")
+@ConditionalOnProperty(value = "mode.local", havingValue = "true")
 public class FolderImageRepository implements ImageRepository {
 
     @Override

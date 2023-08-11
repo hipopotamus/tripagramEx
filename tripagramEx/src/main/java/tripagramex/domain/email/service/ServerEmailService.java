@@ -3,6 +3,7 @@ package tripagramex.domain.email.service;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
@@ -12,6 +13,7 @@ import tripagramex.global.exception.ExceptionCode;
 
 @Component
 @RequiredArgsConstructor
+@ConditionalOnExpression("${mode.local:true} or ${mode.server:true}")
 public class ServerEmailService implements EmailService{
 
     private final JavaMailSender javaMailSender;

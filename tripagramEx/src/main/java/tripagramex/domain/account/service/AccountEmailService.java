@@ -2,7 +2,6 @@ package tripagramex.domain.account.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.TemplateEngine;
@@ -11,6 +10,7 @@ import tripagramex.domain.account.entity.Account;
 import tripagramex.domain.account.repository.AccountRepository;
 import tripagramex.domain.email.dto.EmailMessageDto;
 import tripagramex.domain.email.service.EmailService;
+import tripagramex.global.intrastructure.PasswordEncoder;
 
 @Service
 @Transactional(readOnly = true)
@@ -23,7 +23,7 @@ public class AccountEmailService {
     private final AccountRepository accountRepository;
     private final EmailService emailService;
     private final TemplateEngine templateEngine;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public void sendTempPasswordGuid(String email) {

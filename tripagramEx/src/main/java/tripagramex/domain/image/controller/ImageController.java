@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tripagramex.domain.image.dto.ImageUploadReq;
 import tripagramex.domain.image.dto.ImageUploadRes;
-import tripagramex.domain.image.service.ImageServiceImpl;
+import tripagramex.domain.image.service.ImageService;
 
 import java.net.MalformedURLException;
 import java.util.List;
@@ -25,7 +25,7 @@ public class ImageController {
     @Value("${dir}")
     private String path;
 
-    private final ImageServiceImpl imageServiceImpl;
+    private final ImageService imageService;
 
     @GetMapping("{imageName}")
     public ResponseEntity<Resource> fileDetails(@PathVariable String imageName) throws MalformedURLException {
@@ -40,7 +40,7 @@ public class ImageController {
     @PostMapping
     public ResponseEntity<ImageUploadRes> imageUpload(@Valid @ModelAttribute ImageUploadReq imageUploadReq) {
 
-        List<String> imagePaths = imageServiceImpl.uploadImages(imageUploadReq, path);
+        List<String> imagePaths = imageService.uploadImages(imageUploadReq, path);
 
         return new ResponseEntity<>(ImageUploadRes.of(imagePaths), HttpStatus.OK);
     }

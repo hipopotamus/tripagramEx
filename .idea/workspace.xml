@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="63be65bd-9cf1-4145-ba9f-4c0cacdb29b8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/tripagramEx/src/main/resources/static/docs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/tripagramEx/src/main/resources/static/docs/index.html" afterDir="false" />
-    </list>
+    <list default="true" id="63be65bd-9cf1-4145-ba9f-4c0cacdb29b8" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -47,6 +45,7 @@
       <workItem from="1681207523331" duration="104000" />
       <workItem from="1681607369023" duration="21000" />
       <workItem from="1690376536899" duration="52000" />
+      <workItem from="1691730667069" duration="12000" />
     </task>
     <servers />
   </component>
