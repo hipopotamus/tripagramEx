@@ -7,4 +7,8 @@ public interface AccountValidator {
     void verifyDuplicateNickname(String nickname);
 
     void verifyExistsById(Long id);
+
+    void verifyExistsByEmail(String email);
+
+    void verifySendTempPasswordEmailAt(String email);
 }

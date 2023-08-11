@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -60,4 +61,20 @@ public class Account extends BaseTime {
         deleted = true;
     }
 
+    public boolean canSendTempPasswordGuid() {
+        if (this.tempPasswordEmailSendAt == null) {
+            return true;
+        }
+
+        return this.tempPasswordEmailSendAt.isBefore(LocalDateTime.now().minusMinutes(5));
+    }
+
+    public void createTempPassword() {
+        String uuid = UUID.randomUUID().toString().substring(0, 15);
+        this.tempPassword = uuid.replaceAll("[^ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9]", "");
+    }
+
+    public void setTempPasswordEmailSendAt() {
+        this.tempPasswordEmailSendAt = LocalDateTime.now();
+    }
 }
