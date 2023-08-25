@@ -44,6 +44,13 @@ public class AccountEmailService {
         account.setTempPasswordEmailSendAt();
     }
 
+    @Transactional
+    public void applyTempPassword(Long accountId, String tempPassword) {
+        Account account = accountRepository.findById(accountId).get();
+        String encodedTempPassword = passwordEncoder.encode(tempPassword);
+        account.applyTempPassword(encodedTempPassword);
+    }
+
     private Context getTempPasswordGuidMailContext(Account account) {
         Context context = new Context();
         context.setVariable("link", "accountEmail/tempPassword/" + account.getId() +

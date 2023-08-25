@@ -54,6 +54,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/accounts/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/image-files/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/accountEmail/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/accountEmail/**").permitAll()
                 .anyRequest().authenticated();
 
         http

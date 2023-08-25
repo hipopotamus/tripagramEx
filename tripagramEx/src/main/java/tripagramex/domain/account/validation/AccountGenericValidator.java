@@ -51,4 +51,14 @@ public class AccountGenericValidator implements AccountValidator {
         }
 
     }
+
+    @Override
+    public void verifyApplyTempPasswordAt(Long accountId) {
+        Account account = accountRepository.findById(accountId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_ACCOUNT));
+
+        if (!account.canApplyTempPassword()) {
+            throw new BusinessLogicException(ExceptionCode.TEMP_PASSWORD_DELAY);
+        }
+    }
 }

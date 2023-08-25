@@ -69,6 +69,14 @@ public class Account extends BaseTime {
         return this.tempPasswordEmailSendAt.isBefore(LocalDateTime.now().minusMinutes(5));
     }
 
+    public boolean canApplyTempPassword() {
+        if (this.tempPasswordAppliedAt == null) {
+            return true;
+        }
+
+        return this.tempPasswordAppliedAt.isBefore(LocalDateTime.now().minusMinutes(5));
+    }
+
     public void createTempPassword() {
         String uuid = UUID.randomUUID().toString().substring(0, 15);
         this.tempPassword = uuid.replaceAll("[^ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9]", "");
@@ -76,5 +84,9 @@ public class Account extends BaseTime {
 
     public void setTempPasswordEmailSendAt() {
         this.tempPasswordEmailSendAt = LocalDateTime.now();
+    }
+
+    public void applyTempPassword(String tempPassword) {
+        this.password = tempPassword;
     }
 }
