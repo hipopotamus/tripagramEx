@@ -1,36 +1,34 @@
 package tripagramex.domain.account.service;
 
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.context.Context;
 import tripagramex.domain.account.entity.Account;
 import tripagramex.domain.account.repository.AccountRepository;
 import tripagramex.domain.email.dto.EmailMessageDto;
-import tripagramex.domain.email.service.EmailService;
+import tripagramex.domain.email.service.EmailSender;
+import tripagramex.domain.email.service.TemplateManager;
 import tripagramex.global.intrastructure.PasswordEncoder;
-import tripagramex.global.intrastructure.TemplateManager;
 
+@Builder
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class AccountEmailService {
 
-    @Value("${domain.back}")
-    private String backDomain;
-
     private final AccountRepository accountRepository;
-    private final EmailService emailService;
+    private final EmailSender emailSender;
     private final TemplateManager templateManager;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public void sendTempPasswordGuid(String email) {
+    public void sendTempPasswordGuid(String email, String backDomain) {
         Account account = accountRepository.findByEmail(email).get();
         account.createTempPassword();
 
-        Context context = getTempPasswordGuidMailContext(account);
+        Context context = getTempPasswordGuidMailContext(account, backDomain);
         String message = templateManager.makeTemplate("mail/simple-link", context);
 
         EmailMessageDto emailMessageDto = EmailMessageDto.builder()
@@ -39,7 +37,7 @@ public class AccountEmailService {
                 .message(message)
                 .build();
 
-        emailService.sendEmail(emailMessageDto);
+        emailSender.sendEmail(emailMessageDto);
 
         account.setTempPasswordEmailSendAt();
     }
@@ -51,7 +49,7 @@ public class AccountEmailService {
         account.applyTempPassword(encodedTempPassword);
     }
 
-    private Context getTempPasswordGuidMailContext(Account account) {
+    private Context getTempPasswordGuidMailContext(Account account, String backDomain) {
         Context context = new Context();
         context.setVariable("link", "accountEmail/tempPassword/" + account.getId() +
                 "?tempPassword=" + account.getTempPassword());

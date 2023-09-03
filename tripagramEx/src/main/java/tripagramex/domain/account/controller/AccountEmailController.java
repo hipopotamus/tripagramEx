@@ -12,6 +12,9 @@ import tripagramex.domain.account.validation.AccountValidator;
 @RequiredArgsConstructor
 public class AccountEmailController {
 
+    @Value("${domain.back}")
+    private String backDomain;
+
     @Value("${domain.front}")
     private String frontDomain;
 
@@ -23,7 +26,7 @@ public class AccountEmailController {
     public void sendTempPasswordGuid(@PathVariable String email) {
         accountValidator.verifyExistsByEmail(email);
         accountValidator.verifySendTempPasswordEmailAt(email);
-        accountEmailService.sendTempPasswordGuid(email);
+        accountEmailService.sendTempPasswordGuid(email, backDomain);
     }
 
     @GetMapping("/tempPassword/{accountId}")

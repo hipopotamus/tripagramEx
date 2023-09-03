@@ -14,7 +14,7 @@ import tripagramex.global.exception.ExceptionCode;
 @Component
 @RequiredArgsConstructor
 @ConditionalOnExpression("${mode.local:true} or ${mode.server:true}")
-public class ServerEmailService implements EmailService{
+public class ServerEmailSender implements EmailSender {
 
     private final JavaMailSender javaMailSender;
 

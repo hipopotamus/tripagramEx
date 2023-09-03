@@ -1,4 +1,4 @@
-package tripagramex.global.intrastructure;
+package tripagramex.domain.email.service;
 
 import org.thymeleaf.context.Context;
 

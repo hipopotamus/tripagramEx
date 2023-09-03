@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 import tripagramex.domain.email.dto.EmailMessageDto;
 
 @Component
-public interface EmailService {
+public interface EmailSender {
 
     void sendEmail(EmailMessageDto emailMessageDto);
 }
