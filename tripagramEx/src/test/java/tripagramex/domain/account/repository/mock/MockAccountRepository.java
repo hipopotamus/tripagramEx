@@ -12,11 +12,31 @@ public class MockAccountRepository implements AccountRepository {
     public static List<Account> store = new ArrayList<>();
     public static long sequence = 0L;
 
+    public MockAccountRepository() {
+        initSample();
+    }
+
+    private void initSample() {
+        saveSampleOne();
+    }
+
+    private void saveSampleOne() {
+        Account account = Account.builder()
+                .id(1L)
+                .email("test1@test.com")
+                .password("[Encode]test1Password")
+                .nickname("test1Nickname")
+                .profile("test1Profile")
+                .intro("test1Intro")
+                .build();
+        save(account);
+    }
+
     @Override
     public Account save(Account account) {
         Long id = account.getId();
         if (id == null || id == 0L) {
-            sequence++;
+            increaseSequence();
             Account savedAccount = Account.builder()
                     .id(sequence)
                     .email(account.getEmail())
@@ -70,5 +90,21 @@ public class MockAccountRepository implements AccountRepository {
 
     public void clearAll() {
         store.clear();
+        initSample();
+    }
+
+    private void increaseSequence() {
+        while (true) {
+            if (!existAccountById(++sequence)) {
+                break;
+            }
+        }
+    }
+
+    private boolean existAccountById(long id) {
+        Optional<Account> OptionalAccount = store.stream()
+                .filter(account -> account.getId().equals(id))
+                .findFirst();
+        return OptionalAccount.isPresent();
     }
 }

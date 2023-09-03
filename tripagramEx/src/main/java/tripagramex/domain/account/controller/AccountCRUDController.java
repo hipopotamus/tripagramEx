@@ -52,6 +52,7 @@ public class AccountCRUDController {
 
     @DeleteMapping
     public void delete(@LoginAccountId Long loginAccountId) {
+        accountValidator.verifyExistsById(loginAccountId);
         accountCRUDService.delete(loginAccountId);
     }
 }

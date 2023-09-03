@@ -30,10 +30,9 @@ class AccountEmailSenderTest {
     }
 
     @Test
-    @DisplayName("임시 비밀번호 안내문 발송 성공")
+    @DisplayName("임시 비밀번호 안내문 발송_성공")
     public void sendTempPasswordGuid_Success() {
         //given
-        saveOneSample();
         String backDomain = "localhost:8080/";
 
         //when then
@@ -41,29 +40,17 @@ class AccountEmailSenderTest {
     }
 
     @Test
-    @DisplayName("임시 비밀번호 적용")
+    @DisplayName("임시 비밀번호 적용_성공")
     public void applyTempPassword_Success() {
         //given
-        saveOneSample();
-        Account account = accountRepository.findById(1L).get();
         String tempPassword = "TempPassword";
 
         //when
         accountEmailService.applyTempPassword(1L, tempPassword);
 
         //then
+        Account account = accountRepository.findById(1L).get();
         assertThat(account.getPassword()).isEqualTo("[Encode]" + tempPassword);
-    }
-
-    private Account saveOneSample() {
-        Account account = Account.builder()
-                .id(1L)
-                .email("test1@test.com")
-                .password("[Encode]testPassword")
-                .nickname("testNickname")
-                .profile("testProfile")
-                .build();
-        return accountRepository.save(account);
     }
 
 }
