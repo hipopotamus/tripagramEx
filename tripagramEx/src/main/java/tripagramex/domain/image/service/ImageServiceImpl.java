@@ -1,6 +1,7 @@
 package tripagramex.domain.image.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import tripagramex.domain.image.dto.ImageUploadReq;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@ConditionalOnExpression("${mode.local:true} or ${mode.server:true}")
 public class ImageServiceImpl implements ImageService {
 
     private final ImageRepository imageRepository;

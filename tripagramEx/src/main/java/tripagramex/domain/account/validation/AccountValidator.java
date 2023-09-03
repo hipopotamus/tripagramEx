@@ -6,5 +6,11 @@ public interface AccountValidator {
 
     void verifyDuplicateNickname(String nickname);
 
-    void verifyExistsById(Long id);
+    void verifyExistsById(Long accountId);
+
+    void verifyExistsByEmail(String email);
+
+    void verifySendTempPasswordEmailAt(String email);
+
+    void verifyApplyTempPasswordAt(Long accountId);
 }
