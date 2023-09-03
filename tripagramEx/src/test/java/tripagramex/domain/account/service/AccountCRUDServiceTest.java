@@ -4,7 +4,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import tripagramex.domain.account.dto.CreateRequest;
-import tripagramex.domain.account.dto.IdDto;
+import tripagramex.domain.account.dto.ReadLoginAccountResponse;
+import tripagramex.domain.account.dto.ReadResponse;
 import tripagramex.domain.account.dto.UpdateRequest;
 import tripagramex.domain.account.entity.Account;
 import tripagramex.domain.account.repository.mock.MockAccountRepository;
@@ -33,110 +34,124 @@ class AccountCRUDServiceTest {
     @DisplayName("계정 생성_성공")
     public void createTest_Success() {
         //given
+        String email = "test@test.com";
+        String password = "testPassword";
+        String nickname = "testNickname";
+        String profile = "testProfile";
+
         CreateRequest createRequest = CreateRequest.builder()
-                .email("test@test.com")
-                .password("testPassword")
-                .nickname("testNickname")
-                .profile("testProfile")
+                .email(email)
+                .password(password)
+                .nickname(nickname)
+                .profile(profile)
                 .build();
 
         //when
-        IdDto idDto = accountCrudService.create(createRequest);
+        accountCrudService.create(createRequest);
 
         //then
-        assertThat(idDto.getId()).isEqualTo(1L);
+        Account account = accountRepository.findByEmail(email).get();
+        assertThat(account.getEmail()).isEqualTo(email);
+        assertThat(account.getPassword()).isEqualTo("[Encode]" + password);
+        assertThat(account.getNickname()).isEqualTo(nickname);
+        assertThat(account.getProfile()).isEqualTo(profile);
+
+
     }
 
     @Test
     @DisplayName("계정 단일 조회_성공")
     public void readTest_Success() {
         //given
-        saveOneSample();
-
         //when
+        ReadResponse readResponse = accountCrudService.read(1L);
+
         //then
-        accountCrudService.read(1L);
+        assertThat(readResponse.getId()).isEqualTo(1L);
+        assertThat(readResponse.getEmail()).isEqualTo("test1@test.com");
+        assertThat(readResponse.getNickname()).isEqualTo("test1Nickname");
+        assertThat(readResponse.getIntro()).isEqualTo("test1Intro");
+        assertThat(readResponse.getProfile()).isEqualTo("test1Profile");
+        assertThat(readResponse.getFollowing()).isEqualTo(0L);
+        assertThat(readResponse.getFollower()).isEqualTo(0L);
     }
 
     @Test
     @DisplayName("로그인 계정 조회_성공")
     public void readLoginAccount_Success() {
         //given
-        saveOneSample();
-
         //when
+        ReadLoginAccountResponse readLoginAccountResponse = accountCrudService.readLoginAccount(1L);
+
         //then
-        accountCrudService.readLoginAccount(1L);
+        assertThat(readLoginAccountResponse.getId()).isEqualTo(1L);
+        assertThat(readLoginAccountResponse.getEmail()).isEqualTo("test1@test.com");
+        assertThat(readLoginAccountResponse.getNickname()).isEqualTo("test1Nickname");
+        assertThat(readLoginAccountResponse.getProfile()).isEqualTo("test1Profile");
     }
 
     @Test
     @DisplayName("계정 수정_성공")
     public void updateAccount_Success() {
         //given
-        saveOneSample();
+        String updatePassword = "updatePassword";
+        String updateNickname = "updateNickname";
+        String updateProfile = "updateProfile";
+        String updateIntro = "updateIntro";
 
         UpdateRequest updateRequest = UpdateRequest.builder()
-                .password("testPassword")
-                .nickname("testNickname")
-                .profile("testProfile")
-                .intro("testIntro")
+                .password(updatePassword)
+                .nickname(updateNickname)
+                .profile(updateProfile)
+                .intro(updateIntro)
                 .build();
         //when
-        //then
         accountCrudService.update(1L, updateRequest);
+
+        //then
+        Account account = accountRepository.findById(1L).get();
+        assertThat(account.getPassword()).isEqualTo("[Encode]" + updatePassword);
+        assertThat(account.getNickname()).isEqualTo(updateNickname);
+        assertThat(account.getProfile()).isEqualTo(updateProfile);
+        assertThat(account.getIntro()).isEqualTo(updateIntro);
+
+
     }
 
     @Test
     @DisplayName("계정 수정_Password, Nickname 없는 경우")
     public void updateAccount_NonExist_Password_Nickname() {
         //given
-        saveOneSample();
+        String updateProfile = "updateProfile";
+        String updateIntro = "updateIntro";
 
         UpdateRequest updateRequest = UpdateRequest.builder()
-                .profile("testProfile")
-                .intro("testIntro")
+                .profile(updateProfile)
+                .intro(updateIntro)
                 .build();
+
         //when
-        //then
         accountCrudService.update(1L, updateRequest);
+
+        //then
+        Account account = accountRepository.findById(1L).get();
+        assertThat(account.getPassword()).isEqualTo("[Encode]test1Password");
+        assertThat(account.getNickname()).isEqualTo("test1Nickname");
+        assertThat(account.getProfile()).isEqualTo(updateProfile);
+        assertThat(account.getIntro()).isEqualTo(updateIntro);
+
     }
 
     @Test
-    @DisplayName("계정 삭제 성공")
+    @DisplayName("계정 삭제_성공")
     public void deleteAccount_Success() {
         //given
-        Account account = saveOneSample();
-
         //when
-        accountCrudService.delete(account.getId());
+        accountCrudService.delete(1L);
 
         //then
+        Account account = accountRepository.findById(1L).get();
         assertThat(account.isDeleted()).isTrue();
-    }
-
-    @Test
-    @DisplayName("삭제된 계정 삭제")
-    public void deleteDeletedAccount() {
-        //given
-        Account account = saveOneSample();
-
-        //when
-        accountCrudService.delete(account.getId());
-        accountCrudService.delete(account.getId());
-
-        //then
-        assertThat(account.isDeleted()).isTrue();
-    }
-
-    private Account saveOneSample() {
-        Account account = Account.builder()
-                .id(1L)
-                .email("test1@test.com")
-                .password("[Encode]testPassword")
-                .nickname("testNickname")
-                .profile("testProfile")
-                .build();
-        return accountRepository.save(account);
     }
 
 }
