@@ -13,23 +13,21 @@ public class MockAccountRepository implements AccountRepository {
     public static long sequence = 0L;
 
     public MockAccountRepository() {
-        initSample();
+        initiate();
     }
 
-    private void initSample() {
-        saveSampleOne();
-    }
-
-    private void saveSampleOne() {
-        Account account = Account.builder()
-                .id(1L)
-                .email("test1@test.com")
-                .password("[Encode]test1Password")
-                .nickname("test1Nickname")
-                .profile("test1Profile")
-                .intro("test1Intro")
-                .build();
-        save(account);
+    private void saveSample(Long number) {
+        for (long i = 1L; i <= number; i++) {
+            Account account = Account.builder()
+                    .id(i)
+                    .email("test" + i +"@test.com")
+                    .password("[Encode]test" + i + "Password")
+                    .nickname("test" + i + "Nickname")
+                    .profile("test" + i + "Profile")
+                    .intro("test" + i + "Intro")
+                    .build();
+            save(account);
+        }
     }
 
     @Override
@@ -61,7 +59,7 @@ public class MockAccountRepository implements AccountRepository {
     @Override
     public Optional<Account> findById(Long id) {
         return store.stream()
-                .filter(account -> account.getId().equals(id))
+                .filter(account -> (account.getId().equals(id) && !account.isDeleted()))
                 .findFirst();
     }
 
@@ -73,7 +71,7 @@ public class MockAccountRepository implements AccountRepository {
     @Override
     public Optional<Account> findByEmail(String email) {
         return store.stream()
-                .filter(account -> account.getEmail().equals(email))
+                .filter(account -> (account.getEmail().equals(email) && !account.isDeleted()))
                 .findFirst();
     }
 
@@ -88,9 +86,14 @@ public class MockAccountRepository implements AccountRepository {
     }
 
 
-    public void clearAll() {
+    public void initiate() {
         store.clear();
+        sequence = 0L;
         initSample();
+    }
+
+    private void initSample() {
+        saveSample(3L);
     }
 
     private void increaseSequence() {
@@ -103,7 +106,7 @@ public class MockAccountRepository implements AccountRepository {
 
     private boolean existAccountById(long id) {
         Optional<Account> OptionalAccount = store.stream()
-                .filter(account -> account.getId().equals(id))
+                .filter(account -> (account.getId().equals(id) && !account.isDeleted()))
                 .findFirst();
         return OptionalAccount.isPresent();
     }

@@ -26,7 +26,7 @@ class AccountEmailSenderTest {
 
     @AfterEach
     void after() {
-        accountRepository.clearAll();
+        accountRepository.initiate();
     }
 
     @Test
