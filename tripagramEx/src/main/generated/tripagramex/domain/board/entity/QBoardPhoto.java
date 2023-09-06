@@ -22,12 +22,15 @@ public class QBoardPhoto extends EntityPathBase<BoardPhoto> {
 
     public static final QBoardPhoto boardPhoto = new QBoardPhoto("boardPhoto");
 
-    public final tripagramex.global.auditing.QBaseTime _super = new tripagramex.global.auditing.QBaseTime(this);
+    public final tripagramex.global.auditing.QBaseField _super = new tripagramex.global.auditing.QBaseField(this);
 
     public final QBoard board;
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
+
+    //inherited
+    public final BooleanPath deleted = _super.deleted;
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 

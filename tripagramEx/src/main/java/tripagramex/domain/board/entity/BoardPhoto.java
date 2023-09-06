@@ -5,14 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import tripagramex.global.auditing.BaseTime;
+import tripagramex.global.auditing.BaseField;
 
 @Entity
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BoardPhoto extends BaseTime {
+public class BoardPhoto extends BaseField {
 
     @Id
     @GeneratedValue

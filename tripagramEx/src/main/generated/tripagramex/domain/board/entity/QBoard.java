@@ -22,7 +22,7 @@ public class QBoard extends EntityPathBase<Board> {
 
     public static final QBoard board = new QBoard("board");
 
-    public final tripagramex.global.auditing.QBaseTime _super = new tripagramex.global.auditing.QBaseTime(this);
+    public final tripagramex.global.auditing.QBaseField _super = new tripagramex.global.auditing.QBaseField(this);
 
     public final tripagramex.domain.account.entity.QAccount account;
 
@@ -38,6 +38,9 @@ public class QBoard extends EntityPathBase<Board> {
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
+
+    //inherited
+    public final BooleanPath deleted = _super.deleted;
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 

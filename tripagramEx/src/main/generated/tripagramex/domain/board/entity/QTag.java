@@ -19,10 +19,13 @@ public class QTag extends EntityPathBase<Tag> {
 
     public static final QTag tag1 = new QTag("tag1");
 
-    public final tripagramex.global.auditing.QBaseTime _super = new tripagramex.global.auditing.QBaseTime(this);
+    public final tripagramex.global.auditing.QBaseField _super = new tripagramex.global.auditing.QBaseField(this);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
+
+    //inherited
+    public final BooleanPath deleted = _super.deleted;
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;

@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import tripagramex.domain.board.entity.Board;
-import tripagramex.global.auditing.BaseTime;
+import tripagramex.global.auditing.BaseField;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Account extends BaseTime {
+public class Account extends BaseField {
 
     @Id
     @GeneratedValue
@@ -45,8 +45,6 @@ public class Account extends BaseTime {
 
     private LocalDateTime tempPasswordEmailSendAt;
 
-    private boolean deleted = false;
-
     @OneToMany(mappedBy = "account")
     private List<Board> boards = new ArrayList<>();
 
@@ -55,10 +53,6 @@ public class Account extends BaseTime {
         Optional.ofNullable(account.getNickname()).ifPresent(nickname -> this.nickname = nickname);
         Optional.ofNullable(account.getProfile()).ifPresent(profile -> this.profile = profile);
         Optional.ofNullable(account.getIntro()).ifPresent(intro -> this.intro = intro);
-    }
-
-    public void delete() {
-        deleted = true;
     }
 
     public boolean canSendTempPasswordGuid() {

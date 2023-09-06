@@ -9,6 +9,8 @@ import java.util.Optional;
 
 @Repository
 public interface AccountRepository {
+    Account save(Account account);
+
     @Query("select account from Account account " +
             "where account.email = :email and account.deleted = false")
     Optional<Account> findByEmail(@Param("email") String email);
@@ -20,8 +22,6 @@ public interface AccountRepository {
     @Query("select count(account) > 0 from Account account " +
             "where account.nickname = :nickname and account.deleted = false")
     boolean existsByNickname(@Param("nickname") String nickname);
-
-    Account save(Account account);
 
     @Query("select account from Account account " +
             "where account.id = :id and account.deleted = false")
