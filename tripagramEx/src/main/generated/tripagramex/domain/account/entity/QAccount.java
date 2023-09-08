@@ -20,14 +20,15 @@ public class QAccount extends EntityPathBase<Account> {
 
     public static final QAccount account = new QAccount("account");
 
-    public final tripagramex.global.auditing.QBaseTime _super = new tripagramex.global.auditing.QBaseTime(this);
+    public final tripagramex.global.auditing.QBaseField _super = new tripagramex.global.auditing.QBaseField(this);
 
     public final ListPath<tripagramex.domain.board.entity.Board, tripagramex.domain.board.entity.QBoard> boards = this.<tripagramex.domain.board.entity.Board, tripagramex.domain.board.entity.QBoard>createList("boards", tripagramex.domain.board.entity.Board.class, tripagramex.domain.board.entity.QBoard.class, PathInits.DIRECT2);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
-    public final BooleanPath deleted = createBoolean("deleted");
+    //inherited
+    public final BooleanPath deleted = _super.deleted;
 
     public final StringPath email = createString("email");
 

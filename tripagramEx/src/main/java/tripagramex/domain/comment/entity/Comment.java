@@ -7,14 +7,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import tripagramex.domain.account.entity.Account;
 import tripagramex.domain.board.entity.Board;
-import tripagramex.global.auditing.BaseTime;
+import tripagramex.global.auditing.BaseField;
 
 @Entity
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Comment extends BaseTime {
+public class Comment extends BaseField {
 
     @Id
     @GeneratedValue

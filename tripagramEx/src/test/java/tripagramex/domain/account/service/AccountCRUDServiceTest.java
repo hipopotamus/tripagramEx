@@ -12,6 +12,8 @@ import tripagramex.domain.account.repository.mock.MockAccountRepository;
 import tripagramex.domain.follow.repository.mock.MockFollowRepository;
 import tripagramex.infrastructure.mock.MockPasswordEncoder;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class AccountCRUDServiceTest {
@@ -27,7 +29,7 @@ class AccountCRUDServiceTest {
 
     @AfterEach
     void after() {
-        accountRepository.clearAll();
+        accountRepository.initiate();
     }
 
     @Test
@@ -150,8 +152,8 @@ class AccountCRUDServiceTest {
         accountCrudService.delete(1L);
 
         //then
-        Account account = accountRepository.findById(1L).get();
-        assertThat(account.isDeleted()).isTrue();
+        Optional<Account> optionalAccount = accountRepository.findById(1L);
+        assertThat(optionalAccount.isPresent()).isFalse();
     }
 
 }

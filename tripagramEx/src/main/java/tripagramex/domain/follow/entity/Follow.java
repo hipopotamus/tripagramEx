@@ -6,14 +6,14 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import tripagramex.domain.account.entity.Account;
-import tripagramex.global.auditing.BaseTime;
+import tripagramex.global.auditing.BaseField;
 
 @Entity
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Follow extends BaseTime {
+public class Follow extends BaseField {
 
     @Id
     @GeneratedValue

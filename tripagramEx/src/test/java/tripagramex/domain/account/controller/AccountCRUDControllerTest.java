@@ -51,7 +51,7 @@ class AccountCRUDControllerTest extends Treatment {
     private AccountRepository accountRepository;
 
     @Test
-    @DisplayName("로그인 성공")
+    @DisplayName("로그인_성공")
     void loginTest_Success() throws Exception {
 
         //given
@@ -203,7 +203,7 @@ class AccountCRUDControllerTest extends Treatment {
     }
 
     @Test
-    @DisplayName("계정 수정 성공")
+    @DisplayName("계정 수정_성공")
     void updateTest_Success() throws Exception {
         //given
         Long accountId = 10001L;
@@ -250,7 +250,7 @@ class AccountCRUDControllerTest extends Treatment {
     }
 
     @Test
-    @DisplayName("계정 삭제 성공")
+    @DisplayName("계정 삭제_성공")
     void deleteTest_Success() throws Exception {
         //given
         Long accountId = 10001L;

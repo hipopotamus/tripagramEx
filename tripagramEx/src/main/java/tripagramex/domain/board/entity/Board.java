@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import tripagramex.domain.account.entity.Account;
 import tripagramex.domain.comment.entity.Comment;
-import tripagramex.global.auditing.BaseTime;
+import tripagramex.global.auditing.BaseField;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Board extends BaseTime {
+public class Board extends BaseField {
 
     @Id @GeneratedValue
     @Column(name = "board_id")

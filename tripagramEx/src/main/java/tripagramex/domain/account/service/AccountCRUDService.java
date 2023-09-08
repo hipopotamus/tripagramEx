@@ -31,8 +31,8 @@ public class AccountCRUDService {
     public ReadResponse read(Long accountId) {
         Account account = accountRepository.findById(accountId).get();
 
-        Long following = followRepository.countByFollower(account);
-        Long follower = followRepository.countByFollowing(account);
+        Long following = followRepository.countFollowing(account);
+        Long follower = followRepository.countFollower(account);
 
         return ReadResponse.of(account, following, follower);
     }
@@ -55,7 +55,7 @@ public class AccountCRUDService {
     @Transactional
     public void delete(Long accountId) {
         Account account = accountRepository.findById(accountId).get();
-        account.delete();
+        account.softDelete();
     }
 
     private Account getAccountForCreate(CreateRequest createRequest) {

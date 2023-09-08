@@ -116,6 +116,28 @@ include::{snippets}/sendTempPasswordGuidMail/path-parameters.adoc[]
 include::{snippets}/sendTempPasswordGuidMail/http-response.adoc[]
 
 ***
+== FollowController
+=== 팔로우 시행
+.curl-request
+include::{snippets}/postFollow/curl-request.adoc[]
+
+.http-request
+include::{snippets}/postFollow/http-request.adoc[]
+
+.request-header
+include::{snippets}/postFollow/request-headers.adoc[]
+
+.path-parameters
+include::{snippets}/postFollow/path-parameters.adoc[]
+
+.http-response
+include::{snippets}/postFollow/http-response.adoc[]
+
+.response-fields
+include::{snippets}/postFollow/response-fields.adoc[]
+
+
+***
 == ImageController
 === 이미지 저장
 .curl-request

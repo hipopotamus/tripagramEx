@@ -13,7 +13,7 @@ import com.querydsl.core.types.Path;
  * QBaseTime is a Querydsl query type for BaseTime
  */
 @Generated("com.querydsl.codegen.DefaultSupertypeSerializer")
-public class QBaseTime extends EntityPathBase<BaseTime> {
+public class QBaseTime extends EntityPathBase<BaseField> {
 
     private static final long serialVersionUID = 788872066L;
 
@@ -24,15 +24,15 @@ public class QBaseTime extends EntityPathBase<BaseTime> {
     public final DateTimePath<java.time.LocalDateTime> modifiedAt = createDateTime("modifiedAt", java.time.LocalDateTime.class);
 
     public QBaseTime(String variable) {
-        super(BaseTime.class, forVariable(variable));
+        super(BaseField.class, forVariable(variable));
     }
 
-    public QBaseTime(Path<? extends BaseTime> path) {
+    public QBaseTime(Path<? extends BaseField> path) {
         super(path.getType(), path.getMetadata());
     }
 
     public QBaseTime(PathMetadata metadata) {
-        super(BaseTime.class, metadata);
+        super(BaseField.class, metadata);
     }
 
 }
