@@ -55,6 +55,11 @@ public class MockFollowRepository implements FollowRepository {
                 .findFirst();
     }
 
+    @Override
+    public boolean existByBothId(Long followerId, Long followingId) {
+        return false;
+    }
+
     public void initiate() {
         store.clear();
         sequence = 0L;

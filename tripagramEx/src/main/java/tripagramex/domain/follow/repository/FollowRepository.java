@@ -22,4 +22,9 @@ public interface FollowRepository {
     Long countFollower(@Param("account") Account account);
 
     Optional<Follow> findByFollowerAndFollowing(Account Follower, Account Following);
+
+    @Query("select count(follow) > 0 from Follow follow " +
+            "where follow.follower.id = :followerId and follow.following.id = :followingId " +
+            "and follow.deleted = false")
+    boolean existByBothId(@Param("followerId") Long followerId, @Param("followingId") Long followingId);
 }

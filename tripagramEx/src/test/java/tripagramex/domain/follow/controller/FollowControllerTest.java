@@ -21,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
@@ -49,9 +50,9 @@ class FollowControllerTest {
     @DisplayName("팔로우 시행_성공")
     void postFollow_Success() throws Exception {
         //given
-        Long loginId = 10001L;
+        Long followerId = 10001L;
         Long followingId = 10002L;
-        Account loginAccount = accountRepository.findById(loginId).get();
+        Account loginAccount = accountRepository.findById(followerId).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(loginAccount));
 
         //when
@@ -76,8 +77,46 @@ class FollowControllerTest {
                         responseFields(
                                 List.of(
                                         fieldWithPath("status").type(JsonFieldType.STRING).description("Follow 시행 결과")
-                                        ))
+                                        )
+                        )
                 ));
+    }
+
+    @Test
+    @DisplayName("팔로우 여부 확인_성공")
+    void checkFollowTest_Success() throws Exception {
+        //given
+        Long followerId = 10001L;
+        Long followingId = 10002L;
+        Account loginAccount = accountRepository.findById(followerId).get();
+        String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(loginAccount));
+
+        //when
+        ResultActions checkFollow = mockMvc.perform(
+                get("/follow/{followingId}", followingId)
+                        .header("Authorization", jwt)
+        );
+
+        //then
+        checkFollow
+                .andExpect(status().isOk())
+                .andDo(document(
+                        "checkFollow",
+                        getRequestPreProcessor(),
+                        getResponsePreProcessor(),
+                        requestHeaders(
+                                headerWithName("Authorization").description("JWT")
+                        ),
+                        pathParameters(
+                                parameterWithName("followingId").description("Following 대상 식별자")
+                        ),
+                        responseFields(
+                                List.of(
+                                        fieldWithPath("follow").type(JsonFieldType.BOOLEAN).description("Follow 여부")
+                                )
+                        )
+                ));
+
     }
 
 }
