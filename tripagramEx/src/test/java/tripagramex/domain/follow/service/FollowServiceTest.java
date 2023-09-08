@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import tripagramex.domain.account.entity.Account;
 import tripagramex.domain.account.repository.mock.MockAccountRepository;
+import tripagramex.domain.follow.dto.CheckFollowResponse;
 import tripagramex.domain.follow.dto.PostFollowResponse;
 import tripagramex.domain.follow.entity.Follow;
 import tripagramex.domain.follow.repository.mock.MockFollowRepository;
@@ -88,5 +89,19 @@ class FollowServiceTest {
 
         assertThat(optionalFollow.isPresent()).isTrue();
         assertThat(postFollowResponse.getStatus()).isEqualTo(Status.SUCCESS);
+    }
+
+    @Test
+    @DisplayName("팔로우 여부 확인_성공")
+    public void checkFollow_Success() {
+        //given
+        Long followerId = 1L;
+        Long followingId = 2L;
+
+        //when
+        CheckFollowResponse checkFollowResponse = followService.checkFollow(followerId, followingId);
+
+        //then
+        assertThat(checkFollowResponse.isFollow()).isFalse();
     }
 }
