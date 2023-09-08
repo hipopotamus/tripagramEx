@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tripagramex.domain.account.entity.Account;
 import tripagramex.domain.account.repository.AccountRepository;
+import tripagramex.domain.follow.dto.CheckFollowResponse;
 import tripagramex.domain.follow.dto.PostFollowResponse;
 import tripagramex.domain.follow.entity.Follow;
 import tripagramex.domain.follow.repository.FollowRepository;
@@ -48,5 +49,10 @@ public class FollowService {
 
         follow.softDelete();
         return new PostFollowResponse(Status.CANCEL);
+    }
+
+    public CheckFollowResponse checkFollow(Long followerId, Long followingId) {
+        boolean followFlag = followRepository.existByBothId(followerId, followingId);
+        return new CheckFollowResponse(followFlag);
     }
 }
