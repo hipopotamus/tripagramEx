@@ -9,7 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import tripagramex.domain.account.entity.Account;
-import tripagramex.domain.account.entity.Role;
+import tripagramex.domain.account.enums.Role;
 
 @Data
 @Builder

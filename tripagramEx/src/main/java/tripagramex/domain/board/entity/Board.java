@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import tripagramex.domain.account.entity.Account;
+import tripagramex.domain.board.enums.Category;
 import tripagramex.global.auditing.BaseField;
 import tripagramex.global.jpa.converter.StringListConverter;
 
@@ -33,9 +34,9 @@ public class Board extends BaseField {
 
     private String location;
 
-    private Integer likeCount;
+    private String thumbnail;
 
-    private Integer view;
+    private Integer view = 0;
 
     @Enumerated(EnumType.STRING)
     private Category category;
@@ -45,5 +46,11 @@ public class Board extends BaseField {
 
     @OneToMany(mappedBy = "board")
     private final List<BoardTag> boardTags = new ArrayList<>();
+
+    public void addAccountId(Long accountId) {
+        account = Account.builder()
+                .id(accountId)
+                .build();
+    }
 
 }

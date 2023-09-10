@@ -8,6 +8,7 @@ import tripagramex.domain.account.dto.*;
 import tripagramex.domain.account.entity.Account;
 import tripagramex.domain.account.repository.AccountRepository;
 import tripagramex.domain.follow.repository.FollowRepository;
+import tripagramex.global.common.dto.IdDto;
 import tripagramex.global.intrastructure.PasswordEncoder;
 
 @Builder

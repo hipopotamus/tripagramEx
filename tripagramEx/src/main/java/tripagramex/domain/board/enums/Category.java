@@ -1,4 +1,4 @@
-package tripagramex.domain.board.entity;
+package tripagramex.domain.board.enums;
 
 public enum Category {
 

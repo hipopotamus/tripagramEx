@@ -8,6 +8,7 @@ import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
 import com.querydsl.core.types.dsl.PathInits;
+import tripagramex.domain.board.enums.Category;
 
 
 /**
@@ -48,6 +49,8 @@ public class QBoard extends EntityPathBase<Board> {
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;
+
+    public final StringPath thumbnail = createString("thumbnail");
 
     public final StringPath title = createString("title");
 

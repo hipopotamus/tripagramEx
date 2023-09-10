@@ -3,7 +3,8 @@ package tripagramex.domain.board.dto;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
-import tripagramex.domain.board.entity.Category;
+import tripagramex.domain.board.entity.Board;
+import tripagramex.domain.board.enums.Category;
 
 import java.util.List;
 
@@ -25,8 +26,17 @@ public class CreateRequest {
     @NotNull
     private Category category;
 
-    private List<String> tags;
-
     @NotNull
     private List<String> images;
+
+    public Board toBoard() {
+        return Board.builder()
+                .title(title)
+                .content(content)
+                .location(location)
+                .thumbnail(thumbnail)
+                .category(category)
+                .images(images)
+                .build();
+    }
 }

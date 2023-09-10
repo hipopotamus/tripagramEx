@@ -1,4 +1,4 @@
-package tripagramex.domain.account.dto;
+package tripagramex.global.common.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
