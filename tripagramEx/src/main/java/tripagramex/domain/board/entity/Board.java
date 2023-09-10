@@ -6,8 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import tripagramex.domain.account.entity.Account;
-import tripagramex.domain.comment.entity.Comment;
 import tripagramex.global.auditing.BaseField;
+import tripagramex.global.jpa.converter.StringListConverter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,14 +40,10 @@ public class Board extends BaseField {
     @Enumerated(EnumType.STRING)
     private Category category;
 
+    @Convert(converter = StringListConverter.class)
+    private List<String> images = new ArrayList<>();
+
     @OneToMany(mappedBy = "board")
     private final List<BoardTag> boardTags = new ArrayList<>();
-
-    @OneToMany(mappedBy = "board")
-    private final List<BoardPhoto> boardPhotos = new ArrayList<>();
-
-    @OneToMany(mappedBy = "board")
-    private final List<Comment> comments = new ArrayList<>();
-
 
 }

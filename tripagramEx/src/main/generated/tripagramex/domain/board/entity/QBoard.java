@@ -26,13 +26,9 @@ public class QBoard extends EntityPathBase<Board> {
 
     public final tripagramex.domain.account.entity.QAccount account;
 
-    public final ListPath<BoardPhoto, QBoardPhoto> boardPhotos = this.<BoardPhoto, QBoardPhoto>createList("boardPhotos", BoardPhoto.class, QBoardPhoto.class, PathInits.DIRECT2);
-
     public final ListPath<BoardTag, QBoardTag> boardTags = this.<BoardTag, QBoardTag>createList("boardTags", BoardTag.class, QBoardTag.class, PathInits.DIRECT2);
 
     public final EnumPath<Category> category = createEnum("category", Category.class);
-
-    public final ListPath<tripagramex.domain.comment.entity.Comment, tripagramex.domain.comment.entity.QComment> comments = this.<tripagramex.domain.comment.entity.Comment, tripagramex.domain.comment.entity.QComment>createList("comments", tripagramex.domain.comment.entity.Comment.class, tripagramex.domain.comment.entity.QComment.class, PathInits.DIRECT2);
 
     public final StringPath content = createString("content");
 
@@ -43,6 +39,8 @@ public class QBoard extends EntityPathBase<Board> {
     public final BooleanPath deleted = _super.deleted;
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
+
+    public final ListPath<String, StringPath> images = this.<String, StringPath>createList("images", String.class, StringPath.class, PathInits.DIRECT2);
 
     public final NumberPath<Integer> likeCount = createNumber("likeCount", Integer.class);
 
