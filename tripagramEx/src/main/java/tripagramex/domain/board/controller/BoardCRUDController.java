@@ -7,7 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tripagramex.domain.board.dto.CreateRequest;
 import tripagramex.domain.board.dto.ReadResponse;
+import tripagramex.domain.board.dto.UpdateRequest;
 import tripagramex.domain.board.service.BoardService;
+import tripagramex.domain.board.validation.BoardValidator;
 import tripagramex.global.argumentresolver.LoginAccountId;
 import tripagramex.global.common.dto.IdDto;
 
@@ -17,6 +19,7 @@ import tripagramex.global.common.dto.IdDto;
 public class BoardCRUDController {
 
     private final BoardService boardService;
+    private final BoardValidator boardValidator;
 
     @PostMapping
     public ResponseEntity<IdDto> create(@LoginAccountId Long loginAccountId,
@@ -27,7 +30,20 @@ public class BoardCRUDController {
 
     @GetMapping("/{boardId}")
     public ResponseEntity<ReadResponse> read(@PathVariable Long boardId) {
+        boardValidator.verifyExistsById(boardId);
+
         ReadResponse readResponse = boardService.read(boardId);
         return new ResponseEntity<>(readResponse, HttpStatus.OK);
+    }
+
+    @PostMapping("/{boardId}")
+    public ResponseEntity<String> update(@LoginAccountId Long loginAccountId,
+                                         @PathVariable Long boardId,
+                                         @RequestBody @Valid UpdateRequest updateRequest) {
+        boardValidator.verifyExistsById(boardId);
+        boardValidator.verifyUpdateAuthority(loginAccountId, boardId);
+
+        boardService.update(boardId, updateRequest);
+        return new ResponseEntity<>("Success Update Board", HttpStatus.OK);
     }
 }

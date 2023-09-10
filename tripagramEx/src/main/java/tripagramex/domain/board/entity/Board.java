@@ -12,6 +12,7 @@ import tripagramex.global.jpa.converter.StringListConverter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Getter
@@ -51,6 +52,15 @@ public class Board extends BaseField {
         account = Account.builder()
                 .id(accountId)
                 .build();
+    }
+
+    public void modify(Board board) {
+        Optional.ofNullable(board.getTitle()).ifPresent(title -> this.title = title);
+        Optional.ofNullable(board.getContent()).ifPresent(content -> this.content = content);
+        Optional.ofNullable(board.getLocation()).ifPresent(location -> this.location = location);
+        Optional.ofNullable(board.getThumbnail()).ifPresent(thumbnail -> this.thumbnail = thumbnail);
+        Optional.ofNullable(board.getCategory()).ifPresent(category -> this.category = category);
+        Optional.ofNullable(board.getImages()).ifPresent(images -> this.images = images);
     }
 
 }

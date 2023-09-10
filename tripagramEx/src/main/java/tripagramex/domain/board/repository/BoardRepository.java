@@ -19,4 +19,8 @@ public interface BoardRepository {
     @Query("select board from Board board " +
             "where board.id = :boardId and board.deleted = false")
     Optional<Board> findWithAccount(@Param("boardId") Long boardId);
+
+    @Query("select count(board) > 0 from Board board " +
+            "where board.id = :boardId and board.deleted = false")
+    boolean existsById(@Param("boardId") Long boardId);
 }
