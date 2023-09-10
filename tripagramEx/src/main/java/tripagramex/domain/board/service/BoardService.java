@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tripagramex.domain.board.dto.CreateRequest;
+import tripagramex.domain.board.dto.ReadResponse;
 import tripagramex.domain.board.entity.Board;
 import tripagramex.global.common.dto.IdDto;
 import tripagramex.domain.board.repository.BoardRepository;
@@ -22,6 +23,11 @@ public class BoardService {
         Board board = getBoardForCreate(loginAccountId, createRequest);
         Board savedBoard = boardRepository.save(board);
         return new IdDto(savedBoard.getId());
+    }
+
+    public ReadResponse read(Long boardId) {
+        Board board = boardRepository.findWithAccount(boardId).get();
+        return ReadResponse.of(board);
     }
 
     private Board getBoardForCreate(Long loginAccountId, CreateRequest createRequest) {

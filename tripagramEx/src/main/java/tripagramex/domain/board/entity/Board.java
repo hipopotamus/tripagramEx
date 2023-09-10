@@ -36,7 +36,7 @@ public class Board extends BaseField {
 
     private String thumbnail;
 
-    private Integer view = 0;
+    private int view = 0;
 
     @Enumerated(EnumType.STRING)
     private Category category;

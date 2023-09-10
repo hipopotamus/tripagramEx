@@ -8,7 +8,6 @@ import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
 import com.querydsl.core.types.dsl.PathInits;
-import tripagramex.domain.board.enums.Category;
 
 
 /**
@@ -29,7 +28,7 @@ public class QBoard extends EntityPathBase<Board> {
 
     public final ListPath<BoardTag, QBoardTag> boardTags = this.<BoardTag, QBoardTag>createList("boardTags", BoardTag.class, QBoardTag.class, PathInits.DIRECT2);
 
-    public final EnumPath<Category> category = createEnum("category", Category.class);
+    public final EnumPath<tripagramex.domain.board.enums.Category> category = createEnum("category", tripagramex.domain.board.enums.Category.class);
 
     public final StringPath content = createString("content");
 
@@ -42,8 +41,6 @@ public class QBoard extends EntityPathBase<Board> {
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final ListPath<String, StringPath> images = this.<String, StringPath>createList("images", String.class, StringPath.class, PathInits.DIRECT2);
-
-    public final NumberPath<Integer> likeCount = createNumber("likeCount", Integer.class);
 
     public final StringPath location = createString("location");
 

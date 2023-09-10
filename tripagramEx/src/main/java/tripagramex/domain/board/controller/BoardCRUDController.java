@@ -4,11 +4,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import tripagramex.domain.board.dto.CreateRequest;
+import tripagramex.domain.board.dto.ReadResponse;
 import tripagramex.domain.board.service.BoardService;
 import tripagramex.global.argumentresolver.LoginAccountId;
 import tripagramex.global.common.dto.IdDto;
@@ -25,5 +23,11 @@ public class BoardCRUDController {
                                         @RequestBody @Valid CreateRequest createRequest) {
         IdDto idDto = boardService.create(loginAccountId, createRequest);
         return new ResponseEntity<>(idDto, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{boardId}")
+    public ResponseEntity<ReadResponse> read(@PathVariable Long boardId) {
+        ReadResponse readResponse = boardService.read(boardId);
+        return new ResponseEntity<>(readResponse, HttpStatus.OK);
     }
 }
