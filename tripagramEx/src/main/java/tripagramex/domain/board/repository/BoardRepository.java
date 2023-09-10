@@ -13,7 +13,9 @@ public interface BoardRepository {
 
     Board save(Board board);
 
-    Optional<Board> findById(Long boardId);
+    @Query("select board from Board board " +
+            "where board.id = :boardId and board.deleted = false")
+    Optional<Board> findById(@Param("boardId") Long boardId);
 
     @EntityGraph(attributePaths = {"account"})
     @Query("select board from Board board " +

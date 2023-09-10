@@ -46,4 +46,13 @@ public class BoardCRUDController {
         boardService.update(boardId, updateRequest);
         return new ResponseEntity<>("Success Update Board", HttpStatus.OK);
     }
+
+    @DeleteMapping("/{boardId}")
+    public ResponseEntity<String> delete(@LoginAccountId Long loginAccountId, @PathVariable Long boardId) {
+        boardValidator.verifyExistsById(boardId);
+        boardValidator.verifyUpdateAuthority(loginAccountId, boardId);
+
+        boardService.delete(boardId);
+        return new ResponseEntity<>("Success Delete Board", HttpStatus.OK);
+    }
 }

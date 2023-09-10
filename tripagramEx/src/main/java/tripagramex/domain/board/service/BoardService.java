@@ -38,6 +38,12 @@ public class BoardService {
         board.modify(boardForUpdate);
     }
 
+    @Transactional
+    public void delete(Long boardId) {
+        Board board = boardRepository.findById(boardId).get();
+        board.softDelete();
+    }
+
     private Board getBoardForCreate(Long loginAccountId, CreateRequest createRequest) {
         Board board = createRequest.toBoard();
         board.addAccountId(loginAccountId);
