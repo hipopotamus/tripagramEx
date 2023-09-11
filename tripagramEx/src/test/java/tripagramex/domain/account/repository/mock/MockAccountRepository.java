@@ -16,20 +16,6 @@ public class MockAccountRepository implements AccountRepository {
         initiate();
     }
 
-    private void saveSample(Long number) {
-        for (long i = 1L; i <= number; i++) {
-            Account account = Account.builder()
-                    .id(i)
-                    .email("test" + i +"@test.com")
-                    .password("[Encode]test" + i + "Password")
-                    .nickname("test" + i + "Nickname")
-                    .profile("test" + i + "Profile")
-                    .intro("test" + i + "Intro")
-                    .build();
-            save(account);
-        }
-    }
-
     @Override
     public Account save(Account account) {
         Long id = account.getId();
@@ -94,6 +80,20 @@ public class MockAccountRepository implements AccountRepository {
 
     private void initSample() {
         saveSample(3L);
+    }
+
+    private void saveSample(Long number) {
+        for (long i = 1L; i <= number; i++) {
+            Account account = Account.builder()
+                    .id(i)
+                    .email("test" + i +"@test.com")
+                    .password("[Encode]test" + i + "Password")
+                    .nickname("test" + i + "Nickname")
+                    .profile("test" + i + "Profile")
+                    .intro("test" + i + "Intro")
+                    .build();
+            save(account);
+        }
     }
 
     private void increaseSequence() {
