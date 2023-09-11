@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import tripagramex.domain.board.dto.CreateRequest;
 import tripagramex.domain.board.dto.ReadResponse;
 import tripagramex.domain.board.dto.UpdateRequest;
-import tripagramex.domain.board.service.BoardService;
+import tripagramex.domain.board.service.BoardCRUDService;
 import tripagramex.domain.board.validation.BoardValidator;
 import tripagramex.global.argumentresolver.LoginAccountId;
 import tripagramex.global.common.dto.IdDto;
@@ -18,13 +18,13 @@ import tripagramex.global.common.dto.IdDto;
 @RequiredArgsConstructor
 public class BoardCRUDController {
 
-    private final BoardService boardService;
+    private final BoardCRUDService boardCRUDService;
     private final BoardValidator boardValidator;
 
     @PostMapping
     public ResponseEntity<IdDto> create(@LoginAccountId Long loginAccountId,
                                         @RequestBody @Valid CreateRequest createRequest) {
-        IdDto idDto = boardService.create(loginAccountId, createRequest);
+        IdDto idDto = boardCRUDService.create(loginAccountId, createRequest);
         return new ResponseEntity<>(idDto, HttpStatus.CREATED);
     }
 
@@ -32,7 +32,7 @@ public class BoardCRUDController {
     public ResponseEntity<ReadResponse> read(@PathVariable Long boardId) {
         boardValidator.verifyExistsById(boardId);
 
-        ReadResponse readResponse = boardService.read(boardId);
+        ReadResponse readResponse = boardCRUDService.read(boardId);
         return new ResponseEntity<>(readResponse, HttpStatus.OK);
     }
 
@@ -43,7 +43,7 @@ public class BoardCRUDController {
         boardValidator.verifyExistsById(boardId);
         boardValidator.verifyUpdateAuthority(loginAccountId, boardId);
 
-        boardService.update(boardId, updateRequest);
+        boardCRUDService.update(boardId, updateRequest);
         return new ResponseEntity<>("Success Update Board", HttpStatus.OK);
     }
 
@@ -52,7 +52,7 @@ public class BoardCRUDController {
         boardValidator.verifyExistsById(boardId);
         boardValidator.verifyUpdateAuthority(loginAccountId, boardId);
 
-        boardService.delete(boardId);
+        boardCRUDService.delete(boardId);
         return new ResponseEntity<>("Success Delete Board", HttpStatus.OK);
     }
 }

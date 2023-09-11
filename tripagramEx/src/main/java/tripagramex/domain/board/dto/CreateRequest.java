@@ -1,6 +1,7 @@
 package tripagramex.domain.board.dto;
 
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import tripagramex.domain.board.entity.Board;
@@ -9,6 +10,7 @@ import tripagramex.domain.board.enums.Category;
 import java.util.List;
 
 @Data
+@Builder
 public class CreateRequest {
 
     @NotNull
@@ -21,6 +23,7 @@ public class CreateRequest {
 
     private String location;
 
+    @NotNull
     private String thumbnail;
 
     @NotNull

@@ -46,14 +46,14 @@ public class MockBoardRepository implements BoardRepository {
     @Override
     public Optional<Board> findById(Long boardId) {
         return store.stream()
-                .filter(board -> board.getId().equals(boardId))
+                .filter(board -> board.getId().equals(boardId) && !board.isDeleted())
                 .findAny();
     }
 
     @Override
     public Optional<Board> findWithAccount(Long boardId) {
         return store.stream()
-                .filter(board -> board.getId().equals(boardId))
+                .filter(board -> board.getId().equals(boardId) && !board.isDeleted())
                 .findAny();
     }
 
@@ -76,23 +76,24 @@ public class MockBoardRepository implements BoardRepository {
         for (long i = 1L; i <= number; i++) {
             Account account = Account.builder()
                     .id(10000 + i)
-                    .email("test" + (10000 + i) +"@test.com")
-                    .password("[Encode]test" + (10000 + i) + "Password")
-                    .nickname("test" + (10000 + i) + "Nickname")
-                    .profile("test" + (10000 + i) + "Profile")
-                    .intro("test" + (10000 + i) + "Intro")
+                    .email("test" + i +"@test.com")
+                    .password("[Encode]test" + i + "Password")
+                    .nickname("test" + i + "Nickname")
+                    .profile("test" + i + "Profile")
+                    .intro("test" + i + "Intro")
                     .build();
 
-            Board.builder()
+            Board board = Board.builder()
                     .id(20000 + i)
                     .account(account)
-                    .title("test" + (20000 + i) + "title")
-                    .content("test"+ (20000 + i) + "content")
-                    .location("test"+ (20000 + i) + "location")
-                    .thumbnail("test"+ (20000 + i) + "thumbnail")
+                    .title("test" + i + "Title")
+                    .content("test" + i + "Content")
+                    .location("test" + i + "Location")
+                    .thumbnail("test" + i + "Thumbnail")
                     .category(Category.RESTAURANT)
-                    .images(new ArrayList<>(Arrays.asList("test"+ (20000 + i) + "image1", "test"+ (20000 + i) + "image2")))
+                    .images(new ArrayList<>(Arrays.asList("test" + i + "Image1", "test" + i + "Image2")))
                     .build();
+            save(board);
         }
     }
 

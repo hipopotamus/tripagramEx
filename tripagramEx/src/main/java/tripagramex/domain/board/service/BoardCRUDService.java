@@ -15,7 +15,7 @@ import tripagramex.domain.board.repository.BoardRepository;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class BoardService {
+public class BoardCRUDService {
 
     private final BoardRepository boardRepository;
 
