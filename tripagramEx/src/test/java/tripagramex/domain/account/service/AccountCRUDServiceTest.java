@@ -65,11 +65,13 @@ class AccountCRUDServiceTest {
     @DisplayName("계정 단일 조회_성공")
     public void readTest_Success() {
         //given
+        Long accountId = 10001L;
+
         //when
-        ReadResponse readResponse = accountCrudService.read(1L);
+        ReadResponse readResponse = accountCrudService.read(accountId);
 
         //then
-        assertThat(readResponse.getId()).isEqualTo(1L);
+        assertThat(readResponse.getId()).isEqualTo(accountId);
         assertThat(readResponse.getEmail()).isEqualTo("test1@test.com");
         assertThat(readResponse.getNickname()).isEqualTo("test1Nickname");
         assertThat(readResponse.getIntro()).isEqualTo("test1Intro");
@@ -82,11 +84,13 @@ class AccountCRUDServiceTest {
     @DisplayName("로그인 계정 조회_성공")
     public void readLoginAccount_Success() {
         //given
+        Long accountId = 10001L;
+
         //when
-        ReadLoginAccountResponse readLoginAccountResponse = accountCrudService.readLoginAccount(1L);
+        ReadLoginAccountResponse readLoginAccountResponse = accountCrudService.readLoginAccount(accountId);
 
         //then
-        assertThat(readLoginAccountResponse.getId()).isEqualTo(1L);
+        assertThat(readLoginAccountResponse.getId()).isEqualTo(accountId);
         assertThat(readLoginAccountResponse.getEmail()).isEqualTo("test1@test.com");
         assertThat(readLoginAccountResponse.getNickname()).isEqualTo("test1Nickname");
         assertThat(readLoginAccountResponse.getProfile()).isEqualTo("test1Profile");
@@ -96,6 +100,7 @@ class AccountCRUDServiceTest {
     @DisplayName("계정 수정_성공")
     public void updateAccount_Success() {
         //given
+        Long accountId = 10001L;
         String updatePassword = "updatePassword";
         String updateNickname = "updateNickname";
         String updateProfile = "updateProfile";
@@ -108,10 +113,10 @@ class AccountCRUDServiceTest {
                 .intro(updateIntro)
                 .build();
         //when
-        accountCrudService.update(1L, updateRequest);
+        accountCrudService.update(accountId, updateRequest);
 
         //then
-        Account account = accountRepository.findById(1L).get();
+        Account account = accountRepository.findById(accountId).get();
         assertThat(account.getPassword()).isEqualTo("[Encode]" + updatePassword);
         assertThat(account.getNickname()).isEqualTo(updateNickname);
         assertThat(account.getProfile()).isEqualTo(updateProfile);
@@ -124,6 +129,7 @@ class AccountCRUDServiceTest {
     @DisplayName("계정 수정_Password, Nickname 없는 경우")
     public void updateAccount_NonExist_Password_Nickname() {
         //given
+        Long accountId = 10001L;
         String updateProfile = "updateProfile";
         String updateIntro = "updateIntro";
 
@@ -133,10 +139,10 @@ class AccountCRUDServiceTest {
                 .build();
 
         //when
-        accountCrudService.update(1L, updateRequest);
+        accountCrudService.update(accountId, updateRequest);
 
         //then
-        Account account = accountRepository.findById(1L).get();
+        Account account = accountRepository.findById(accountId).get();
         assertThat(account.getPassword()).isEqualTo("[Encode]test1Password");
         assertThat(account.getNickname()).isEqualTo("test1Nickname");
         assertThat(account.getProfile()).isEqualTo(updateProfile);
@@ -148,11 +154,13 @@ class AccountCRUDServiceTest {
     @DisplayName("계정 삭제_성공")
     public void deleteAccount_Success() {
         //given
+        Long accountId = 10001L;
+
         //when
-        accountCrudService.delete(1L);
+        accountCrudService.delete(accountId);
 
         //then
-        Optional<Account> optionalAccount = accountRepository.findById(1L);
+        Optional<Account> optionalAccount = accountRepository.findById(accountId);
         assertThat(optionalAccount.isPresent()).isFalse();
     }
 

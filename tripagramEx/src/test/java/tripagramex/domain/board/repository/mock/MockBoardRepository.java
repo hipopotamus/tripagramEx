@@ -13,7 +13,7 @@ import java.util.Optional;
 public class MockBoardRepository implements BoardRepository {
 
     public static List<Board> store = new ArrayList<>();
-    public static long sequence = 0L;
+    public static long sequence = 30000L;
 
     public MockBoardRepository() {
         initiate();
@@ -64,7 +64,7 @@ public class MockBoardRepository implements BoardRepository {
 
     public void initiate() {
         store.clear();
-        sequence = 0L;
+        sequence = 30000L;
         initSample();
     }
 
@@ -84,7 +84,7 @@ public class MockBoardRepository implements BoardRepository {
                     .build();
 
             Board board = Board.builder()
-                    .id(20000 + i)
+                    .id(30000 + i)
                     .account(account)
                     .title("test" + i + "Title")
                     .content("test" + i + "Content")

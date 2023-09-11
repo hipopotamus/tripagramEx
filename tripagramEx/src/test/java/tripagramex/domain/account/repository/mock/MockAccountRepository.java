@@ -10,7 +10,7 @@ import java.util.Optional;
 public class MockAccountRepository implements AccountRepository {
 
     public static List<Account> store = new ArrayList<>();
-    public static long sequence = 0L;
+    public static long sequence = 10000L;
 
     public MockAccountRepository() {
         initiate();
@@ -74,7 +74,7 @@ public class MockAccountRepository implements AccountRepository {
 
     public void initiate() {
         store.clear();
-        sequence = 0L;
+        sequence = 10000L;
         initSample();
     }
 
@@ -85,7 +85,7 @@ public class MockAccountRepository implements AccountRepository {
     private void saveSample(Long number) {
         for (long i = 1L; i <= number; i++) {
             Account account = Account.builder()
-                    .id(i)
+                    .id(10000 + i)
                     .email("test" + i +"@test.com")
                     .password("[Encode]test" + i + "Password")
                     .nickname("test" + i + "Nickname")

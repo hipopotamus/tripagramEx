@@ -68,7 +68,7 @@ class BoardServiceTest {
     @DisplayName("게시물 조회_성공")
     public void readTest_Success() {
         //given
-        Long boardId = 20001L;
+        Long boardId = 30001L;
 
         //when
         ReadResponse readResponse = boardCRUDService.read(boardId);
@@ -89,7 +89,7 @@ class BoardServiceTest {
     @DisplayName("게시물 수정_성공")
     public void updateTest_Success() {
         //given
-        Long boardId = 20001L;
+        Long boardId = 30001L;
         String updateTitle = "testUpdateTitle";
         String updateContent = "testUpdateContent";
         String updateLocation = "testUpdateLocation";
@@ -124,7 +124,7 @@ class BoardServiceTest {
     @DisplayName("게시물 수정_일부 필드 누락")
     public void updateTest_FieldOmission() {
         //given
-        Long boardId = 20001L;
+        Long boardId = 30001L;
         String updateContent = "testUpdateContent";
         String updateThumbnail = "testUpdateThumbnail";
         List<String> updateImages = new ArrayList<>(List.of("test1Image1", "testUpdateImage2", "testUpdateImage3"));
@@ -154,7 +154,7 @@ class BoardServiceTest {
     @DisplayName("게시물 수정_모든 필드 누락")
     public void updateTest_AllFieldOmission() {
         //given
-        Long boardId = 20001L;
+        Long boardId = 30001L;
 
         UpdateRequest updateRequest = UpdateRequest.builder()
                 .build();
@@ -178,7 +178,7 @@ class BoardServiceTest {
     @DisplayName("게시물 삭제_성공")
     public void deleteTest_Success() {
         //given
-        Long boardId = 20001L;
+        Long boardId = 30001L;
 
         //then
         boardCRUDService.delete(boardId);
