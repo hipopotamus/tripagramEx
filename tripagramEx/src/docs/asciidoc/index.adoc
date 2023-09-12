@@ -27,35 +27,35 @@ include::{snippets}/login/response-headers.adoc[]
 
 == 계정 생성
 .curl-request
-include::{snippets}/create/curl-request.adoc[]
+include::{snippets}/createAccount/curl-request.adoc[]
 
 .http-request
-include::{snippets}/create/http-request.adoc[]
+include::{snippets}/createAccount/http-request.adoc[]
 
 .request-fields
-include::{snippets}/create/request-fields.adoc
+include::{snippets}/createAccount/request-fields.adoc
 
 .http-response
-include::{snippets}/create/http-response.adoc[]
+include::{snippets}/createAccount/http-response.adoc[]
 
 .response-fields
-include::{snippets}/create/response-fields.adoc[]
+include::{snippets}/createAccount/response-fields.adoc[]
 
 == 계정 단일 조회
 .curl-request
-include::{snippets}/read/curl-request.adoc[]
+include::{snippets}/readAccount/curl-request.adoc[]
 
 .http-request
-include::{snippets}/read/http-request.adoc[]
+include::{snippets}/readAccount/http-request.adoc[]
 
 .path-parameters
-include::{snippets}/read/path-parameters.adoc[]
+include::{snippets}/readAccount/path-parameters.adoc[]
 
 .http-response
-include::{snippets}/read/http-response.adoc[]
+include::{snippets}/readAccount/http-response.adoc[]
 
 .response-fields
-include::{snippets}/read/response-fields.adoc[]
+include::{snippets}/readAccount/response-fields.adoc[]
 
 == 로그인 계정 조회
 .curl-request
@@ -75,32 +75,32 @@ include::{snippets}/readLoginAccount/response-fields.adoc[]
 
 == 계정 수정
 .curl-request
-include::{snippets}/update/curl-request.adoc[]
+include::{snippets}/updateAccount/curl-request.adoc[]
 
 .http-request
-include::{snippets}/update/http-request.adoc[]
+include::{snippets}/updateAccount/http-request.adoc[]
 
 .request-headers
-include::{snippets}/update/request-headers.adoc[]
+include::{snippets}/updateAccount/request-headers.adoc[]
 
 .http-response
-include::{snippets}/update/http-response.adoc[]
+include::{snippets}/updateAccount/http-response.adoc[]
 
 .response-fields
-include::{snippets}/update/response-fields.adoc[]
+include::{snippets}/updateAccount/response-fields.adoc[]
 
 == 계정 삭제
 .curl-request
-include::{snippets}/delete/curl-request.adoc[]
+include::{snippets}/deleteAccount/curl-request.adoc[]
 
 .http-request
-include::{snippets}/delete/http-request.adoc[]
+include::{snippets}/deleteAccount/http-request.adoc[]
 
 .request-header
-include::{snippets}/delete/request-headers.adoc[]
+include::{snippets}/deleteAccount/request-headers.adoc[]
 
 .http-response
-include::{snippets}/delete/http-response.adoc[]
+include::{snippets}/deleteAccount/http-response.adoc[]
 
 == 임시 비밀번호 안내 메일 발송
 .curl-request
@@ -155,6 +155,26 @@ include::{snippets}/checkFollow/http-response.adoc[]
 .response-fields
 include::{snippets}/checkFollow/response-fields.adoc[]
 
+***
+== BoardController
+=== 게시물 생성
+.curl-request
+include::{snippets}/createBoard/curl-request.adoc[]
+
+.http-request
+include::{snippets}/createBoard/http-request.adoc[]
+
+.request-header
+include::{snippets}/createBoard/request-headers.adoc[]
+
+.request-field
+include::{snippets}/createBoard/request-fields.adoc[]
+
+.http-response
+include::{snippets}/createBoard/http-response.adoc[]
+
+.response-field
+include::{snippets}/createBoard/response-fields.adoc[]
 
 
 ***

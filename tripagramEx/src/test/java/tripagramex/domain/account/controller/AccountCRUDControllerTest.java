@@ -19,7 +19,6 @@ import tripagramex.domain.account.repository.AccountRepository;
 import tripagramex.global.security.authentication.UserAccount;
 import tripagramex.global.security.dto.LoginDto;
 import tripagramex.global.security.jwt.JwtProcessor;
-import tripagramex.util.Treatment;
 
 import java.util.List;
 
@@ -27,7 +26,8 @@ import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static tripagramex.util.ApiDocumentUtils.getRequestPreProcessor;
 import static tripagramex.util.ApiDocumentUtils.getResponsePreProcessor;
@@ -36,7 +36,7 @@ import static tripagramex.util.ApiDocumentUtils.getResponsePreProcessor;
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
-class AccountCRUDControllerTest extends Treatment {
+class AccountCRUDControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -87,7 +87,7 @@ class AccountCRUDControllerTest extends Treatment {
     }
 
     @Test
-    @DisplayName("계정 추가_성공")
+    @DisplayName("계정 생성_성공")
     void createTest_Success() throws Exception {
 
         //given
@@ -119,7 +119,7 @@ class AccountCRUDControllerTest extends Treatment {
         createResult
                 .andExpect(status().isCreated())
                 .andDo(document(
-                        "create",
+                        "createAccount",
                         getRequestPreProcessor(),
                         getResponsePreProcessor(),
                         requestFields(
@@ -149,7 +149,7 @@ class AccountCRUDControllerTest extends Treatment {
         actions
                 .andExpect(status().isOk())
                 .andDo(document(
-                        "read",
+                        "readAccount",
                         getRequestPreProcessor(),
                         getResponsePreProcessor(),
                         pathParameters(
@@ -231,7 +231,7 @@ class AccountCRUDControllerTest extends Treatment {
         //then
         update.andExpect(status().isOk())
                 .andDo(document(
-                        "update",
+                        "updateAccount",
                         getRequestPreProcessor(),
                         getResponsePreProcessor(),
                         requestHeaders(
@@ -266,7 +266,7 @@ class AccountCRUDControllerTest extends Treatment {
         //then
         delete.andExpect(status().isOk())
                 .andDo(document(
-                        "delete",
+                        "deleteAccount",
                         getRequestPreProcessor(),
                         getResponsePreProcessor(),
                         requestHeaders(
