@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import tripagramex.domain.account.entity.Account;
 import tripagramex.domain.account.repository.AccountRepository;
 import tripagramex.domain.board.dto.CreateRequest;
+import tripagramex.domain.board.dto.UpdateRequest;
 import tripagramex.domain.board.enums.Category;
 import tripagramex.global.security.authentication.UserAccount;
 import tripagramex.global.security.jwt.JwtProcessor;
@@ -148,4 +149,61 @@ class BoardCRUDControllerTest {
                 ));
     }
 
+    @Test
+    @DisplayName("게시물 수정_성공")
+    void updateTest_Success() throws Exception {
+        //given
+        Long accountId = 10001L;
+        Account account = accountRepository.findById(accountId).get();
+        String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
+
+        Long boardId = 30001L;
+        String updateTitle = "testUpdateTitle";
+        String updateContent = "testUpdateContent";
+        String updateLocation = "testUpdateLocation";
+        String updateThumbnail = "testUpdateThumbnail";
+        Category updateCategory = Category.SPOT;
+        List<String> updateImages = new ArrayList<>(List.of("testUpdateImage1", "testUpdateImage2"));
+
+        UpdateRequest updateRequest = UpdateRequest.builder()
+                .title(updateTitle)
+                .content(updateContent)
+                .location(updateLocation)
+                .thumbnail(updateThumbnail)
+                .category(updateCategory)
+                .images(updateImages)
+                .build();
+
+        String updateRequestByJson = gson.toJson(updateRequest);
+
+        //when
+        ResultActions update = mockMvc.perform(
+                post("/boards/{boardId}", boardId)
+                        .header("Authorization", jwt)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(updateRequestByJson)
+        );
+
+        //then
+        update
+                .andExpect(status().isOk())
+                .andDo(document(
+                        "updateBoard",
+                        getRequestPreProcessor(),
+                        getResponsePreProcessor(),
+                        requestHeaders(
+                                headerWithName("Authorization").description("JWT")
+                        ),
+                        requestFields(
+                                fieldWithPath("title").description("제목").optional(),
+                                fieldWithPath("content").description("내용").optional(),
+                                fieldWithPath("location").description("위치").optional(),
+                                fieldWithPath("thumbnail").description("썸네일 URL").optional(),
+                                fieldWithPath("category").description("카테고리").optional(),
+                                fieldWithPath("images").description("이미지 리스트").optional()
+                        )
+                ));
+
+    }
 }

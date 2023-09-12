@@ -83,6 +83,9 @@ include::{snippets}/updateAccount/http-request.adoc[]
 .request-headers
 include::{snippets}/updateAccount/request-headers.adoc[]
 
+.request-fields
+include::{snippets}/updateAccount/request-fields.adoc[]
+
 .http-response
 include::{snippets}/updateAccount/http-response.adoc[]
 
@@ -191,6 +194,22 @@ include::{snippets}/readBoard/http-response.adoc[]
 
 .response-field
 include::{snippets}/readBoard/response-fields.adoc[]
+
+=== 게시물 수정
+.curl-request
+include::{snippets}/updateBoard/curl-request.adoc[]
+
+.http-request
+include::{snippets}/updateBoard/http-request.adoc[]
+
+.request-headers
+include::{snippets}/updateBoard/request-headers.adoc[]
+
+.request-fields
+include::{snippets}/updateBoard/request-fields.adoc[]
+
+.http-response
+include::{snippets}/updateBoard/http-response.adoc[]
 
 
 ***
