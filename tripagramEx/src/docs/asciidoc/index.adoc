@@ -176,6 +176,22 @@ include::{snippets}/createBoard/http-response.adoc[]
 .response-field
 include::{snippets}/createBoard/response-fields.adoc[]
 
+=== 게시물 단일 조회
+.curl-request
+include::{snippets}/readBoard/curl-request.adoc[]
+
+.http-request
+include::{snippets}/readBoard/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/readBoard/path-parameters.adoc[]
+
+.http-response
+include::{snippets}/readBoard/http-response.adoc[]
+
+.response-field
+include::{snippets}/readBoard/response-fields.adoc[]
+
 
 ***
 == ImageController

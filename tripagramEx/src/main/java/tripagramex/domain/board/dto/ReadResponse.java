@@ -4,8 +4,10 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import tripagramex.domain.board.entity.Board;
 import tripagramex.domain.board.enums.Category;
 
@@ -14,7 +16,11 @@ import java.util.List;
 
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ReadResponse {
+
+    private Long boardId;
 
     private Long accountId;
 
@@ -38,12 +44,13 @@ public class ReadResponse {
 
     public static ReadResponse of(Board board) {
         return ReadResponse.builder()
+                .boardId(board.getId())
                 .accountId(board.getAccount().getId())
                 .title(board.getTitle())
                 .content(board.getContent())
                 .location(board.getLocation())
                 .thumbnail(board.getThumbnail())
-                .view(board.getView())
+                .view(board.getViews())
                 .category(board.getCategory())
                 .images(board.getImages())
                 .createdAt(board.getCreatedAt())
