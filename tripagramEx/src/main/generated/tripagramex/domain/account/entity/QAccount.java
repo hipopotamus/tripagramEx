@@ -45,7 +45,7 @@ public class QAccount extends EntityPathBase<Account> {
 
     public final StringPath profile = createString("profile");
 
-    public final EnumPath<Role> role = createEnum("role", Role.class);
+    public final EnumPath<tripagramex.domain.account.enums.Role> role = createEnum("role", tripagramex.domain.account.enums.Role.class);
 
     public final StringPath tempPassword = createString("tempPassword");
 

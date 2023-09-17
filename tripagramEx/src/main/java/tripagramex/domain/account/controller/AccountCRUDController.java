@@ -9,6 +9,7 @@ import tripagramex.domain.account.dto.*;
 import tripagramex.domain.account.service.AccountCRUDService;
 import tripagramex.domain.account.validation.AccountValidator;
 import tripagramex.global.argumentresolver.LoginAccountId;
+import tripagramex.global.common.dto.IdDto;
 
 @RestController
 @RequestMapping("/accounts")

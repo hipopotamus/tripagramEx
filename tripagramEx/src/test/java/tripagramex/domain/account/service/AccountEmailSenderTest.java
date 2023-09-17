@@ -43,13 +43,14 @@ class AccountEmailSenderTest {
     @DisplayName("임시 비밀번호 적용_성공")
     public void applyTempPassword_Success() {
         //given
+        Long accountId = 10001L;
         String tempPassword = "TempPassword";
 
         //when
-        accountEmailService.applyTempPassword(1L, tempPassword);
+        accountEmailService.applyTempPassword(accountId, tempPassword);
 
         //then
-        Account account = accountRepository.findById(1L).get();
+        Account account = accountRepository.findById(accountId).get();
         assertThat(account.getPassword()).isEqualTo("[Encode]" + tempPassword);
     }
 

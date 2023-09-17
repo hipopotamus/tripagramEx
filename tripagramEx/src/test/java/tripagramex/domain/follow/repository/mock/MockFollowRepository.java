@@ -11,7 +11,7 @@ import java.util.Optional;
 public class MockFollowRepository implements FollowRepository {
 
     public static List<Follow> store = new ArrayList<>();
-    public static long sequence = 0L;
+    public static long sequence = 20001L;
 
     public MockFollowRepository() {
         initiate();
@@ -62,12 +62,12 @@ public class MockFollowRepository implements FollowRepository {
 
     public void initiate() {
         store.clear();
-        sequence = 0L;
+        sequence = 20001L;
         initSample();
     }
 
     private void initSample() {
-        saveSampleFollow(1L, 3L);
+        saveSampleFollow(10001L, 10003L);
     }
 
     private void saveSampleFollow(Long followerId, Long followingId) {
@@ -78,6 +78,7 @@ public class MockFollowRepository implements FollowRepository {
                 .id(followingId)
                 .build();
         Follow follow = Follow.builder()
+                .id(20001L)
                 .follower(follower)
                 .following(following)
                 .build();

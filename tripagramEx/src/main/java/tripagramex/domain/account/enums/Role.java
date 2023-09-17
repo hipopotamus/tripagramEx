@@ -1,4 +1,4 @@
-package tripagramex.domain.account.entity;
+package tripagramex.domain.account.enums;
 
 import lombok.Getter;
 

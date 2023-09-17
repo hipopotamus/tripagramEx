@@ -34,8 +34,8 @@ class FollowServiceTest {
     @DisplayName("팔로우 시행_성공")
     public void postFollow_Success() {
         //given
-        Long followerId = 1L;
-        Long followingId = 2L;
+        Long followerId = 10001L;
+        Long followingId = 10002L;
 
         //when
         PostFollowResponse postFollowResponse = followService.postFollow(followerId, followingId);
@@ -53,8 +53,8 @@ class FollowServiceTest {
     @DisplayName("팔로우 취소_성공")
     public void cancelFollow_Success() {
         //given
-        Long followerId = 1L;
-        Long followingId = 3L;
+        Long followerId = 10001L;
+        Long followingId = 10003L;
 
         //when
         PostFollowResponse postFollowResponse = followService.postFollow(followerId, followingId);
@@ -72,8 +72,8 @@ class FollowServiceTest {
     @DisplayName("팔로우 반복 시행_팔로우 시행 성공")
     public void repeatFollow_postFollow_Success() {
         //given
-        Long followerId = 1L;
-        Long followingId = 2L;
+        Long followerId = 10001L;
+        Long followingId = 10002L;
 
         //when
         followService.postFollow(followerId, followingId);
@@ -95,8 +95,8 @@ class FollowServiceTest {
     @DisplayName("팔로우 여부 확인_성공")
     public void checkFollow_Success() {
         //given
-        Long followerId = 1L;
-        Long followingId = 2L;
+        Long followerId = 10001L;
+        Long followingId = 10002L;
 
         //when
         CheckFollowResponse checkFollowResponse = followService.checkFollow(followerId, followingId);

@@ -9,7 +9,7 @@ v1.0.0, 2023.05.15
 
 ***
 == AccountController
-== 로그인
+=== 로그인
 .curl-request
 include::{snippets}/login/curl-request.adoc[]
 
@@ -25,39 +25,39 @@ include::{snippets}/login/http-response.adoc[]
 .response-headers
 include::{snippets}/login/response-headers.adoc[]
 
-== 계정 생성
+=== 계정 생성
 .curl-request
-include::{snippets}/create/curl-request.adoc[]
+include::{snippets}/createAccount/curl-request.adoc[]
 
 .http-request
-include::{snippets}/create/http-request.adoc[]
+include::{snippets}/createAccount/http-request.adoc[]
 
 .request-fields
-include::{snippets}/create/request-fields.adoc
+include::{snippets}/createAccount/request-fields.adoc
 
 .http-response
-include::{snippets}/create/http-response.adoc[]
+include::{snippets}/createAccount/http-response.adoc[]
 
 .response-fields
-include::{snippets}/create/response-fields.adoc[]
+include::{snippets}/createAccount/response-fields.adoc[]
 
-== 계정 단일 조회
+=== 계정 단일 조회
 .curl-request
-include::{snippets}/read/curl-request.adoc[]
+include::{snippets}/readAccount/curl-request.adoc[]
 
 .http-request
-include::{snippets}/read/http-request.adoc[]
+include::{snippets}/readAccount/http-request.adoc[]
 
 .path-parameters
-include::{snippets}/read/path-parameters.adoc[]
+include::{snippets}/readAccount/path-parameters.adoc[]
 
 .http-response
-include::{snippets}/read/http-response.adoc[]
+include::{snippets}/readAccount/http-response.adoc[]
 
 .response-fields
-include::{snippets}/read/response-fields.adoc[]
+include::{snippets}/readAccount/response-fields.adoc[]
 
-== 로그인 계정 조회
+=== 로그인 계정 조회
 .curl-request
 include::{snippets}/readLoginAccount/curl-request.adoc[]
 
@@ -73,36 +73,39 @@ include::{snippets}/readLoginAccount/http-response.adoc[]
 .response-fields
 include::{snippets}/readLoginAccount/response-fields.adoc[]
 
-== 계정 수정
+=== 계정 수정
 .curl-request
-include::{snippets}/update/curl-request.adoc[]
+include::{snippets}/updateAccount/curl-request.adoc[]
 
 .http-request
-include::{snippets}/update/http-request.adoc[]
+include::{snippets}/updateAccount/http-request.adoc[]
 
 .request-headers
-include::{snippets}/update/request-headers.adoc[]
+include::{snippets}/updateAccount/request-headers.adoc[]
+
+.request-fields
+include::{snippets}/updateAccount/request-fields.adoc[]
 
 .http-response
-include::{snippets}/update/http-response.adoc[]
+include::{snippets}/updateAccount/http-response.adoc[]
 
 .response-fields
-include::{snippets}/update/response-fields.adoc[]
+include::{snippets}/updateAccount/response-fields.adoc[]
 
-== 계정 삭제
+=== 계정 삭제
 .curl-request
-include::{snippets}/delete/curl-request.adoc[]
+include::{snippets}/deleteAccount/curl-request.adoc[]
 
 .http-request
-include::{snippets}/delete/http-request.adoc[]
+include::{snippets}/deleteAccount/http-request.adoc[]
 
 .request-header
-include::{snippets}/delete/request-headers.adoc[]
+include::{snippets}/deleteAccount/request-headers.adoc[]
 
 .http-response
-include::{snippets}/delete/http-response.adoc[]
+include::{snippets}/deleteAccount/http-response.adoc[]
 
-== 임시 비밀번호 안내 메일 발송
+=== 임시 비밀번호 안내 메일 발송
 .curl-request
 include::{snippets}/sendTempPasswordGuidMail/curl-request.adoc[]
 
@@ -136,7 +139,7 @@ include::{snippets}/postFollow/http-response.adoc[]
 .response-fields
 include::{snippets}/postFollow/response-fields.adoc[]
 
-== 팔로우 여부 확인
+=== 팔로우 여부 확인
 .curl-request
 include::{snippets}/checkFollow/curl-request.adoc[]
 
@@ -155,7 +158,71 @@ include::{snippets}/checkFollow/http-response.adoc[]
 .response-fields
 include::{snippets}/checkFollow/response-fields.adoc[]
 
+***
+== BoardController
+=== 게시물 생성
+.curl-request
+include::{snippets}/createBoard/curl-request.adoc[]
 
+.http-request
+include::{snippets}/createBoard/http-request.adoc[]
+
+.request-header
+include::{snippets}/createBoard/request-headers.adoc[]
+
+.request-field
+include::{snippets}/createBoard/request-fields.adoc[]
+
+.http-response
+include::{snippets}/createBoard/http-response.adoc[]
+
+.response-field
+include::{snippets}/createBoard/response-fields.adoc[]
+
+=== 게시물 단일 조회
+.curl-request
+include::{snippets}/readBoard/curl-request.adoc[]
+
+.http-request
+include::{snippets}/readBoard/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/readBoard/path-parameters.adoc[]
+
+.http-response
+include::{snippets}/readBoard/http-response.adoc[]
+
+.response-field
+include::{snippets}/readBoard/response-fields.adoc[]
+
+=== 게시물 수정
+.curl-request
+include::{snippets}/updateBoard/curl-request.adoc[]
+
+.http-request
+include::{snippets}/updateBoard/http-request.adoc[]
+
+.request-headers
+include::{snippets}/updateBoard/request-headers.adoc[]
+
+.request-fields
+include::{snippets}/updateBoard/request-fields.adoc[]
+
+.http-response
+include::{snippets}/updateBoard/http-response.adoc[]
+
+=== 게시물 삭제
+.curl-request
+include::{snippets}/deleteBoard/curl-request.adoc[]
+
+.http-request
+include::{snippets}/deleteBoard/http-request.adoc[]
+
+.request-header
+include::{snippets}/deleteBoard/request-headers.adoc[]
+
+.http-response
+include::{snippets}/deleteBoard/http-response.adoc[]
 
 ***
 == ImageController

@@ -26,13 +26,9 @@ public class QBoard extends EntityPathBase<Board> {
 
     public final tripagramex.domain.account.entity.QAccount account;
 
-    public final ListPath<BoardPhoto, QBoardPhoto> boardPhotos = this.<BoardPhoto, QBoardPhoto>createList("boardPhotos", BoardPhoto.class, QBoardPhoto.class, PathInits.DIRECT2);
-
     public final ListPath<BoardTag, QBoardTag> boardTags = this.<BoardTag, QBoardTag>createList("boardTags", BoardTag.class, QBoardTag.class, PathInits.DIRECT2);
 
-    public final EnumPath<Category> category = createEnum("category", Category.class);
-
-    public final ListPath<tripagramex.domain.comment.entity.Comment, tripagramex.domain.comment.entity.QComment> comments = this.<tripagramex.domain.comment.entity.Comment, tripagramex.domain.comment.entity.QComment>createList("comments", tripagramex.domain.comment.entity.Comment.class, tripagramex.domain.comment.entity.QComment.class, PathInits.DIRECT2);
+    public final EnumPath<tripagramex.domain.board.enums.Category> category = createEnum("category", tripagramex.domain.board.enums.Category.class);
 
     public final StringPath content = createString("content");
 
@@ -44,16 +40,18 @@ public class QBoard extends EntityPathBase<Board> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final NumberPath<Integer> likeCount = createNumber("likeCount", Integer.class);
+    public final ListPath<String, StringPath> images = this.<String, StringPath>createList("images", String.class, StringPath.class, PathInits.DIRECT2);
 
     public final StringPath location = createString("location");
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;
 
+    public final StringPath thumbnail = createString("thumbnail");
+
     public final StringPath title = createString("title");
 
-    public final NumberPath<Integer> view = createNumber("view", Integer.class);
+    public final NumberPath<Integer> views = createNumber("views", Integer.class);
 
     public QBoard(String variable) {
         this(Board.class, forVariable(variable), INITS);

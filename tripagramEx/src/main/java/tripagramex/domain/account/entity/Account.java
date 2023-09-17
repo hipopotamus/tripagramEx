@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import tripagramex.domain.account.enums.Role;
 import tripagramex.domain.board.entity.Board;
 import tripagramex.global.auditing.BaseField;
 

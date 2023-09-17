@@ -6,11 +6,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import tripagramex.domain.account.entity.Account;
-import tripagramex.domain.comment.entity.Comment;
+import tripagramex.domain.board.enums.Category;
 import tripagramex.global.auditing.BaseField;
+import tripagramex.global.jpa.converter.StringListConverter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Getter
@@ -33,21 +35,32 @@ public class Board extends BaseField {
 
     private String location;
 
-    private Integer likeCount;
+    private String thumbnail;
 
-    private Integer view;
+    private int views = 0;
 
     @Enumerated(EnumType.STRING)
     private Category category;
 
+    @Convert(converter = StringListConverter.class)
+    private List<String> images = new ArrayList<>();
+
     @OneToMany(mappedBy = "board")
     private final List<BoardTag> boardTags = new ArrayList<>();
 
-    @OneToMany(mappedBy = "board")
-    private final List<BoardPhoto> boardPhotos = new ArrayList<>();
+    public void addAccountId(Long accountId) {
+        account = Account.builder()
+                .id(accountId)
+                .build();
+    }
 
-    @OneToMany(mappedBy = "board")
-    private final List<Comment> comments = new ArrayList<>();
-
+    public void modify(Board board) {
+        Optional.ofNullable(board.getTitle()).ifPresent(title -> this.title = title);
+        Optional.ofNullable(board.getContent()).ifPresent(content -> this.content = content);
+        Optional.ofNullable(board.getLocation()).ifPresent(location -> this.location = location);
+        Optional.ofNullable(board.getThumbnail()).ifPresent(thumbnail -> this.thumbnail = thumbnail);
+        Optional.ofNullable(board.getCategory()).ifPresent(category -> this.category = category);
+        Optional.ofNullable(board.getImages()).ifPresent(images -> this.images = images);
+    }
 
 }
