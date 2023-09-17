@@ -26,8 +26,7 @@ import java.util.List;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
@@ -204,6 +203,34 @@ class BoardCRUDControllerTest {
                                 fieldWithPath("images").description("이미지 리스트").optional()
                         )
                 ));
+    }
 
+    @Test
+    @DisplayName("게시물 삭제_성공")
+    void deleteTest_Success() throws Exception {
+        //given
+        Long accountId = 10001L;
+        Account account = accountRepository.findById(accountId).get();
+        String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
+
+        Long boardId = 30001L;
+
+        //when
+        ResultActions delete = mockMvc.perform(
+                delete("/boards/{boardId}", boardId)
+                        .header("Authorization", jwt)
+        );
+
+        //then
+        delete
+                .andExpect(status().isOk())
+                .andDo(document(
+                        "deleteBoard",
+                        getRequestPreProcessor(),
+                        getResponsePreProcessor(),
+                        requestHeaders(
+                                headerWithName("Authorization").description("JWT")
+                        )
+                ));
     }
 }

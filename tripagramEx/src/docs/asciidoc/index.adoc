@@ -9,7 +9,7 @@ v1.0.0, 2023.05.15
 
 ***
 == AccountController
-== 로그인
+=== 로그인
 .curl-request
 include::{snippets}/login/curl-request.adoc[]
 
@@ -25,7 +25,7 @@ include::{snippets}/login/http-response.adoc[]
 .response-headers
 include::{snippets}/login/response-headers.adoc[]
 
-== 계정 생성
+=== 계정 생성
 .curl-request
 include::{snippets}/createAccount/curl-request.adoc[]
 
@@ -41,7 +41,7 @@ include::{snippets}/createAccount/http-response.adoc[]
 .response-fields
 include::{snippets}/createAccount/response-fields.adoc[]
 
-== 계정 단일 조회
+=== 계정 단일 조회
 .curl-request
 include::{snippets}/readAccount/curl-request.adoc[]
 
@@ -57,7 +57,7 @@ include::{snippets}/readAccount/http-response.adoc[]
 .response-fields
 include::{snippets}/readAccount/response-fields.adoc[]
 
-== 로그인 계정 조회
+=== 로그인 계정 조회
 .curl-request
 include::{snippets}/readLoginAccount/curl-request.adoc[]
 
@@ -73,7 +73,7 @@ include::{snippets}/readLoginAccount/http-response.adoc[]
 .response-fields
 include::{snippets}/readLoginAccount/response-fields.adoc[]
 
-== 계정 수정
+=== 계정 수정
 .curl-request
 include::{snippets}/updateAccount/curl-request.adoc[]
 
@@ -92,7 +92,7 @@ include::{snippets}/updateAccount/http-response.adoc[]
 .response-fields
 include::{snippets}/updateAccount/response-fields.adoc[]
 
-== 계정 삭제
+=== 계정 삭제
 .curl-request
 include::{snippets}/deleteAccount/curl-request.adoc[]
 
@@ -105,7 +105,7 @@ include::{snippets}/deleteAccount/request-headers.adoc[]
 .http-response
 include::{snippets}/deleteAccount/http-response.adoc[]
 
-== 임시 비밀번호 안내 메일 발송
+=== 임시 비밀번호 안내 메일 발송
 .curl-request
 include::{snippets}/sendTempPasswordGuidMail/curl-request.adoc[]
 
@@ -139,7 +139,7 @@ include::{snippets}/postFollow/http-response.adoc[]
 .response-fields
 include::{snippets}/postFollow/response-fields.adoc[]
 
-== 팔로우 여부 확인
+=== 팔로우 여부 확인
 .curl-request
 include::{snippets}/checkFollow/curl-request.adoc[]
 
@@ -211,6 +211,18 @@ include::{snippets}/updateBoard/request-fields.adoc[]
 .http-response
 include::{snippets}/updateBoard/http-response.adoc[]
 
+=== 게시물 삭제
+.curl-request
+include::{snippets}/deleteBoard/curl-request.adoc[]
+
+.http-request
+include::{snippets}/deleteBoard/http-request.adoc[]
+
+.request-header
+include::{snippets}/deleteBoard/request-headers.adoc[]
+
+.http-response
+include::{snippets}/deleteBoard/http-response.adoc[]
 
 ***
 == ImageController
