@@ -14,10 +14,9 @@ public class GenericBoardValidator implements BoardValidator {
     private final BoardRepository boardRepository;
 
     @Override
-    public void verifyExistsById(Long boardId) {
-        if (!boardRepository.existsById(boardId)) {
-            throw new BusinessLogicException(ExceptionCode.NOT_FOUND_BOARD);
-        }
+    public Board verifyExistsById(Long boardId) {
+        return boardRepository.findById(boardId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_BOARD));
     }
 
     @Override

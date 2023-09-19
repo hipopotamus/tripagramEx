@@ -1,8 +1,10 @@
 package tripagramex.domain.board.validation;
 
+import tripagramex.domain.board.entity.Board;
+
 public interface BoardValidator {
 
-    void verifyExistsById(Long boardId);
+    Board verifyExistsById(Long boardId);
 
     void verifyUpdateAuthority(Long accountId, Long boardId);
 }

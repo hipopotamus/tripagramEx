@@ -7,13 +7,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import tripagramex.domain.account.entity.Account;
 import tripagramex.domain.board.entity.Board;
+import tripagramex.global.auditing.BaseField;
 
 @Entity
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Likes {
+public class Likes extends BaseField {
 
     @Id
     @GeneratedValue

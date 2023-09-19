@@ -1,12 +1,14 @@
 package tripagramex.domain.account.validation;
 
+import tripagramex.domain.account.entity.Account;
+
 public interface AccountValidator {
 
     void verifyDuplicateEmail(String email);
 
     void verifyDuplicateNickname(String nickname);
 
-    void verifyExistsById(Long accountId);
+    Account verifyExistsById(Long accountId);
 
     void verifyExistsByEmail(String email);
 
