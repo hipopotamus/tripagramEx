@@ -17,4 +17,8 @@ public interface LikeRepository {
     @Query("select count(likes) > 0 from Likes likes " +
             "where likes.account.id = :accountId and likes.board.id = :boardId and likes.deleted = false")
     boolean existByBothId(@Param("accountId") Long accountId, @Param("boardId") Long boardId);
+
+    @Query("select count(likes) from Likes likes " +
+            "where likes.board.id = :boardId and likes.deleted = false")
+    Long countBoardLike(@Param("boardId") Long boardId);
 }

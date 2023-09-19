@@ -9,6 +9,7 @@ import tripagramex.domain.account.validation.AccountValidator;
 import tripagramex.domain.board.entity.Board;
 import tripagramex.domain.board.validation.BoardValidator;
 import tripagramex.domain.likes.dto.CheckLikeResponse;
+import tripagramex.domain.likes.dto.CountBoardLikeResponse;
 import tripagramex.domain.likes.dto.PostLikeResponse;
 import tripagramex.domain.likes.service.LikeService;
 import tripagramex.domain.likes.validation.LikeValidator;
@@ -38,5 +39,11 @@ public class LikeController {
     public ResponseEntity<CheckLikeResponse> checkLike(@LoginAccountId Long loginAccountId, @PathVariable Long boardId) {
         CheckLikeResponse checkLikeResponse = likeService.checkLike(loginAccountId, boardId);
         return new ResponseEntity<>(checkLikeResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("/{boardId}")
+    public ResponseEntity<CountBoardLikeResponse> countBoardLike(@PathVariable Long boardId) {
+        CountBoardLikeResponse countBoardLikeResponse = likeService.countBoardLike(boardId);
+        return new ResponseEntity<>(countBoardLikeResponse, HttpStatus.OK);
     }
 }

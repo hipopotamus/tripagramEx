@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import tripagramex.domain.account.entity.Account;
 import tripagramex.domain.board.entity.Board;
 import tripagramex.domain.likes.dto.CheckLikeResponse;
+import tripagramex.domain.likes.dto.CountBoardLikeResponse;
 import tripagramex.domain.likes.dto.PostLikeResponse;
 import tripagramex.domain.likes.entity.Likes;
 import tripagramex.domain.likes.repository.LikeRepository;
@@ -48,5 +49,10 @@ public class LikeService {
     public CheckLikeResponse checkLike(Long accountId, Long boardId) {
         boolean likeFlag = likeRepository.existByBothId(accountId, boardId);
         return new CheckLikeResponse(likeFlag);
+    }
+
+    public CountBoardLikeResponse countBoardLike(Long boardId) {
+        Long likeCount = likeRepository.countBoardLike(boardId);
+        return new CountBoardLikeResponse(likeCount);
     }
 }
