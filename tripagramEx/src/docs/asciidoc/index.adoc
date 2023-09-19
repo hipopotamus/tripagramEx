@@ -225,6 +225,62 @@ include::{snippets}/deleteBoard/request-headers.adoc[]
 include::{snippets}/deleteBoard/http-response.adoc[]
 
 ***
+== LikeController
+=== 좋아요 시행
+.curl-request
+include::{snippets}/postLike/curl-request.adoc[]
+
+.http-request
+include::{snippets}/postLike/http-request.adoc[]
+
+.request-header
+include::{snippets}/postLike/request-headers.adoc[]
+
+.path-parameters
+include::{snippets}/postLike/path-parameters.adoc[]
+
+.http-response
+include::{snippets}/postLike/http-response.adoc[]
+
+.response-fields
+include::{snippets}/postLike/response-fields.adoc[]
+
+=== 좋아요 여부 확인
+.curl-request
+include::{snippets}/checkLike/curl-request.adoc[]
+
+.http-request
+include::{snippets}/checkLike/http-request.adoc[]
+
+.request-header
+include::{snippets}/checkLike/request-headers.adoc[]
+
+.path-parameters
+include::{snippets}/checkLike/path-parameters.adoc[]
+
+.http-response
+include::{snippets}/checkLike/http-response.adoc[]
+
+.response-fields
+include::{snippets}/checkLike/response-fields.adoc[]
+
+=== 게시물의 좋아요 개수 조회
+.curl-request
+include::{snippets}/countBoardLike/curl-request.adoc[]
+
+.http-request
+include::{snippets}/countBoardLike/http-request.adoc[]
+
+.path-parameter
+include::{snippets}/countBoardLike/path-parameters.adoc[]
+
+.http-response
+include::{snippets}/countBoardLike/http-response.adoc[]
+
+.response-fields
+include::{snippets}/countBoardLike/response-fields.adoc[]
+
+***
 == ImageController
 === 이미지 저장
 .curl-request

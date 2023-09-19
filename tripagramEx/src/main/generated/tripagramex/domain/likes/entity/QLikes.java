@@ -22,11 +22,22 @@ public class QLikes extends EntityPathBase<Likes> {
 
     public static final QLikes likes = new QLikes("likes");
 
+    public final tripagramex.global.auditing.QBaseField _super = new tripagramex.global.auditing.QBaseField(this);
+
     public final tripagramex.domain.account.entity.QAccount account;
 
     public final tripagramex.domain.board.entity.QBoard board;
 
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
+
+    //inherited
+    public final BooleanPath deleted = _super.deleted;
+
     public final NumberPath<Long> id = createNumber("id", Long.class);
+
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;
 
     public QLikes(String variable) {
         this(Likes.class, forVariable(variable), INITS);

@@ -22,7 +22,8 @@ public enum ExceptionCode {
     DUPLICATION_NICKNAME(400, "동일한 닉네임의 계정이 존재합니다.", "014"),
     EMPTY_FILE(400, "파일이 비어있습니다.", "015"),
     ILLEGAL_FILENAME(400, "잘못된 형식의 파일 이름입니다.", "016"),
-    FAIL_REMOVE_ACCOUNT(400, "회원을 삭제 할 수 없습니다.", "017");
+    FAIL_REMOVE_ACCOUNT(400, "회원을 삭제 할 수 없습니다.", "017"),
+    SELF_LIKE(400, "자기 자신의 게시물에 좋아요를 할 수 없습니다.", "018");
 
     private int status;
     private String message;
