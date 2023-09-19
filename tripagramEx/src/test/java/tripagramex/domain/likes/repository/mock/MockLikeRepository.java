@@ -38,7 +38,10 @@ public class MockLikeRepository implements LikeRepository {
 
     @Override
     public Optional<Likes> findByAccountAndBoard(Account account, Board board) {
-        return Optional.empty();
+        return store.stream()
+                .filter(likes -> (likes.getAccount().getId().equals(account.getId()) &&
+                        likes.getBoard().getId().equals(board.getId())))
+                .findFirst();
     }
 
     @Override
@@ -48,7 +51,7 @@ public class MockLikeRepository implements LikeRepository {
 
     @Override
     public Long countBoardLike(Long boardId) {
-        return null;
+        return 1L;
     }
 
     public void initiate() {
