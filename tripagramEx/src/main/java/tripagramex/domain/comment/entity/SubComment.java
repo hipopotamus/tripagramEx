@@ -6,27 +6,23 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import tripagramex.domain.account.entity.Account;
-import tripagramex.domain.board.entity.Board;
 import tripagramex.global.auditing.BaseField;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Comment extends BaseField {
+public class SubComment extends BaseField {
 
     @Id
     @GeneratedValue
-    @Column(name = "comment_id")
+    @Column(name = "subComment_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "board_id")
-    private Board board;
+    @JoinColumn(name = "comment_id")
+    private Comment comment;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id")
@@ -34,6 +30,10 @@ public class Comment extends BaseField {
 
     private String content;
 
-    @OneToMany(mappedBy = "comment")
-    private List<SubComment> subCommentList = new ArrayList<>();
+    public void addSubCommentToComment(Comment comment) {
+        this.comment = comment;
+        if (!comment.getSubCommentList().contains(this)) {
+            comment.getSubCommentList().add(this);
+        }
+    }
 }
