@@ -34,6 +34,16 @@ public class Comment extends BaseField {
 
     private String content;
 
+    private String beforeDeleteContent;
+
     @OneToMany(mappedBy = "comment")
     private List<SubComment> subCommentList = new ArrayList<>();
+
+    public void modifyContent(String content) {
+        this.content = content;
+    }
+
+    public void saveContent() {
+        beforeDeleteContent = content;
+    }
 }

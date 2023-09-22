@@ -26,6 +26,8 @@ public class QComment extends EntityPathBase<Comment> {
 
     public final tripagramex.domain.account.entity.QAccount account;
 
+    public final StringPath beforeDeleteContent = createString("beforeDeleteContent");
+
     public final tripagramex.domain.board.entity.QBoard board;
 
     public final StringPath content = createString("content");
@@ -40,6 +42,8 @@ public class QComment extends EntityPathBase<Comment> {
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;
+
+    public final ListPath<SubComment, QSubComment> subCommentList = this.<SubComment, QSubComment>createList("subCommentList", SubComment.class, QSubComment.class, PathInits.DIRECT2);
 
     public QComment(String variable) {
         this(Comment.class, forVariable(variable), INITS);
