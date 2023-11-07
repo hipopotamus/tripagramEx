@@ -24,6 +24,7 @@ public class Comment extends BaseField {
     @Column(name = "comment_id")
     private Long id;
 
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
     private Board board;
@@ -32,12 +33,20 @@ public class Comment extends BaseField {
     @JoinColumn(name = "account_id")
     private Account account;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    private Comment parent;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "targetAccount_id")
+    private Account targetAccount;
+
     private String content;
 
     private String beforeDeleteContent;
 
-    @OneToMany(mappedBy = "comment")
-    private List<SubComment> subCommentList = new ArrayList<>();
+    @OneToMany(mappedBy = "parent")
+    private List<Comment> subComments = new ArrayList<>();
 
     public void modifyContent(String content) {
         this.content = content;

@@ -30,10 +30,4 @@ public class SubComment extends BaseField {
 
     private String content;
 
-    public void addSubCommentToComment(Comment comment) {
-        this.comment = comment;
-        if (!comment.getSubCommentList().contains(this)) {
-            comment.getSubCommentList().add(this);
-        }
-    }
 }

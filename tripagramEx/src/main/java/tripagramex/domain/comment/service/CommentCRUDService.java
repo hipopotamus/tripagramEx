@@ -7,6 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 import tripagramex.domain.account.entity.Account;
 import tripagramex.domain.board.entity.Board;
 import tripagramex.domain.comment.dto.CreateRequest;
+import tripagramex.domain.comment.dto.CreateSubCommentRequest;
+import tripagramex.domain.comment.dto.ReadResponse;
 import tripagramex.domain.comment.dto.UpdateRequest;
 import tripagramex.domain.comment.entity.Comment;
 import tripagramex.domain.comment.repository.CommentRepository;
@@ -28,6 +30,14 @@ public class CommentCRUDService {
     }
 
     @Transactional
+    public IdDto createSubComment(CreateSubCommentRequest createSubCommentRequest, Board board, Account account,
+                                  Account targetAccount, Comment comment) {
+        Comment subComment = createSubCommentRequest.toComment(board, account, targetAccount, comment);
+        Comment saveSubComment = commentRepository.save(subComment);
+        return new IdDto(saveSubComment.getId());
+    }
+
+    @Transactional
     public void updateComment(UpdateRequest updateRequest, Long commentId) {
         Comment comment = commentRepository.findById(commentId).get();
         comment.modifyContent(updateRequest.getContent());
@@ -36,11 +46,22 @@ public class CommentCRUDService {
     @Transactional
     public void deleteComment(Long commentId) {
         Comment comment = commentRepository.findById(commentId).get();
-        if (!comment.getSubCommentList().isEmpty()) {
+        if (!comment.getSubComments().isEmpty()) {
             comment.saveContent();
             comment.modifyContent("삭제된 댓글입니다.");
         } else {
             comment.softDelete();
         }
+    }
+
+    public ReadResponse readComment(Long commentId) {
+        Long parentId = commentRepository.checkParent(commentId);
+        if (parentId == 0) {
+            Comment comment = commentRepository.findWithAccount(commentId).get();
+            return ReadResponse.of(comment);
+        }
+
+        Comment comment = commentRepository.findWithAccount(parentId).get();
+        return ReadResponse.of(comment);
     }
 }
