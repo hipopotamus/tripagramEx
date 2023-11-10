@@ -1,10 +1,13 @@
 package tripagramex.domain.comment.repository;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import tripagramex.domain.comment.entity.Comment;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 public interface CommentRepository {
@@ -26,5 +29,16 @@ public interface CommentRepository {
     @EntityGraph(attributePaths = {"account", "subComments", "parent"})
     @Query("select comment from Comment comment " +
             "where comment.id = :commentId and comment.deleted = false ")
-    Optional<Comment> findWithAccount(@Param("commentId") Long commentId);
+    Optional<Comment> findWithAccountAndSubCommentsAndParent(@Param("commentId") Long commentId);
+
+    @EntityGraph(attributePaths = {"account", "subComments", "parent"})
+    Slice<Comment> findAllByBoard_Id(Long boardId, Pageable pageable);
+
+    @EntityGraph(attributePaths = {"account", "subComments", "parent"})
+    @Query("select comment from Comment comment where comment.board.id = :boardId " +
+            "and (comment.createdAt < :lastCommentCreatedAt or (comment.createdAt = :lastCommentCreatedAt and comment.id < :lastCommentId))")
+    Slice<Comment> findByBoardIdWithAccountAndSubCommentsAndParent(@Param("boardId") Long boardId,
+                                                                   @Param("lastCommentId") Long lastCommentId,
+                                                                   @Param("lastCommentCreatedAt") LocalDateTime lastCommentCreatedAt,
+                                                                   Pageable pageable);
 }

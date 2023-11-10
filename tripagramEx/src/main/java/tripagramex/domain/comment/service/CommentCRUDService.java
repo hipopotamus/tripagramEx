@@ -2,6 +2,8 @@ package tripagramex.domain.comment.service;
 
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tripagramex.domain.account.entity.Account;
@@ -13,6 +15,9 @@ import tripagramex.domain.comment.dto.UpdateRequest;
 import tripagramex.domain.comment.entity.Comment;
 import tripagramex.domain.comment.repository.CommentRepository;
 import tripagramex.global.common.dto.IdDto;
+import tripagramex.global.common.dto.SliceDto;
+
+import java.time.LocalDateTime;
 
 @Builder
 @Service
@@ -57,11 +62,24 @@ public class CommentCRUDService {
     public ReadResponse readComment(Long commentId) {
         Long parentId = commentRepository.checkParent(commentId);
         if (parentId == 0) {
-            Comment comment = commentRepository.findWithAccount(commentId).get();
+            Comment comment = commentRepository.findWithAccountAndSubCommentsAndParent(commentId).get();
             return ReadResponse.of(comment);
         }
 
-        Comment comment = commentRepository.findWithAccount(parentId).get();
+        Comment comment = commentRepository.findWithAccountAndSubCommentsAndParent(parentId).get();
         return ReadResponse.of(comment);
+    }
+
+    public SliceDto<ReadResponse> readBoardComments(Long boardId, Long lastCommentId, LocalDateTime lastCommentCreatedAt, Pageable pageable) {
+
+        Slice<Comment> comments;
+
+        if (lastCommentId == null) {
+            comments = commentRepository.findAllByBoard_Id(boardId, pageable);
+        } else {
+            comments = commentRepository.findByBoardIdWithAccountAndSubCommentsAndParent(boardId, lastCommentId, lastCommentCreatedAt, pageable);
+        }
+
+        return new SliceDto<>(comments.map(ReadResponse::of));
     }
 }
