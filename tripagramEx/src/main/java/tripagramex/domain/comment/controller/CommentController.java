@@ -12,10 +12,7 @@ import tripagramex.domain.account.entity.Account;
 import tripagramex.domain.account.validation.AccountValidator;
 import tripagramex.domain.board.entity.Board;
 import tripagramex.domain.board.validation.BoardValidator;
-import tripagramex.domain.comment.dto.CreateRequest;
-import tripagramex.domain.comment.dto.CreateSubCommentRequest;
-import tripagramex.domain.comment.dto.ReadResponse;
-import tripagramex.domain.comment.dto.UpdateRequest;
+import tripagramex.domain.comment.dto.*;
 import tripagramex.domain.comment.entity.Comment;
 import tripagramex.domain.comment.service.CommentCRUDService;
 import tripagramex.domain.comment.validation.CommentValidator;
@@ -87,6 +84,17 @@ public class CommentController {
                                                                     @PageableDefault(size = 5,  sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
 
         SliceDto<ReadResponse> response = commentCRUDService.readBoardComments(boardId, lastCommentId, lastCommentCreatedAt, pageable);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/account")
+    public ResponseEntity<SliceDto<ReadResponseByAccount>> readAccountComments(@LoginAccountId Long loginAccountId,
+                                                                               @RequestParam(required = false) Long lastCommentId,
+                                                                               @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime lastCommentCreatedAt,
+                                                                               @PageableDefault(size = 5,  sort = {"createdAt", "˚id"}, direction = Sort.Direction.DESC) Pageable pageable) {
+
+        SliceDto<ReadResponseByAccount> response = commentCRUDService.readAccountComments(loginAccountId, lastCommentId, lastCommentCreatedAt, pageable);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

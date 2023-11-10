@@ -8,10 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tripagramex.domain.account.entity.Account;
 import tripagramex.domain.board.entity.Board;
-import tripagramex.domain.comment.dto.CreateRequest;
-import tripagramex.domain.comment.dto.CreateSubCommentRequest;
-import tripagramex.domain.comment.dto.ReadResponse;
-import tripagramex.domain.comment.dto.UpdateRequest;
+import tripagramex.domain.comment.dto.*;
 import tripagramex.domain.comment.entity.Comment;
 import tripagramex.domain.comment.repository.CommentRepository;
 import tripagramex.global.common.dto.IdDto;
@@ -82,4 +79,18 @@ public class CommentCRUDService {
 
         return new SliceDto<>(comments.map(ReadResponse::of));
     }
+
+    public SliceDto<ReadResponseByAccount> readAccountComments(Long accountId, Long lastCommentId, LocalDateTime lastCommentCreatedAt, Pageable pageable) {
+
+        Slice<Comment> comments;
+
+        if (lastCommentId == null) {
+            comments = commentRepository.findAllByAccount_Id(accountId, pageable);
+        } else {
+            comments = commentRepository.findByAccountWithAccountAndTargetAccountAndBoard(accountId, lastCommentId, lastCommentCreatedAt, pageable);
+        }
+
+        return new SliceDto<>(comments.map(ReadResponseByAccount::of));
+    }
+
 }

@@ -4,7 +4,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class CustomCommentRepository implements CommentInquiryRepositoryByQueryDsl{
+public class CustomCommentRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
 }

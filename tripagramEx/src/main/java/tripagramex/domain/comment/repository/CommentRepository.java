@@ -35,10 +35,20 @@ public interface CommentRepository {
     Slice<Comment> findAllByBoard_Id(Long boardId, Pageable pageable);
 
     @EntityGraph(attributePaths = {"account", "subComments", "parent"})
+    Slice<Comment> findAllByAccount_Id(Long accountId, Pageable pageable);
+
+    @EntityGraph(attributePaths = {"account", "subComments", "parent"})
     @Query("select comment from Comment comment where comment.board.id = :boardId " +
             "and (comment.createdAt < :lastCommentCreatedAt or (comment.createdAt = :lastCommentCreatedAt and comment.id < :lastCommentId))")
     Slice<Comment> findByBoardIdWithAccountAndSubCommentsAndParent(@Param("boardId") Long boardId,
                                                                    @Param("lastCommentId") Long lastCommentId,
                                                                    @Param("lastCommentCreatedAt") LocalDateTime lastCommentCreatedAt,
                                                                    Pageable pageable);
+    @EntityGraph(attributePaths = {"account", "targetAccount", "board"})
+    @Query("select comment from Comment comment where comment.account.id = :accountId and comment.deleted = false " +
+            "and (comment.createdAt < :lastCommentCreatedAt or (comment.createdAt = :lastCommentCreatedAt and comment.id < :lastCommentId))")
+    Slice<Comment> findByAccountWithAccountAndTargetAccountAndBoard(@Param("accountId") Long accountId,
+                                                                    @Param("lastCommentId") Long lastCommentId,
+                                                                    @Param("lastCommentCreatedAt") LocalDateTime lastCommentCreatedAt,
+                                                                    Pageable pageable);
 }

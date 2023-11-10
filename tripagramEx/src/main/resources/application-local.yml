@@ -35,7 +35,7 @@ decorator:
     p6spy:
       enable-logging: true
 
-logTracer: false
+logTracer: true
 
 dir : /Users/hipo/Desktop/project/toy_project/tripagramEx/tripagramEx/image/
 
