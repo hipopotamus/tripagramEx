@@ -72,7 +72,7 @@ public class CommentCRUDService {
         Slice<Comment> comments;
 
         if (lastCommentId == null) {
-            comments = commentRepository.findAllByBoard_Id(boardId, pageable);
+            comments = commentRepository.findByBoard(boardId, pageable);
         } else {
             comments = commentRepository.findByBoardIdWithAccountAndSubCommentsAndParent(boardId, lastCommentId, lastCommentCreatedAt, pageable);
         }
@@ -85,7 +85,7 @@ public class CommentCRUDService {
         Slice<Comment> comments;
 
         if (lastCommentId == null) {
-            comments = commentRepository.findAllByAccount_Id(accountId, pageable);
+            comments = commentRepository.findByAccount(accountId, pageable);
         } else {
             comments = commentRepository.findByAccountWithAccountAndTargetAccountAndBoard(accountId, lastCommentId, lastCommentCreatedAt, pageable);
         }

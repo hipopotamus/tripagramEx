@@ -92,7 +92,7 @@ public class CommentController {
     public ResponseEntity<SliceDto<ReadResponseByAccount>> readAccountComments(@LoginAccountId Long loginAccountId,
                                                                                @RequestParam(required = false) Long lastCommentId,
                                                                                @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime lastCommentCreatedAt,
-                                                                               @PageableDefault(size = 5,  sort = {"createdAt", "˚id"}, direction = Sort.Direction.DESC) Pageable pageable) {
+                                                                               @PageableDefault(size = 5,  sort = {"createdAt", "id"}, direction = Sort.Direction.DESC) Pageable pageable) {
 
         SliceDto<ReadResponseByAccount> response = commentCRUDService.readAccountComments(loginAccountId, lastCommentId, lastCommentCreatedAt, pageable);
 

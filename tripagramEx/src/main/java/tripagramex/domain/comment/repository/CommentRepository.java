@@ -32,10 +32,14 @@ public interface CommentRepository {
     Optional<Comment> findWithAccountAndSubCommentsAndParent(@Param("commentId") Long commentId);
 
     @EntityGraph(attributePaths = {"account", "subComments", "parent"})
-    Slice<Comment> findAllByBoard_Id(Long boardId, Pageable pageable);
+    @Query("select comment from Comment comment " +
+            "where comment.board.id = :boardId and comment.deleted = false")
+    Slice<Comment> findByBoard(@Param("boardId") Long boardId, Pageable pageable);
 
-    @EntityGraph(attributePaths = {"account", "subComments", "parent"})
-    Slice<Comment> findAllByAccount_Id(Long accountId, Pageable pageable);
+    @EntityGraph(attributePaths = {"account", "targetAccount", "board"})
+    @Query("select comment from Comment comment " +
+            "where comment.account.id = :accountId and comment.deleted = false")
+    Slice<Comment> findByAccount(@Param("accountId") Long accountId, Pageable pageable);
 
     @EntityGraph(attributePaths = {"account", "subComments", "parent"})
     @Query("select comment from Comment comment where comment.board.id = :boardId " +
