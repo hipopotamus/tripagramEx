@@ -26,6 +26,8 @@ public class QComment extends EntityPathBase<Comment> {
 
     public final tripagramex.domain.account.entity.QAccount account;
 
+    public final StringPath beforeDeleteContent = createString("beforeDeleteContent");
+
     public final tripagramex.domain.board.entity.QBoard board;
 
     public final StringPath content = createString("content");
@@ -40,6 +42,12 @@ public class QComment extends EntityPathBase<Comment> {
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;
+
+    public final QComment parent;
+
+    public final ListPath<Comment, QComment> subComments = this.<Comment, QComment>createList("subComments", Comment.class, QComment.class, PathInits.DIRECT2);
+
+    public final tripagramex.domain.account.entity.QAccount targetAccount;
 
     public QComment(String variable) {
         this(Comment.class, forVariable(variable), INITS);
@@ -61,6 +69,8 @@ public class QComment extends EntityPathBase<Comment> {
         super(type, metadata, inits);
         this.account = inits.isInitialized("account") ? new tripagramex.domain.account.entity.QAccount(forProperty("account")) : null;
         this.board = inits.isInitialized("board") ? new tripagramex.domain.board.entity.QBoard(forProperty("board"), inits.get("board")) : null;
+        this.parent = inits.isInitialized("parent") ? new QComment(forProperty("parent"), inits.get("parent")) : null;
+        this.targetAccount = inits.isInitialized("targetAccount") ? new tripagramex.domain.account.entity.QAccount(forProperty("targetAccount")) : null;
     }
 
 }

@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="63be65bd-9cf1-4145-ba9f-4c0cacdb29b8" name="Changes" comment="" />
+    <list default="true" id="63be65bd-9cf1-4145-ba9f-4c0cacdb29b8" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tripagramEx/src/main/java/tripagramex/domain/comment/controller/CommentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/tripagramEx/src/main/java/tripagramex/domain/comment/controller/CommentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tripagramEx/src/main/java/tripagramex/domain/comment/repository/CommentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/tripagramEx/src/main/java/tripagramex/domain/comment/repository/CommentRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tripagramEx/src/main/java/tripagramex/domain/comment/service/CommentCRUDService.java" beforeDir="false" afterPath="$PROJECT_DIR$/tripagramEx/src/main/java/tripagramex/domain/comment/service/CommentCRUDService.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -21,6 +26,10 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="2OHBFKk2H477KFJs2DxD72sZSTp" />
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
@@ -30,6 +39,11 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;android.gradle.sync.needed&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -47,6 +61,8 @@
       <workItem from="1690376536899" duration="52000" />
       <workItem from="1691730667069" duration="12000" />
       <workItem from="1692843252577" duration="19000" />
+      <workItem from="1699334603226" duration="628000" />
+      <workItem from="1701242974023" duration="11000" />
     </task>
     <servers />
   </component>
