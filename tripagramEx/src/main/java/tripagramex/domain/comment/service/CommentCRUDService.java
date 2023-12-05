@@ -33,8 +33,8 @@ public class CommentCRUDService {
 
     @Transactional
     public IdDto createSubComment(CreateSubCommentRequest createSubCommentRequest, Board board, Account account,
-                                  Account targetAccount, Comment comment) {
-        Comment subComment = createSubCommentRequest.toComment(board, account, targetAccount, comment);
+                                  Comment comment) {
+        Comment subComment = createSubCommentRequest.toComment(board, account, comment);
         Comment saveSubComment = commentRepository.save(subComment);
         return new IdDto(saveSubComment.getId());
     }
@@ -54,17 +54,6 @@ public class CommentCRUDService {
         } else {
             comment.softDelete();
         }
-    }
-
-    public ReadResponse readComment(Long commentId) {
-        Long parentId = commentRepository.checkParent(commentId);
-        if (parentId == 0) {
-            Comment comment = commentRepository.findWithAccountAndSubCommentsAndParent(commentId).get();
-            return ReadResponse.of(comment);
-        }
-
-        Comment comment = commentRepository.findWithAccountAndSubCommentsAndParent(parentId).get();
-        return ReadResponse.of(comment);
     }
 
     public SliceDto<ReadResponse> readBoardComments(Long boardId, Long lastCommentId, LocalDateTime lastCommentCreatedAt, Pageable pageable) {

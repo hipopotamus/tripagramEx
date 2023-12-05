@@ -47,17 +47,11 @@ public class CommentController {
                                                   @RequestBody CreateSubCommentRequest createSubCommentRequest) {
         Board board = boardValidator.verifyExistsById(createSubCommentRequest.getBoardId());
         Account account = accountValidator.verifyExistsById(loginAccountId);
-        Account targetAccount = accountValidator.verifyExistsById(createSubCommentRequest.getTargetAccountId());
+        accountValidator.verifyExistsById(createSubCommentRequest.getTargetId());
         Comment comment = commentValidator.verifyExistsById(createSubCommentRequest.getCommentId());
 
-        IdDto idDto = commentCRUDService.createSubComment(createSubCommentRequest, board, account, targetAccount, comment);
+        IdDto idDto = commentCRUDService.createSubComment(createSubCommentRequest, board, account, comment);
         return new ResponseEntity<>(idDto, HttpStatus.CREATED);
-    }
-
-    @GetMapping("{commentId}")
-    public ResponseEntity<ReadResponse> readComment(@PathVariable Long commentId) {
-        ReadResponse readResponse = commentCRUDService.readComment(commentId);
-        return new ResponseEntity<>(readResponse, HttpStatus.OK);
     }
 
     @PostMapping("/{commentId}")

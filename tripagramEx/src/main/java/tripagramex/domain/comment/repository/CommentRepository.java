@@ -21,16 +21,6 @@ public interface CommentRepository {
     @Query("select nullif(comment.account.id, :accountId) from Comment comment where comment.id = :commentId")
     Long checkUpdateAuthority(@Param("accountId") Long accountId, @Param("commentId") Long commentId);
 
-
-    @Query("select case when (comment.parent is null) then 0 else comment.parent.id end from Comment comment " +
-            "where comment.id = :commentId")
-    Long checkParent(@Param("commentId") Long commentId);
-
-    @EntityGraph(attributePaths = {"account", "subComments", "parent"})
-    @Query("select comment from Comment comment " +
-            "where comment.id = :commentId and comment.deleted = false ")
-    Optional<Comment> findWithAccountAndSubCommentsAndParent(@Param("commentId") Long commentId);
-
     @EntityGraph(attributePaths = {"account", "subComments", "parent"})
     @Query("select comment from Comment comment " +
             "where comment.board.id = :boardId and comment.deleted = false")

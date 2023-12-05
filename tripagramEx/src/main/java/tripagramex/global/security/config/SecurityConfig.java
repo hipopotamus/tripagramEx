@@ -55,8 +55,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/accountEmail/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/boards/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/likes/*").permitAll()
-                .requestMatchers(HttpMethod.GET, "/comments/account/**").authenticated()
-                .requestMatchers(HttpMethod.GET, "/comments/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/comments/board/**").permitAll()
                 .anyRequest().authenticated();
 
         http
