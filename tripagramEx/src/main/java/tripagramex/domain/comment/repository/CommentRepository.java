@@ -3,6 +3,7 @@ package tripagramex.domain.comment.repository;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.EntityGraph;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import tripagramex.domain.comment.entity.Comment;
@@ -18,7 +19,11 @@ public interface CommentRepository {
     Optional<Comment> findById(@Param("commentId") Long commentId);
 
     @Query("select nullif(comment.account.id, :accountId) from Comment comment where comment.id = :commentId")
-    Long checkUpdateAuthority(@Param("accountId") Long accountId, @Param("commentId") Long commentId);
+    Long checkAuthority(@Param("accountId") Long accountId, @Param("commentId") Long commentId);
+
+    @Modifying
+    @Query("update Comment comment set comment.deleted = true where comment.parent.id = :commentId")
+    void deleteSubComment(@Param("commentId") Long commentId);
 
     @EntityGraph(attributePaths = {"account"})
     @Query("select comment from Comment comment " +

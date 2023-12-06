@@ -46,12 +46,8 @@ public class CommentCRUDService {
     @Transactional
     public void deleteComment(Long commentId) {
         Comment comment = commentRepository.findById(commentId).get();
-        if (!comment.getSubComments().isEmpty()) {
-            comment.saveContent();
-            comment.modifyContent("삭제된 댓글입니다.");
-        } else {
-            comment.softDelete();
-        }
+        commentRepository.deleteSubComment(comment.getId());
+        comment.softDelete();
     }
 
     public SliceDto<ReadResponse> readBoardComments(Long boardId, Long lastCommentId, Pageable pageable) {
