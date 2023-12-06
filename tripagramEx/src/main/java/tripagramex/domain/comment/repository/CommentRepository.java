@@ -24,7 +24,7 @@ public interface CommentRepository {
     @Query("select comment from Comment comment " +
             "left join fetch comment.subComments subcomment where comment.board.id = :boardId " +
             "and (subcomment.deleted = false or subcomment.deleted = null) " +
-            "and comment.targetId = 0L " +
+            "and comment.target.id = 0L " +
             "and comment.deleted = false")
     Slice<Comment> findByBoard(@Param("boardId") Long boardId, Pageable pageable);
 
@@ -37,7 +37,7 @@ public interface CommentRepository {
     @Query("select comment from Comment comment " +
             "left join fetch comment.subComments subcomment where comment.board.id = :boardId " +
             "and (subcomment.deleted = false or subcomment.deleted = null) " +
-            "and comment.targetId = 0L " +
+            "and comment.target.id = 0L " +
             "and comment.id < :lastCommentId")
     Slice<Comment> findByBoardIdWithAccountAndSubCommentsAndParent(@Param("boardId") Long boardId,
                                                                    @Param("lastCommentId") Long lastCommentId,

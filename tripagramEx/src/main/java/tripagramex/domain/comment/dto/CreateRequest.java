@@ -17,6 +17,12 @@ public class CreateRequest {
                 .content(content)
                 .board(board)
                 .account(account)
+                .target(Account.builder()
+                        .id(0L)
+                        .build())
+                .parent(Comment.builder()
+                        .id(0L)
+                        .build())
                 .build();
     }
 }

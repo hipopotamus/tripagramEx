@@ -37,9 +37,9 @@ public class Comment extends BaseField {
     @JoinColumn(name = "parent_id")
     private Comment parent;
 
-    private Long targetId = 0L;
-
-    private String targetNickname = "";
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "target_id")
+    private Account target;
 
     private String content;
 

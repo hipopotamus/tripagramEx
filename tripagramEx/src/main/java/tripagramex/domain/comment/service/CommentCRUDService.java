@@ -31,8 +31,8 @@ public class CommentCRUDService {
 
     @Transactional
     public IdDto createSubComment(CreateSubCommentRequest createSubCommentRequest, Board board, Account account,
-                                  Comment comment) {
-        Comment subComment = createSubCommentRequest.toComment(board, account, comment);
+                                  Comment comment, Account target) {
+        Comment subComment = createSubCommentRequest.toComment(board, account, comment, target);
         Comment saveSubComment = commentRepository.save(subComment);
         return new IdDto(saveSubComment.getId());
     }

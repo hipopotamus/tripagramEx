@@ -44,10 +44,10 @@ public class CommentController {
                                                   @RequestBody CreateSubCommentRequest createSubCommentRequest) {
         Board board = boardValidator.verifyExistsById(createSubCommentRequest.getBoardId());
         Account account = accountValidator.verifyExistsById(loginAccountId);
-        accountValidator.verifyExistsById(createSubCommentRequest.getTargetId());
+        Account target = accountValidator.verifyExistsById(createSubCommentRequest.getTargetId());
         Comment comment = commentValidator.verifyExistsById(createSubCommentRequest.getCommentId());
 
-        IdDto idDto = commentCRUDService.createSubComment(createSubCommentRequest, board, account, comment);
+        IdDto idDto = commentCRUDService.createSubComment(createSubCommentRequest, board, account, comment, target);
         return new ResponseEntity<>(idDto, HttpStatus.CREATED);
     }
 

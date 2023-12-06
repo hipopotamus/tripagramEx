@@ -18,13 +18,12 @@ public class CreateSubCommentRequest {
 
     private String content;
 
-    public Comment toComment(Board board, Account account, Comment comment) {
+    public Comment toComment(Board board, Account account, Comment comment, Account target) {
         return Comment.builder()
                 .content(content)
                 .board(board)
                 .account(account)
-                .targetId(targetId)
-                .targetNickname(targetNickname)
+                .target(target)
                 .parent(comment)
                 .build();
     }
