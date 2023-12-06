@@ -12,9 +12,9 @@ public class ReadResponseByAccount {
 
     private Long commentId;
 
-    private Long boardId;
+    private BoardDto board;
 
-    private AccountDto account;
+    private Long targetId;
 
     private String targetNickname;
 
@@ -25,8 +25,8 @@ public class ReadResponseByAccount {
     static public ReadResponseByAccount of(Comment comment) {
         return ReadResponseByAccount.builder()
                 .commentId(comment.getId())
-                .boardId(comment.getBoard().getId())
-                .account(AccountDto.of(comment.getAccount()))
+                .board(BoardDto.of(comment.getBoard()))
+                .targetId(comment.getTargetId())
                 .targetNickname(comment.getTargetNickname())
                 .content(comment.getContent())
                 .modifiedAt(comment.getModifiedAt())

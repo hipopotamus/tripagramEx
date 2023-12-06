@@ -14,8 +14,6 @@ import tripagramex.domain.comment.repository.CommentRepository;
 import tripagramex.global.common.dto.IdDto;
 import tripagramex.global.common.dto.SliceDto;
 
-import java.time.LocalDateTime;
-
 @Builder
 @Service
 @Transactional(readOnly = true)
@@ -56,27 +54,27 @@ public class CommentCRUDService {
         }
     }
 
-    public SliceDto<ReadResponse> readBoardComments(Long boardId, Long lastCommentId, LocalDateTime lastCommentCreatedAt, Pageable pageable) {
+    public SliceDto<ReadResponse> readBoardComments(Long boardId, Long lastCommentId, Pageable pageable) {
 
         Slice<Comment> comments;
 
         if (lastCommentId == null) {
             comments = commentRepository.findByBoard(boardId, pageable);
         } else {
-            comments = commentRepository.findByBoardIdWithAccountAndSubCommentsAndParent(boardId, lastCommentId, lastCommentCreatedAt, pageable);
+            comments = commentRepository.findByBoardIdWithAccountAndSubCommentsAndParent(boardId, lastCommentId, pageable);
         }
 
         return new SliceDto<>(comments.map(ReadResponse::of));
     }
 
-    public SliceDto<ReadResponseByAccount> readAccountComments(Long accountId, Long lastCommentId, LocalDateTime lastCommentCreatedAt, Pageable pageable) {
+    public SliceDto<ReadResponseByAccount> readAccountComments(Long accountId, Long lastCommentId, Pageable pageable) {
 
         Slice<Comment> comments;
 
         if (lastCommentId == null) {
             comments = commentRepository.findByAccount(accountId, pageable);
         } else {
-            comments = commentRepository.findByAccountWithAccountAndTargetAccountAndBoard(accountId, lastCommentId, lastCommentCreatedAt, pageable);
+            comments = commentRepository.findByAccountWithAccountAndTargetAccountAndBoard(accountId, lastCommentId, pageable);
         }
 
         return new SliceDto<>(comments.map(ReadResponseByAccount::of));

@@ -18,13 +18,7 @@ public class ReadResponse {
 
     private AccountDto account;
 
-    private Long targetId;
-
-    private String targetNickname;
-
     private String content;
-
-    private BoardDto board;
 
     private LocalDateTime modifiedAt;
 
@@ -34,10 +28,7 @@ public class ReadResponse {
         return ReadResponse.builder()
                 .commentId(comment.getId())
                 .account(AccountDto.of(comment.getAccount()))
-                .targetId(comment.getTargetId())
-                .targetNickname(comment.getTargetNickname())
                 .content(comment.getContent())
-                .board(BoardDto.of(comment.getBoard()))
                 .modifiedAt(comment.getModifiedAt())
                 .subCommentSize(comment.getSubComments().size())
                 .build();

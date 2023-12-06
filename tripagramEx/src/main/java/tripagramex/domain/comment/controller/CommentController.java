@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +18,6 @@ import tripagramex.domain.comment.validation.CommentValidator;
 import tripagramex.global.argumentresolver.LoginAccountId;
 import tripagramex.global.common.dto.IdDto;
 import tripagramex.global.common.dto.SliceDto;
-
-import java.time.LocalDateTime;
 
 @RestController
 @RequiredArgsConstructor
@@ -74,10 +71,9 @@ public class CommentController {
     @GetMapping("/board/{boardId}")
     public ResponseEntity<SliceDto<ReadResponse>> readBoardComments(@PathVariable Long boardId,
                                                                     @RequestParam(required = false) Long lastCommentId,
-                                                                    @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime lastCommentCreatedAt,
-                                                                    @PageableDefault(size = 5,  sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+                                                                    @PageableDefault(size = 5,  sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
 
-        SliceDto<ReadResponse> response = commentCRUDService.readBoardComments(boardId, lastCommentId, lastCommentCreatedAt, pageable);
+        SliceDto<ReadResponse> response = commentCRUDService.readBoardComments(boardId, lastCommentId, pageable);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -85,10 +81,9 @@ public class CommentController {
     @GetMapping("/account")
     public ResponseEntity<SliceDto<ReadResponseByAccount>> readAccountComments(@LoginAccountId Long loginAccountId,
                                                                                @RequestParam(required = false) Long lastCommentId,
-                                                                               @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime lastCommentCreatedAt,
-                                                                               @PageableDefault(size = 5,  sort = {"createdAt", "id"}, direction = Sort.Direction.DESC) Pageable pageable) {
+                                                                               @PageableDefault(size = 5,  sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
 
-        SliceDto<ReadResponseByAccount> response = commentCRUDService.readAccountComments(loginAccountId, lastCommentId, lastCommentCreatedAt, pageable);
+        SliceDto<ReadResponseByAccount> response = commentCRUDService.readAccountComments(loginAccountId, lastCommentId, pageable);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
