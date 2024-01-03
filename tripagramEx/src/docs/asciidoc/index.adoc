@@ -300,3 +300,21 @@ include::{snippets}/imageUpload/http-response.adoc[]
 
 .response-fields
 include::{snippets}/imageUpload/response-fields.adoc[]
+
+***
+== CommentController
+=== 댓글 생성
+.curl-requeset
+include::{snippets}/createComment/curl-request.adoc[]
+
+.http-request
+include::{snippets}/createComment/http-request.adoc[]
+
+.request-fields
+include::{snippets}/createComment/request-fields.adoc[]
+
+.http-response
+include::{snippets}/createComment/http-response.adoc[]
+
+.response-fields
+include::{snippets}/createComment/response-fields.adoc[]
