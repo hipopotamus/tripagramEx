@@ -3,11 +3,11 @@ package tripagramex.domain.comment.repository;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.EntityGraph;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import tripagramex.domain.comment.entity.Comment;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 public interface CommentRepository {
@@ -19,40 +19,58 @@ public interface CommentRepository {
     Optional<Comment> findById(@Param("commentId") Long commentId);
 
     @Query("select nullif(comment.account.id, :accountId) from Comment comment where comment.id = :commentId")
-    Long checkUpdateAuthority(@Param("accountId") Long accountId, @Param("commentId") Long commentId);
+    Long checkAuthority(@Param("accountId") Long accountId, @Param("commentId") Long commentId);
 
+    @Modifying
+    @Query("update Comment comment set comment.deleted = true where comment.parent.id = :commentId")
+    void deleteSubComment(@Param("commentId") Long commentId);
 
-    @Query("select case when (comment.parent is null) then 0 else comment.parent.id end from Comment comment " +
-            "where comment.id = :commentId")
-    Long checkParent(@Param("commentId") Long commentId);
-
-    @EntityGraph(attributePaths = {"account", "subComments", "parent"})
+    @EntityGraph(attributePaths = {"account"})
     @Query("select comment from Comment comment " +
-            "where comment.id = :commentId and comment.deleted = false ")
-    Optional<Comment> findWithAccountAndSubCommentsAndParent(@Param("commentId") Long commentId);
-
-    @EntityGraph(attributePaths = {"account", "subComments", "parent"})
-    @Query("select comment from Comment comment " +
-            "where comment.board.id = :boardId and comment.deleted = false")
+            "left join fetch comment.subComments subcomment where comment.board.id = :boardId " +
+            "and (subcomment.deleted = false or subcomment.deleted = null) " +
+            "and comment.target.id = 0L " +
+            "and comment.deleted = false")
     Slice<Comment> findByBoard(@Param("boardId") Long boardId, Pageable pageable);
 
-    @EntityGraph(attributePaths = {"account", "targetAccount", "board"})
-    @Query("select comment from Comment comment " +
-            "where comment.account.id = :accountId and comment.deleted = false")
+    @EntityGraph(attributePaths = {"account", "board"})
+    @Query("select comment from Comment comment where comment.account.id = :accountId " +
+            "and comment.deleted = false")
     Slice<Comment> findByAccount(@Param("accountId") Long accountId, Pageable pageable);
 
-    @EntityGraph(attributePaths = {"account", "subComments", "parent"})
-    @Query("select comment from Comment comment where comment.board.id = :boardId " +
-            "and (comment.createdAt < :lastCommentCreatedAt or (comment.createdAt = :lastCommentCreatedAt and comment.id < :lastCommentId))")
+
+    @EntityGraph(attributePaths = {"account", "target"})
+    @Query("select subComment from Comment subComment where subComment.parent.id = :commentId " +
+            "and subComment.target.id != 0L " +
+            "and subComment.deleted = false")
+    Slice<Comment> findByComment(@Param("commentId") Long commentId, Pageable pageable);
+
+    @EntityGraph(attributePaths = {"account"})
+    @Query("select comment from Comment comment " +
+            "left join fetch comment.subComments subcomment where comment.board.id = :boardId " +
+            "and (subcomment.deleted = false or subcomment.deleted = null) " +
+            "and comment.target.id = 0L " +
+            "and comment.id < :lastCommentId " +
+            "and comment.deleted = false")
     Slice<Comment> findByBoardIdWithAccountAndSubCommentsAndParent(@Param("boardId") Long boardId,
                                                                    @Param("lastCommentId") Long lastCommentId,
-                                                                   @Param("lastCommentCreatedAt") LocalDateTime lastCommentCreatedAt,
                                                                    Pageable pageable);
-    @EntityGraph(attributePaths = {"account", "targetAccount", "board"})
-    @Query("select comment from Comment comment where comment.account.id = :accountId and comment.deleted = false " +
-            "and (comment.createdAt < :lastCommentCreatedAt or (comment.createdAt = :lastCommentCreatedAt and comment.id < :lastCommentId))")
+
+    @EntityGraph(attributePaths = {"account", "board"})
+    @Query("select comment from Comment comment where comment.account.id = :accountId " +
+            "and comment.deleted = false " +
+            "and comment.id < :lastCommentId " +
+            "and comment.deleted = false")
     Slice<Comment> findByAccountWithAccountAndTargetAccountAndBoard(@Param("accountId") Long accountId,
                                                                     @Param("lastCommentId") Long lastCommentId,
-                                                                    @Param("lastCommentCreatedAt") LocalDateTime lastCommentCreatedAt,
                                                                     Pageable pageable);
+
+    @EntityGraph(attributePaths = {"account", "target"})
+    @Query("select subComment from Comment subComment where subComment.parent.id = :commentId " +
+            "and subComment.target.id != 0L " +
+            "and subComment.id < :lastSubCommentId " +
+            "and subComment.deleted = false")
+    Slice<Comment> findByCommentWithAccountAndTarget(@Param("commentId") Long commentId,
+                                                     @Param("lastSubCommentId") Long lastSubCommentId,
+                                                     Pageable pageable);
 }

@@ -14,8 +14,6 @@ import tripagramex.domain.comment.repository.CommentRepository;
 import tripagramex.global.common.dto.IdDto;
 import tripagramex.global.common.dto.SliceDto;
 
-import java.time.LocalDateTime;
-
 @Builder
 @Service
 @Transactional(readOnly = true)
@@ -33,8 +31,8 @@ public class CommentCRUDService {
 
     @Transactional
     public IdDto createSubComment(CreateSubCommentRequest createSubCommentRequest, Board board, Account account,
-                                  Account targetAccount, Comment comment) {
-        Comment subComment = createSubCommentRequest.toComment(board, account, targetAccount, comment);
+                                  Comment comment, Account target) {
+        Comment subComment = createSubCommentRequest.toComment(board, account, comment, target);
         Comment saveSubComment = commentRepository.save(subComment);
         return new IdDto(saveSubComment.getId());
     }
@@ -48,49 +46,47 @@ public class CommentCRUDService {
     @Transactional
     public void deleteComment(Long commentId) {
         Comment comment = commentRepository.findById(commentId).get();
-        if (!comment.getSubComments().isEmpty()) {
-            comment.saveContent();
-            comment.modifyContent("삭제된 댓글입니다.");
-        } else {
-            comment.softDelete();
-        }
+        commentRepository.deleteSubComment(comment.getId());
+        comment.softDelete();
     }
 
-    public ReadResponse readComment(Long commentId) {
-        Long parentId = commentRepository.checkParent(commentId);
-        if (parentId == 0) {
-            Comment comment = commentRepository.findWithAccountAndSubCommentsAndParent(commentId).get();
-            return ReadResponse.of(comment);
-        }
-
-        Comment comment = commentRepository.findWithAccountAndSubCommentsAndParent(parentId).get();
-        return ReadResponse.of(comment);
-    }
-
-    public SliceDto<ReadResponse> readBoardComments(Long boardId, Long lastCommentId, LocalDateTime lastCommentCreatedAt, Pageable pageable) {
+    public SliceDto<ReadResponse> readBoardComments(Long boardId, Long lastCommentId, Pageable pageable) {
 
         Slice<Comment> comments;
 
         if (lastCommentId == null) {
             comments = commentRepository.findByBoard(boardId, pageable);
         } else {
-            comments = commentRepository.findByBoardIdWithAccountAndSubCommentsAndParent(boardId, lastCommentId, lastCommentCreatedAt, pageable);
+            comments = commentRepository.findByBoardIdWithAccountAndSubCommentsAndParent(boardId, lastCommentId, pageable);
         }
 
         return new SliceDto<>(comments.map(ReadResponse::of));
     }
 
-    public SliceDto<ReadResponseByAccount> readAccountComments(Long accountId, Long lastCommentId, LocalDateTime lastCommentCreatedAt, Pageable pageable) {
+    public SliceDto<ReadResponseByAccount> readAccountComments(Long accountId, Long lastCommentId, Pageable pageable) {
 
         Slice<Comment> comments;
 
         if (lastCommentId == null) {
             comments = commentRepository.findByAccount(accountId, pageable);
         } else {
-            comments = commentRepository.findByAccountWithAccountAndTargetAccountAndBoard(accountId, lastCommentId, lastCommentCreatedAt, pageable);
+            comments = commentRepository.findByAccountWithAccountAndTargetAccountAndBoard(accountId, lastCommentId, pageable);
         }
 
         return new SliceDto<>(comments.map(ReadResponseByAccount::of));
+    }
+
+    public SliceDto<ReadSubCommentResponse> readSubComments(Long commentId, Long lastSubCommentId, Pageable pageable) {
+
+        Slice<Comment> comments;
+
+        if (lastSubCommentId == null) {
+            comments = commentRepository.findByComment(commentId, pageable);
+        } else {
+            comments = commentRepository.findByCommentWithAccountAndTarget(commentId, lastSubCommentId, pageable);
+        }
+
+        return new SliceDto<>(comments.map(ReadSubCommentResponse::of));
     }
 
 }

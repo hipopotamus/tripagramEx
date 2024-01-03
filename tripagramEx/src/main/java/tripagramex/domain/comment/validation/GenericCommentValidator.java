@@ -15,7 +15,7 @@ public class GenericCommentValidator implements CommentValidator {
 
     @Override
     public void verifyUpdateAuthority(Long accountId, Long commentId) {
-        Long result = commentRepository.checkUpdateAuthority(accountId, commentId);
+        Long result = commentRepository.checkAuthority(accountId, commentId);
         if (result != null) {
             throw new BusinessLogicException(ExceptionCode.FORBIDDEN);
         }

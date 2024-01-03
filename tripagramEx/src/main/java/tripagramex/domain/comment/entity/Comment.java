@@ -37,9 +37,9 @@ public class Comment extends BaseField {
     @JoinColumn(name = "parent_id")
     private Comment parent;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "targetAccount_id")
-    private Account targetAccount;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "target_id")
+    private Account target;
 
     private String content;
 

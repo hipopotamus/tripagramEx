@@ -47,7 +47,7 @@ public class QComment extends EntityPathBase<Comment> {
 
     public final ListPath<Comment, QComment> subComments = this.<Comment, QComment>createList("subComments", Comment.class, QComment.class, PathInits.DIRECT2);
 
-    public final tripagramex.domain.account.entity.QAccount targetAccount;
+    public final tripagramex.domain.account.entity.QAccount target;
 
     public QComment(String variable) {
         this(Comment.class, forVariable(variable), INITS);
@@ -70,7 +70,7 @@ public class QComment extends EntityPathBase<Comment> {
         this.account = inits.isInitialized("account") ? new tripagramex.domain.account.entity.QAccount(forProperty("account")) : null;
         this.board = inits.isInitialized("board") ? new tripagramex.domain.board.entity.QBoard(forProperty("board"), inits.get("board")) : null;
         this.parent = inits.isInitialized("parent") ? new QComment(forProperty("parent"), inits.get("parent")) : null;
-        this.targetAccount = inits.isInitialized("targetAccount") ? new tripagramex.domain.account.entity.QAccount(forProperty("targetAccount")) : null;
+        this.target = inits.isInitialized("target") ? new tripagramex.domain.account.entity.QAccount(forProperty("target")) : null;
     }
 
 }

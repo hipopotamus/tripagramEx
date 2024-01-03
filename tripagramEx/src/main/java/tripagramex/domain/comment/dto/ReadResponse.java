@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 import tripagramex.domain.comment.entity.Comment;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @Builder
@@ -22,22 +20,17 @@ public class ReadResponse {
 
     private String content;
 
-    private List<SubCommentDto> subComments = new ArrayList<>();
-
     private LocalDateTime modifiedAt;
 
+    private int subCommentSize = 0;
+
     public static ReadResponse of(Comment comment) {
-
-        List<SubCommentDto> subComments = comment.getSubComments().stream()
-                .map(SubCommentDto::of)
-                .toList();
-
         return ReadResponse.builder()
                 .commentId(comment.getId())
                 .account(AccountDto.of(comment.getAccount()))
                 .content(comment.getContent())
-                .subComments(subComments)
                 .modifiedAt(comment.getModifiedAt())
+                .subCommentSize(comment.getSubComments().size())
                 .build();
     }
 }
