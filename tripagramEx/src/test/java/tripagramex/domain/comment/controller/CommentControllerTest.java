@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import tripagramex.domain.account.entity.Account;
 import tripagramex.domain.account.repository.AccountRepository;
 import tripagramex.domain.comment.dto.CreateRequest;
+import tripagramex.domain.comment.dto.CreateSubCommentRequest;
 import tripagramex.global.security.authentication.UserAccount;
 import tripagramex.global.security.jwt.JwtProcessor;
 
@@ -88,6 +89,57 @@ class CommentControllerTest {
                         ),
                         responseFields(
                                 fieldWithPath("id").type(JsonFieldType.NUMBER).description("생성된 Comment 식별자")
+                        )
+                ));
+    }
+
+    @Test
+    @DisplayName("대댓글 생성_성공")
+    public void createSubComment_Success() throws Exception {
+        //given
+        Long accountId = 10002L;
+        Account account = accountRepository.findById(accountId).get();
+        String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
+
+        Long boardId = 30001L;
+        Long commentId = 40001L;
+        Long targetId = 10001L;
+        String content = "testSubComments";
+
+        CreateSubCommentRequest createSubCommentRequest = CreateSubCommentRequest.builder()
+                .boardId(boardId)
+                .commentId(commentId)
+                .targetId(targetId)
+                .content(content)
+                .build();
+
+        String createSubCommentRequestByJson = gson.toJson(createSubCommentRequest);
+
+        //when
+        ResultActions create = mockMvc.perform(
+                post("/comments/subComment")
+                        .header("Authorization", jwt)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(createSubCommentRequestByJson));
+
+        //then
+        create.andExpect(status().isCreated())
+                .andDo(document(
+                        "createSubComment",
+                        getRequestPreProcessor(),
+                        getResponsePreProcessor(),
+                        requestHeaders(
+                                headerWithName("Authorization").description("JWT")
+                        ),
+                        requestFields(
+                                fieldWithPath("boardId").description("게시물 식별자"),
+                                fieldWithPath("commentId").description("댓글 식별자"),
+                                fieldWithPath("targetId").description("대댓글 대상 식별자"),
+                                fieldWithPath("content").description("내용")
+                        ),
+                        responseFields(
+                                fieldWithPath("id").type(JsonFieldType.NUMBER).description("생성된 SubComment 식별자")
                         )
                 ));
     }

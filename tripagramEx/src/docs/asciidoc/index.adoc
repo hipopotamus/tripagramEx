@@ -318,3 +318,19 @@ include::{snippets}/createComment/http-response.adoc[]
 
 .response-fields
 include::{snippets}/createComment/response-fields.adoc[]
+
+=== 대댓글 생성
+.curl-requeset
+include::{snippets}/createSubComment/curl-request.adoc[]
+
+.http-request
+include::{snippets}/createSubComment/http-request.adoc[]
+
+.request-fields
+include::{snippets}/createSubComment/request-fields.adoc[]
+
+.http-response
+include::{snippets}/createSubComment/http-response.adoc[]
+
+.response-fields
+include::{snippets}/createSubComment/response-fields.adoc[]
