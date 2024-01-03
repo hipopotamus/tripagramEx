@@ -334,3 +334,16 @@ include::{snippets}/createSubComment/http-response.adoc[]
 
 .response-fields
 include::{snippets}/createSubComment/response-fields.adoc[]
+
+=== 댓글 수정
+.curl-requeset
+include::{snippets}/updateComment/curl-request.adoc[]
+
+.http-request
+include::{snippets}/updateComment/http-request.adoc[]
+
+.request-fields
+include::{snippets}/updateComment/request-fields.adoc[]
+
+.http-response
+include::{snippets}/updateComment/http-response.adoc[]

@@ -16,6 +16,7 @@ import tripagramex.domain.account.entity.Account;
 import tripagramex.domain.account.repository.AccountRepository;
 import tripagramex.domain.comment.dto.CreateRequest;
 import tripagramex.domain.comment.dto.CreateSubCommentRequest;
+import tripagramex.domain.comment.dto.UpdateRequest;
 import tripagramex.global.security.authentication.UserAccount;
 import tripagramex.global.security.jwt.JwtProcessor;
 
@@ -142,6 +143,48 @@ class CommentControllerTest {
                                 fieldWithPath("id").type(JsonFieldType.NUMBER).description("생성된 SubComment 식별자")
                         )
                 ));
+    }
+
+    @Test
+    @DisplayName("댓글 수정_성공")
+    public void updateComment_Success() throws Exception {
+        //given
+        Long accountId = 10001L;
+        Account account = accountRepository.findById(accountId).get();
+        String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
+        Long commentId = 40001L;
+
+
+        String content = "updateTestComment";
+
+        UpdateRequest updateRequest = UpdateRequest.builder()
+                .content(content)
+                .build();
+
+        String updateRequestByJson = gson.toJson(updateRequest);
+
+        //when
+        ResultActions update = mockMvc.perform(
+                post("/comments/{commentId}", commentId)
+                        .header("Authorization", jwt)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(updateRequestByJson));
+
+        update
+                .andExpect(status().isOk())
+                .andDo(document(
+                        "updateComment",
+                        getRequestPreProcessor(),
+                        getResponsePreProcessor(),
+                        requestHeaders(
+                                headerWithName("Authorization").description("JWT")
+                        ),
+                        requestFields(
+                                fieldWithPath("content").description("수정할 내용").optional()
+                        )
+                ));
+
     }
 
 }
