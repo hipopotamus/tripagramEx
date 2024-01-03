@@ -76,4 +76,17 @@ public class CommentCRUDService {
         return new SliceDto<>(comments.map(ReadResponseByAccount::of));
     }
 
+    public SliceDto<ReadSubCommentResponse> readSubComments(Long commentId, Long lastSubCommentId, Pageable pageable) {
+
+        Slice<Comment> comments;
+
+        if (lastSubCommentId == null) {
+            comments = commentRepository.findByComment(commentId, pageable);
+        } else {
+            comments = commentRepository.findByCommentWithAccountAndTarget(commentId, lastSubCommentId, pageable);
+        }
+
+        return new SliceDto<>(comments.map(ReadSubCommentResponse::of));
+    }
+
 }

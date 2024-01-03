@@ -34,24 +34,43 @@ public interface CommentRepository {
     Slice<Comment> findByBoard(@Param("boardId") Long boardId, Pageable pageable);
 
     @EntityGraph(attributePaths = {"account", "board"})
-    @Query("select comment from Comment comment " +
-            "where comment.account.id = :accountId and comment.deleted = false")
+    @Query("select comment from Comment comment where comment.account.id = :accountId " +
+            "and comment.deleted = false")
     Slice<Comment> findByAccount(@Param("accountId") Long accountId, Pageable pageable);
+
+
+    @EntityGraph(attributePaths = {"account", "target"})
+    @Query("select subComment from Comment subComment where subComment.parent.id = :commentId " +
+            "and subComment.target.id != 0L " +
+            "and subComment.deleted = false")
+    Slice<Comment> findByComment(@Param("commentId") Long commentId, Pageable pageable);
 
     @EntityGraph(attributePaths = {"account"})
     @Query("select comment from Comment comment " +
             "left join fetch comment.subComments subcomment where comment.board.id = :boardId " +
             "and (subcomment.deleted = false or subcomment.deleted = null) " +
             "and comment.target.id = 0L " +
-            "and comment.id < :lastCommentId")
+            "and comment.id < :lastCommentId " +
+            "and comment.deleted = false")
     Slice<Comment> findByBoardIdWithAccountAndSubCommentsAndParent(@Param("boardId") Long boardId,
                                                                    @Param("lastCommentId") Long lastCommentId,
                                                                    Pageable pageable);
 
     @EntityGraph(attributePaths = {"account", "board"})
-    @Query("select comment from Comment comment where comment.account.id = :accountId and comment.deleted = false " +
-            "and comment.id < :lastCommentId")
+    @Query("select comment from Comment comment where comment.account.id = :accountId " +
+            "and comment.deleted = false " +
+            "and comment.id < :lastCommentId " +
+            "and comment.deleted = false")
     Slice<Comment> findByAccountWithAccountAndTargetAccountAndBoard(@Param("accountId") Long accountId,
                                                                     @Param("lastCommentId") Long lastCommentId,
                                                                     Pageable pageable);
+
+    @EntityGraph(attributePaths = {"account", "target"})
+    @Query("select subComment from Comment subComment where subComment.parent.id = :commentId " +
+            "and subComment.target.id != 0L " +
+            "and subComment.id < :lastSubCommentId " +
+            "and subComment.deleted = false")
+    Slice<Comment> findByCommentWithAccountAndTarget(@Param("commentId") Long commentId,
+                                                     @Param("lastSubCommentId") Long lastSubCommentId,
+                                                     Pageable pageable);
 }

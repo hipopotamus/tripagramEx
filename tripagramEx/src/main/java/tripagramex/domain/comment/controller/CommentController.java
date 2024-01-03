@@ -87,4 +87,13 @@ public class CommentController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @GetMapping("/subComment/{commentId}")
+    public ResponseEntity<SliceDto<ReadSubCommentResponse>> readSubComments(@PathVariable Long commentId,
+                                                                            @RequestParam(required = false) Long lastSubCommentId,
+                                                                            @PageableDefault(size = 5,  sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+        SliceDto<ReadSubCommentResponse> response = commentCRUDService.readSubComments(commentId, lastSubCommentId, pageable);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }
