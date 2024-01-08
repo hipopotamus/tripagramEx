@@ -258,4 +258,98 @@ class CommentControllerTest {
                 )));
     }
 
+    @Test
+    @DisplayName("내 댓글 조회_성공")
+    public void readAccountComment() throws Exception {
+        //given
+        Long accountId = 10001L;
+        Account account = accountRepository.findById(accountId).get();
+        String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
+
+        //when
+        ResultActions read = mockMvc.perform(
+                get("/comments/account")
+                        .header("Authorization", jwt));
+
+        //then
+        read
+                .andExpect(status().isOk())
+                .andDo(document(
+                        "readAccountComment",
+                        getRequestPreProcessor(),
+                        getResponsePreProcessor(),
+                        requestHeaders(
+                                headerWithName("Authorization").description("JWT")
+                        ),
+                        formParameters(
+                                parameterWithName("page").description("페이지").optional(),
+                                parameterWithName("size").description("페이지 크기").optional(),
+                                parameterWithName("lastCommentId").description("마지막으로 조회된 댓글 식별자").optional()
+                        ),
+                        responseFields(
+                                List.of(
+                                        fieldWithPath("content[]").type(JsonFieldType.ARRAY).description("댓글 목록"),
+                                        fieldWithPath("content[].commentId").type(JsonFieldType.NUMBER).description("댓글 식별자"),
+                                        fieldWithPath("content[].board").type(JsonFieldType.OBJECT).description("댓글이 속한 게시물"),
+                                        fieldWithPath("content[].board.id").type(JsonFieldType.NUMBER).description("댓글이 속한 게시물 식별자"),
+                                        fieldWithPath("content[].board.title").type(JsonFieldType.STRING).description("댓글이 속한 게시물 제목"),
+                                        fieldWithPath("content[].board.thumbnail").type(JsonFieldType.STRING).description("댓글이 속한 게시물 썸네일"),
+                                        fieldWithPath("content[].target").type(JsonFieldType.OBJECT).description("대댓글 대상"),
+                                        fieldWithPath("content[].target.accountId").type(JsonFieldType.NUMBER).description("대댓글 대상의 식별자(없을 시 0)"),
+                                        fieldWithPath("content[].target.nickname").type(JsonFieldType.STRING).description("대댓글 대상으 닉네임(없을 시 null)").optional(),
+                                        fieldWithPath("content[].content").type(JsonFieldType.STRING).description("댓글 내용"),
+                                        fieldWithPath("content[].modifiedAt").type(JsonFieldType.STRING).description("댓글 수정 일자"),
+                                        fieldWithPath("sliceNumber").type(JsonFieldType.NUMBER).description("현재 슬라이스 번호"),
+                                        fieldWithPath("size").type(JsonFieldType.NUMBER).description("슬라이스 사이즈"),
+                                        fieldWithPath("hasNext").type(JsonFieldType.BOOLEAN).description("다음 슬라이스 존재 여부"),
+                                        fieldWithPath("numberOfElements").type(JsonFieldType.NUMBER).description("현재 슬라이스의 게시글 수")
+                                )
+                        )));
+    }
+
+    @Test
+    @DisplayName("대댓글 조회")
+    public void readSubComments() throws Exception {
+        //given
+        Long commentId = 40001L;
+
+        //when
+        ResultActions read = mockMvc.perform(
+                get("/comments/subComment/{commentId}", commentId));
+
+        //then
+        read
+                .andExpect(status().isOk())
+                .andDo(document(
+                        "readSubComment",
+                        getRequestPreProcessor(),
+                        getResponsePreProcessor(),
+                        pathParameters(
+                                parameterWithName("commentId").description("댓글 식별자")
+                        ),
+                        formParameters(
+                                parameterWithName("page").description("페이지").optional(),
+                                parameterWithName("size").description("페이지 크기").optional(),
+                                parameterWithName("lastCommentId").description("마지막으로 조회된 댓글 식별자").optional()
+                        ),
+                        responseFields(
+                                List.of(
+                                        fieldWithPath("content[]").type(JsonFieldType.ARRAY).description("대댓글 목록"),
+                                        fieldWithPath("content[].subCommentId").type(JsonFieldType.NUMBER).description("대댓글 식별자"),
+                                        fieldWithPath("content[].account").type(JsonFieldType.OBJECT).description("대댓글 생성자"),
+                                        fieldWithPath("content[].account.accountId").type(JsonFieldType.NUMBER).description("대댓글 생성자 식별자"),
+                                        fieldWithPath("content[].account.nickname").type(JsonFieldType.STRING).description("대댓글 생성자 닉네임"),
+                                        fieldWithPath("content[].target").type(JsonFieldType.OBJECT).description("대댓글 대상"),
+                                        fieldWithPath("content[].target.accountId").type(JsonFieldType.NUMBER).description("대댓글 대상의 식별자"),
+                                        fieldWithPath("content[].target.nickname").type(JsonFieldType.STRING).description("대댓글 대상으 닉네임"),
+                                        fieldWithPath("content[].contents").type(JsonFieldType.STRING).description("댓글 내용"),
+                                        fieldWithPath("content[].modifiedAt").type(JsonFieldType.STRING).description("댓글 수정 일자"),
+                                        fieldWithPath("sliceNumber").type(JsonFieldType.NUMBER).description("현재 슬라이스 번호"),
+                                        fieldWithPath("size").type(JsonFieldType.NUMBER).description("슬라이스 사이즈"),
+                                        fieldWithPath("hasNext").type(JsonFieldType.BOOLEAN).description("다음 슬라이스 존재 여부"),
+                                        fieldWithPath("numberOfElements").type(JsonFieldType.NUMBER).description("현재 슬라이스의 게시글 수")
+                                )
+                        )));
+    }
+
 }

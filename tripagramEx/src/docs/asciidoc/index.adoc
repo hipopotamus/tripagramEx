@@ -388,3 +388,41 @@ include::{snippets}/readBoardComment/http-response.adoc[]
 
 .response-fields
 include::{snippets}/readBoardComment/response-fields.adoc[]
+
+=== 내 댓글 조회
+.curl-requeset
+include::{snippets}/readAccountComment/curl-request.adoc[]
+
+.http-request
+include::{snippets}/readAccountComment/http-request.adoc[]
+
+.request-headers
+include::{snippets}/readAccountComment/request-headers.adoc[]
+
+.form-parameters
+include::{snippets}/readAccountComment/form-parameters.adoc[]
+
+.http-response
+include::{snippets}/readAccountComment/http-response.adoc[]
+
+.response-fields
+include::{snippets}/readAccountComment/response-fields.adoc[]
+
+=== 대댓글 조회
+.curl-requeset
+include::{snippets}/readSubComment/curl-request.adoc[]
+
+.http-request
+include::{snippets}/readSubComment/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/readSubComment/path-parameters.adoc[]
+
+.form-parameters
+include::{snippets}/readSubComment/form-parameters.adoc[]
+
+.http-response
+include::{snippets}/readSubComment/http-response.adoc[]
+
+.response-fields
+include::{snippets}/readSubComment/response-fields.adoc[]
