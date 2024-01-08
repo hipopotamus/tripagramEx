@@ -310,6 +310,9 @@ include::{snippets}/createComment/curl-request.adoc[]
 .http-request
 include::{snippets}/createComment/http-request.adoc[]
 
+.request-headers
+include::{snippets}/createComment/request-headers.adoc[]
+
 .request-fields
 include::{snippets}/createComment/request-fields.adoc[]
 
@@ -325,6 +328,9 @@ include::{snippets}/createSubComment/curl-request.adoc[]
 
 .http-request
 include::{snippets}/createSubComment/http-request.adoc[]
+
+.request-headers
+include::{snippets}/createSubComment/request-headers.adoc[]
 
 .request-fields
 include::{snippets}/createSubComment/request-fields.adoc[]
@@ -342,8 +348,43 @@ include::{snippets}/updateComment/curl-request.adoc[]
 .http-request
 include::{snippets}/updateComment/http-request.adoc[]
 
+.request-headers
+include::{snippets}/updateComment/request-headers.adoc[]
+
 .request-fields
 include::{snippets}/updateComment/request-fields.adoc[]
 
 .http-response
 include::{snippets}/updateComment/http-response.adoc[]
+
+=== 댓글 삭제
+.curl-requeset
+include::{snippets}/deleteComment/curl-request.adoc[]
+
+.http-request
+include::{snippets}/deleteComment/http-request.adoc[]
+
+.request-headers
+include::{snippets}/deleteComment/request-headers.adoc[]
+
+.http-response
+include::{snippets}/deleteComment/http-response.adoc[]
+
+=== 게시물 댓글 조회
+.curl-requeset
+include::{snippets}/readBoardComment/curl-request.adoc[]
+
+.http-request
+include::{snippets}/readBoardComment/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/readBoardComment/path-parameters.adoc[]
+
+.form-parameters
+include::{snippets}/readBoardComment/form-parameters.adoc[]
+
+.http-response
+include::{snippets}/readBoardComment/http-response.adoc[]
+
+.response-fields
+include::{snippets}/readBoardComment/response-fields.adoc[]
