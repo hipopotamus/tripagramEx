@@ -205,6 +205,9 @@ include::{snippets}/updateBoard/http-request.adoc[]
 .request-headers
 include::{snippets}/updateBoard/request-headers.adoc[]
 
+.path-parameters
+include::{snippets}/updateBoard/path-parameters.adoc[]
+
 .request-fields
 include::{snippets}/updateBoard/request-fields.adoc[]
 
@@ -220,6 +223,9 @@ include::{snippets}/deleteBoard/http-request.adoc[]
 
 .request-header
 include::{snippets}/deleteBoard/request-headers.adoc[]
+
+.path-parameters
+include::{snippets}/deleteBoard/path-parameters.adoc[]
 
 .http-response
 include::{snippets}/deleteBoard/http-response.adoc[]
@@ -348,6 +354,9 @@ include::{snippets}/updateComment/curl-request.adoc[]
 .http-request
 include::{snippets}/updateComment/http-request.adoc[]
 
+.path-parameters
+include::{snippets}/updateComment/path-parameters.adoc[]
+
 .request-headers
 include::{snippets}/updateComment/request-headers.adoc[]
 
@@ -363,6 +372,9 @@ include::{snippets}/deleteComment/curl-request.adoc[]
 
 .http-request
 include::{snippets}/deleteComment/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/deleteComment/path-parameters.adoc[]
 
 .request-headers
 include::{snippets}/deleteComment/request-headers.adoc[]

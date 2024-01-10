@@ -181,6 +181,9 @@ class CommentControllerTest {
                         requestHeaders(
                                 headerWithName("Authorization").description("JWT")
                         ),
+                        pathParameters(
+                                parameterWithName("commentId").description("댓글 식별자")
+                        ),
                         requestFields(
                                 fieldWithPath("content").description("수정할 내용").optional()
                         )
@@ -211,6 +214,9 @@ class CommentControllerTest {
                         getResponsePreProcessor(),
                         requestHeaders(
                                 headerWithName("Authorization").description("JWT")
+                        ),
+                        pathParameters(
+                                parameterWithName("commentId").description("댓글 식별자")
                         )
                 ));
     }
