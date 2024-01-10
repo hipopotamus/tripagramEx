@@ -194,6 +194,9 @@ class BoardCRUDControllerTest {
                         requestHeaders(
                                 headerWithName("Authorization").description("JWT")
                         ),
+                        pathParameters(
+                                parameterWithName("boardId").description("Board 식별자")
+                        ),
                         requestFields(
                                 fieldWithPath("title").description("제목").optional(),
                                 fieldWithPath("content").description("내용").optional(),
@@ -230,6 +233,9 @@ class BoardCRUDControllerTest {
                         getResponsePreProcessor(),
                         requestHeaders(
                                 headerWithName("Authorization").description("JWT")
+                        ),
+                        pathParameters(
+                                parameterWithName("boardId").description("Board 식별자")
                         )
                 ));
     }

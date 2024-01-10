@@ -205,6 +205,9 @@ include::{snippets}/updateBoard/http-request.adoc[]
 .request-headers
 include::{snippets}/updateBoard/request-headers.adoc[]
 
+.path-parameters
+include::{snippets}/updateBoard/path-parameters.adoc[]
+
 .request-fields
 include::{snippets}/updateBoard/request-fields.adoc[]
 
@@ -220,6 +223,9 @@ include::{snippets}/deleteBoard/http-request.adoc[]
 
 .request-header
 include::{snippets}/deleteBoard/request-headers.adoc[]
+
+.path-parameters
+include::{snippets}/deleteBoard/path-parameters.adoc[]
 
 .http-response
 include::{snippets}/deleteBoard/http-response.adoc[]
@@ -300,3 +306,135 @@ include::{snippets}/imageUpload/http-response.adoc[]
 
 .response-fields
 include::{snippets}/imageUpload/response-fields.adoc[]
+
+***
+== CommentController
+=== 댓글 생성
+.curl-requeset
+include::{snippets}/createComment/curl-request.adoc[]
+
+.http-request
+include::{snippets}/createComment/http-request.adoc[]
+
+.request-headers
+include::{snippets}/createComment/request-headers.adoc[]
+
+.request-fields
+include::{snippets}/createComment/request-fields.adoc[]
+
+.http-response
+include::{snippets}/createComment/http-response.adoc[]
+
+.response-fields
+include::{snippets}/createComment/response-fields.adoc[]
+
+=== 대댓글 생성
+.curl-requeset
+include::{snippets}/createSubComment/curl-request.adoc[]
+
+.http-request
+include::{snippets}/createSubComment/http-request.adoc[]
+
+.request-headers
+include::{snippets}/createSubComment/request-headers.adoc[]
+
+.request-fields
+include::{snippets}/createSubComment/request-fields.adoc[]
+
+.http-response
+include::{snippets}/createSubComment/http-response.adoc[]
+
+.response-fields
+include::{snippets}/createSubComment/response-fields.adoc[]
+
+=== 댓글 수정
+.curl-requeset
+include::{snippets}/updateComment/curl-request.adoc[]
+
+.http-request
+include::{snippets}/updateComment/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/updateComment/path-parameters.adoc[]
+
+.request-headers
+include::{snippets}/updateComment/request-headers.adoc[]
+
+.request-fields
+include::{snippets}/updateComment/request-fields.adoc[]
+
+.http-response
+include::{snippets}/updateComment/http-response.adoc[]
+
+=== 댓글 삭제
+.curl-requeset
+include::{snippets}/deleteComment/curl-request.adoc[]
+
+.http-request
+include::{snippets}/deleteComment/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/deleteComment/path-parameters.adoc[]
+
+.request-headers
+include::{snippets}/deleteComment/request-headers.adoc[]
+
+.http-response
+include::{snippets}/deleteComment/http-response.adoc[]
+
+=== 게시물 댓글 조회
+.curl-requeset
+include::{snippets}/readBoardComment/curl-request.adoc[]
+
+.http-request
+include::{snippets}/readBoardComment/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/readBoardComment/path-parameters.adoc[]
+
+.form-parameters
+include::{snippets}/readBoardComment/form-parameters.adoc[]
+
+.http-response
+include::{snippets}/readBoardComment/http-response.adoc[]
+
+.response-fields
+include::{snippets}/readBoardComment/response-fields.adoc[]
+
+=== 내 댓글 조회
+.curl-requeset
+include::{snippets}/readAccountComment/curl-request.adoc[]
+
+.http-request
+include::{snippets}/readAccountComment/http-request.adoc[]
+
+.request-headers
+include::{snippets}/readAccountComment/request-headers.adoc[]
+
+.form-parameters
+include::{snippets}/readAccountComment/form-parameters.adoc[]
+
+.http-response
+include::{snippets}/readAccountComment/http-response.adoc[]
+
+.response-fields
+include::{snippets}/readAccountComment/response-fields.adoc[]
+
+=== 대댓글 조회
+.curl-requeset
+include::{snippets}/readSubComment/curl-request.adoc[]
+
+.http-request
+include::{snippets}/readSubComment/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/readSubComment/path-parameters.adoc[]
+
+.form-parameters
+include::{snippets}/readSubComment/form-parameters.adoc[]
+
+.http-response
+include::{snippets}/readSubComment/http-response.adoc[]
+
+.response-fields
+include::{snippets}/readSubComment/response-fields.adoc[]
